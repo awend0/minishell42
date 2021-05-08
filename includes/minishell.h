@@ -4,6 +4,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}					t_env;
+
 typedef struct s_cmd
 {
 	char			*cmd;
