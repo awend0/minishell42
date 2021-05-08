@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-int     main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	int			status;
-	char        *line;
+	char		*line;
 	t_cmdtable	*cmdtable;
 
 	(void)argc;

@@ -18,4 +18,6 @@ typedef struct s_cmdtable
 	t_cmd			*cmds;
 }					t_cmdtable;
 
+int			get_next_line(int fd, char **line);
+
 #endif
