@@ -1,5 +1,44 @@
 #include "../includes/minishell.h"
 
+void	*ft_bzero(void *s, size_t n)
+{
+	unsigned char	*buf;
+
+	buf = s;
+	while (n > 0)
+	{
+		*buf = '\0';
+		buf++;
+		n--;
+	}
+	return (s);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t		len;
+
+	len = 0;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		len++;
+		str++;
+	}
+	return (len);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*array;
+
+	array = malloc(count * size);
+	if (!array)
+		return (0);
+	return (ft_bzero(array, count * size));
+}
+
 char	*ft_strjoin(char const *s1, char const s2)
 {
 	char	*strjoin;
