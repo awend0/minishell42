@@ -12,7 +12,7 @@ int	main(int argc, char **argv, char **env)
 	envs = init_envs(env);
 	while (!status)
 	{
-		putstr("sh> ", 1);
+		putstr("sh» ", 1);
 		line = get_next_line(1, &line);
 		cmdtable = parser(line, envs);
 		free(line);
