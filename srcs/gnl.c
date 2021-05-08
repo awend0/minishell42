@@ -11,7 +11,7 @@ void	*ft_bzero(void *s, size_t n)
 		buf++;
 		n--;
 	}
-	return (s);
+	return (s);
 }
 
 size_t	ft_strlen(const char *str)
