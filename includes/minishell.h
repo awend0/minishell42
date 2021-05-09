@@ -3,6 +3,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_env
 {
@@ -32,5 +33,7 @@ typedef struct s_cmdtable
 }						t_cmdtable;
 
 int			get_next_line(int fd, char **line);
+t_env		*init_envs(char **env);
+void		test_init_envs(t_env *envs);
 
 #endif

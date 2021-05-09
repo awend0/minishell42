@@ -2,5 +2,5 @@
 
 t_cmdtable	parser(char *line)
 {
-	
+	void (*line);
 }

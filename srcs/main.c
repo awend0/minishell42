@@ -10,10 +10,12 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	envs = init_envs(env);
+	test_init_envs(envs);
+	status = 0;
 	while (!status)
 	{
 		putstr("sh» ", 1);
-		line = get_next_line(1, &line);
+		line = get_next_line(0, &line);
 		cmdtable = parser(line, envs);
 		free(line);
 		status = executor(cmdtable, envs);
