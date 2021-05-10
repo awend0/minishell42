@@ -16,7 +16,6 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	char				*cmd;
-	char				**flags;
 	int					argc;
 	char				**argv;
 	int					pipe;
