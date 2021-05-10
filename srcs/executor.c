@@ -4,7 +4,6 @@
 #include <string.h>
 #include <sys/wait.h>
 
-
 int		executor_init_fds(int tmp[7], t_cmdtable *table)
 {
 	tmp[2] = dup(0);
@@ -13,17 +12,21 @@ int		executor_init_fds(int tmp[7], t_cmdtable *table)
 	{
 		tmp[4] = open(table->input_file, O_RDONLY);
 		if (tmp[4] == -1)
-		return (1);
+			print_error_and_exit("Error: file opening error\n");
 	}
 	else
+	{
 		tmp[4] = dup(tmp[2]);
+		if (tmp[4] == -1)
+			print_error_and_exit("Error: file descriptor duplication error\n");
+	}
 	return (0);
 }
 
 int		executor_redir(int oldfd, int newfd)
 {
 	if (dup2(oldfd, newfd) == -1)
-		return (1);
+		print_error_and_exit("Error: redirection failed");
 	close(oldfd);
 	return (0);
 }
@@ -36,31 +39,53 @@ int		executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 		{
 			tmp[5] = open(table->output_file, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 			if (tmp[5] == -1)
-				return (1);
+				print_error_and_exit("Error: failed file creation\n");
 		}
 		else
 		{
 			tmp[5] = dup(tmp[3]);
 			if (tmp[5] == -1)
-				return (1);
+				print_error_and_exit("Error: file descriptor duplication error\n");
 		}
 	}
 	else
 	{
 		if (pipe(tmp) == -1)
-			return (1);
+			print_error_and_exit("Error: pipe creation error\n");
 		tmp[5] = tmp[1];			
 		tmp[4] = tmp[0];
 		return (0);
 	}
 }
 
-int     executor(t_cmdtable *cmdtable, char **env)
+int		executor_fork_run(char **argv, char **env)
+{
+	int		pid;
+	int		ret;
+
+	pid = fork();
+	if (pid == -1)
+		print_error_and_exit("Error: fork failed\n");
+	if (pid == 0)
+	{
+		if (execve(argv[0], argv, env) == -1)
+			print_error_and_exit("Error: binary execution error\n");
+		_exit(1);
+	}
+	else
+		if (waitpid(pid, &ret, 0) == -1)
+			print_error_and_exit("Error: waitpid error o.o\n");
+	return (0);
+}
+
+int     executor(t_cmdtable *cmdtable, t_env **envs)
 {
 	t_cmdtable	*curtable;
 	t_cmd		*curcmds;
 	int			tmp[7];
+	char		**env;
 
+	env = get_env_as_string(envs);
 	curtable = cmdtable;
 	while (curtable)
 	{
@@ -72,13 +97,7 @@ int     executor(t_cmdtable *cmdtable, char **env)
 			executor_redir(tmp[4], 0);
 			executor_run_and_redir(curcmds, curtable, tmp);
 			executor_redir(tmp[5], 1);
-			tmp[6] = fork();
-			if (tmp[6] == 0)
-			{
-				execve(curcmds->argv[0], curcmds->argv, env);
-				perror(strerror(errno));
-				_exit(1);
-			}
+			executor_fork_run(curcmds->argv, env);
 			curcmds = curcmds->next;
 		}
 		curtable = curtable->next;
@@ -88,6 +107,8 @@ int     executor(t_cmdtable *cmdtable, char **env)
 	waitpid(tmp[6], 0, 0);
 }
 
+/*
+** Test "/bin/ls | grep e" 
 int     main(int argc, char **argv, char **env)
 {
 	t_cmdtable	*test;
@@ -108,7 +129,8 @@ int     main(int argc, char **argv, char **env)
 	test = malloc(sizeof(t_cmdtable));
 	test->cmds = cmd1;
 	test->input_file = 0;
-	test->output_file = "output";
+	test->output_file = 0;
 	test->next = 0;
 	executor(test, env);
 }
+*/
