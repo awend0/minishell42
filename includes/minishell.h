@@ -4,6 +4,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <errno.h>
 
 typedef struct s_env
 {
@@ -30,6 +31,14 @@ typedef struct s_cmdtable
 
 int			get_next_line(int fd, char **line);
 t_env		*init_envs(char **env);
+char		**get_env_as_string(t_env *envs);
+
+// tests
 void		test_init_envs(t_env *envs);
+void		test_envs_to_strings(t_env *envs);
+
+// utils
+int			ft_strlen(char *str);
+int			get_envs_len(t_env *envs);
 
 #endif

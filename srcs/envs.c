@@ -69,3 +69,30 @@ t_env	*init_envs(char **env)
 	}
 	return (buf);
 }
+
+char	**get_env_as_string(t_env *envs)
+{
+	char	**env;
+	int		len;
+	int		i;
+	int		j;
+
+	len = get_envs_len(envs);
+	env = malloc(sizeof(char *) * (len + 1));
+	env[len] = 0;
+	i = 0;
+	while (envs)
+	{
+		env[i] = malloc(sizeof(char) * (ft_strlen(envs->name)
+					+ ft_strlen(envs->value) + 2));
+		j = 0;
+		while (*(envs->name))
+			env[i][j++] = *(envs->name++);
+		env[i][j++] = '=';
+		while (*(envs->value))
+			env[i][j++] = *(envs->value++);
+		env[i++][j] = '\0';
+		envs = envs->next;
+	}
+	return (env);
+}

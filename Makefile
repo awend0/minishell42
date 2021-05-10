@@ -3,7 +3,8 @@ NAME	= minishell
 SRC		= main.c \
 			envs.c \
 			gnl.c \
-			test.c
+			test.c \
+			utils.c
 
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))

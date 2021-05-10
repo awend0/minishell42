@@ -10,7 +10,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	envs = init_envs(env);
-	test_init_envs(envs);
 	status = 0;
 	while (!status)
 	{
