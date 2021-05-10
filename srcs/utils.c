@@ -28,11 +28,11 @@ int		get_envs_len(t_env *envs)
 	return (size);
 }
 
-void	ft_puts(char *str)
+void	ft_puts(char *str, int fd)
 {
 	while (*str)
 	{
-		write(1, str, 1);
+		write(fd, str, 1);
 		str++;
 	}
 }
@@ -40,8 +40,8 @@ void	ft_puts(char *str)
 void	print_error_and_exit(char *str)
 {
 	if (errno != 0)
-		ft_puts(strerror(errno));
+		ft_puts(strerror(errno), 1);
 	else
-		ft_puts(str);
+		ft_puts(str, 1);
 	exit(1);
 }
