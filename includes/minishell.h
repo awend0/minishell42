@@ -4,6 +4,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <sys/types.h>
 
 typedef struct s_env
 {
@@ -15,11 +16,8 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-	char				*cmd;
-	char				**flags;
 	int					argc;
 	char				**argv;
-	int					pipe;
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -27,7 +25,6 @@ typedef struct s_cmdtable
 {
 	char				*input_file;
 	char				*output_file;
-	int					cmds_count;
 	t_cmd				*cmds;
 	struct s_cmdtable	*next;
 }						t_cmdtable;
