@@ -6,30 +6,17 @@ int	main(int argc, char **argv, char **env)
 	t_cmd		*cmd1;
 	t_env		*envs;
 
-	printf("I'm alive1\n");
-	envs = init_envs(env);
-	printf("I'm alive2\n");
+	argv++;
 	cmd1 = malloc(sizeof(t_cmd));
-	printf("I'm alive3\n");
 	cmd1->next = 0;
-	printf("I'm alive4\n");
 	cmd1->argv = malloc(sizeof(char*));
-	printf("I'm alive5\n");
-	cmd1->argv[0] = strdup("pwd");
-	printf("I'm alive6\n");
-	cmd1->argv[1] = 0;
-	printf("I'm alive7\n");
+	cmd1->argv = argv;
 	test = malloc(sizeof(t_cmdtable));
-	printf("I'm alive8\n");
 	test->cmds = cmd1;
-	printf("I'm alive9\n");
 	test->input_file = 0;
-	printf("I'm alive10\n");
 	test->output_file = 0;
-	printf("I'm alive11\n");
 	test->next = 0;
-	printf("I'm alive12\n");
-	executor(test, envs);
+	executor(test, env);
 	/*
 	int			status;
 	char		*line;

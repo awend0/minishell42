@@ -93,6 +93,8 @@ int		executor_run_builtin(char **argv, t_env *envs, char **env)
 		exit(0);
 	if (!ft_strcmp(argv[0], "pwd"))
 		builtin_pwd();
+	if (!ft_strcmp(argv[0], "echo"))
+		builtin_echo(argv);
 }
 
 int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
@@ -124,12 +126,9 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 	waitpid(tmp[6], 0, 0);
 }
 
-int		executor(t_cmdtable *table, t_env *envs)
+int		executor(t_cmdtable *table, char **env)
 {
-	char	**env;
-
-	env = get_env_as_string(envs);
-	executor_exec(table, envs, env);
+	executor_exec(table, 0, env);
 }
 
 /*

@@ -7,7 +7,8 @@ SRC		= main.c \
 		utils.c \
 		utils2.c \
 		executor.c \
-		builtin_pwd.c
+		builtin_pwd.c \
+		builtin_echo.c
 
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
