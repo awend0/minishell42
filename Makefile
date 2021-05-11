@@ -4,6 +4,7 @@ SRC		= main.c \
 		envs.c \
 		gnl.c \
 		test.c \
+		parser.c \
 		utils.c \
 		utils2.c \
 		executor.c \
@@ -13,11 +14,12 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
+FLAGS	= -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc -o $(NAME) $(OBJS)
+	gcc $(FLAGS) -o $(NAME) $(OBJS)
 
 %.o: %.c
 	gcc -c $< -o $@

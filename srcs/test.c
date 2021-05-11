@@ -20,3 +20,20 @@ void	test_envs_to_strings(t_env *envs)
 		env++;
 	}
 }
+
+void	test_parsing(t_cmdtable *table)
+{
+	int		i;
+
+	i = -1;
+	while (table)
+	{
+		while (table->cmds)
+		{
+			while (table->cmds->argv[++i])
+				printf("\n%d : %s ", i, table->cmds->argv[i]);
+			table->cmds = table->cmds->next;
+		}
+		table = table->next;
+	}
+}

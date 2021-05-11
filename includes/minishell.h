@@ -37,14 +37,20 @@ t_env		*init_envs(char **env);
 char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 int			executor(t_cmdtable *table, char **env);
+void		*ft_calloc(size_t count, size_t size);
+void		ft_puts(char *str, int fd);
 
 // tests
 void		test_init_envs(t_env *envs);
 void		test_envs_to_strings(t_env *envs);
+void		test_parsing(t_cmdtable *table);
 
 // utils
 int			ft_strlen(char *str);
+int			ft_arrlen(char **str);
+char		*ft_strdup(const char *str);
 int			get_envs_len(t_env *envs);
+void		free_arr(char **arr);
 int			ft_ischar(char c);
 int			ft_isspace(char c);
 void		print_error_and_exit(char *str);

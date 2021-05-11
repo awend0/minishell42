@@ -15,6 +15,53 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
+int	ft_arrlen(char **str)
+{
+	int		len;
+
+	len = 0;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		str++;
+		len++;
+	}
+	return (0);
+}
+
+char	*ft_strdup(const char *str)
+{
+	int		len;
+	char	*copy;
+	char	*buf_copy;
+
+	len = ft_strlen((char *)str);
+	copy = malloc((len + 1) * sizeof(char));
+	if (!copy)
+		return (0);
+	buf_copy = copy;
+	while (*str)
+	{
+		*copy = *str;
+		copy++;
+		str++;
+	}
+	*copy = '\0';
+	return (buf_copy);
+}
+
+void	free_arr(char **arr)
+{
+	if (!arr)
+		return ;
+	while (*arr)
+	{
+		free(*arr);
+		arr++;
+	}
+}
+
 int	get_envs_len(t_env *envs)
 {
 	int		size;
