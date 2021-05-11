@@ -48,20 +48,18 @@ char	**get_env_as_string(t_env *envs)
 	int		j;
 
 	len = get_envs_len(envs);
-	env = malloc(sizeof(char *) * (len + 1));
-	env[len] = 0;
+	env = ft_calloc(len + 1, sizeof(char *));
 	i = 0;
 	while (envs)
 	{
-		env[i] = malloc(sizeof(char) * (ft_strlen(envs->name)
-					+ ft_strlen(envs->value) + 2));
+		env[i] = ft_calloc(ft_strlen(envs->name)
+					+ ft_strlen(envs->value) + 2, sizeof(char));
 		j = 0;
 		while (*(envs->name))
 			env[i][j++] = *(envs->name++);
 		env[i][j++] = '=';
 		while (*(envs->value))
 			env[i][j++] = *(envs->value++);
-		env[i++][j] = '\0';
 		envs = envs->next;
 	}
 	return (env);
