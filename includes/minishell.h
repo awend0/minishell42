@@ -8,6 +8,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 typedef struct s_env
 {
@@ -38,7 +39,7 @@ char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 int			executor(t_cmdtable *table, t_env *envs);
 void		*ft_calloc(size_t count, size_t size);
-void		ft_puts(char *str, int fd);
+char		**ft_split(char const *s, char c);
 
 // tests
 void		test_init_envs(t_env *envs);
