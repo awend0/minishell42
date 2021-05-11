@@ -18,7 +18,7 @@ void	arg_init(t_cmdtable *buf)
 
 	buf->cmds->argc++;
 	len = ft_arrlen(buf->cmds->argv);
-	arr = ft_calloc(len + 1, sizeof(char *));
+	arr = ft_calloc(len + 2, sizeof(char *));
 	arr = arr_copy(arr, buf->cmds->argv);
 	arr_buf = buf->cmds->argv;
 	buf->cmds->argv = arr;
@@ -32,7 +32,7 @@ t_cmd	*cmd_init(void)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	cmd->next = 0;
 	cmd->argc = 0;
-	cmd->argv = ft_calloc(1, sizeof(char *));
+	cmd->argv = ft_calloc(2, sizeof(char *));
 	return (cmd);
 }
 
@@ -66,7 +66,7 @@ t_cmdtable	*parser(char *line, t_env *envs)
 {
 	t_cmdtable	*table;
 	t_cmdtable	*buf;
-	
+
 	cmdtable_init(&table);
 	buf = table;
 	(void)envs;

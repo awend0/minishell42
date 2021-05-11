@@ -27,7 +27,7 @@ int	ft_arrlen(char **str)
 		str++;
 		len++;
 	}
-	return (0);
+	return (len);
 }
 
 char	*ft_strdup(const char *str)
