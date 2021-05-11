@@ -126,18 +126,38 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 	waitpid(tmp[6], 0, 0);
 }
 
-int		scan_path(t_env *envs)
+char	*scan_path(char *binary, t_env *envs)
 {
+	DIR				*folder;
+	struct dirent	*file;
+	char			**dirs;
+	char			*slash;
+
+	slash = strdup("/");
 	while (envs && ft_strcmp(envs->name, "PATH"))
-	{
-		printf("[%s]=[%s]\n", envs->name, envs->value);
 		envs = envs->next;
+	dirs = ft_split(envs->value, ':');
+	while (*dirs)
+	{
+		folder = opendir(*dirs);
+		while (1)
+		{
+			file = readdir(folder);
+			if (!file)
+				break;
+			if (!ft_strcmp(file->d_name, binary))
+				return (strcat(*dirs, strcat(slash, binary)));
+		}
+		closedir(folder);
+		dirs++;
 	}
-	printf("[%s]=[%s]\n", envs->name, envs->value);
+	return (binary);
 }
 
 int		executor(t_cmdtable *table, t_env *envs)
 {
-	scan_path(envs);
+	if (!table->cmds->argv)
+		return (1);
+	table->cmds->argv[0] = scan_path(table->cmds->argv[0], envs);
 	executor_exec(table, envs, get_env_as_string(envs));
 }

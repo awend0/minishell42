@@ -7,7 +7,6 @@ int	main(int argc, char **argv, char **env)
 	t_cmd		*cmd1;
 
 	argv++;
-	envs = init_envs(env);
 	cmd1 = malloc(sizeof(t_cmd));
 	cmd1->next = 0;
 	cmd1->argv = malloc(sizeof(char*));
@@ -17,7 +16,7 @@ int	main(int argc, char **argv, char **env)
 	test->input_file = 0;
 	test->output_file = 0;
 	test->next = 0;
-	executor(test, env_split(env));
+	executor(test, envs);
 }
 
 // int	main(int argc, char **argv, char **env)
