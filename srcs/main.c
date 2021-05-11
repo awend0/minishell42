@@ -35,10 +35,13 @@ int	main(int argc, char **argv, char **env)
 	{
 		ft_puts("sh» ", 1);
 		get_next_line(0, &line);
-		cmdtable = parser(line, envs);
-		test_parsing(cmdtable);
+		if (*line)
+		{
+			cmdtable = parser(line, envs);
+			// test_parsing(cmdtable);
+			executor(cmdtable, env);
+		}
 		free(line);
-		status = executor(cmdtable, envs);
 	}
 	return (status);
 }

@@ -98,8 +98,14 @@ void	ft_puts(char *str, int fd)
 void	print_error_and_exit(char *str)
 {
 	if (errno != 0)
+	{
 		ft_puts(strerror(errno), 1);
+		ft_puts("\n", 1);
+	}
 	else
+	{
 		ft_puts(str, 1);
+		ft_puts("\n", 1);
+	}
 	exit(1);
 }
