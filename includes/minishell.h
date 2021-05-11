@@ -5,6 +5,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
+# include <fcntl.h>
+# include <string.h>
+# include <sys/wait.h>
 
 typedef struct s_env
 {
@@ -32,7 +35,8 @@ typedef struct s_cmdtable
 int			get_next_line(int fd, char **line);
 t_env		*init_envs(char **env);
 char		**get_env_as_string(t_env *envs);
-t_cmdtable	*parser(char *line, t_env *envs)ж
+t_cmdtable	*parser(char *line, t_env *envs);
+int			executor(t_cmdtable *table, t_env *envs);
 
 // tests
 void		test_init_envs(t_env *envs);
@@ -43,5 +47,8 @@ int			ft_strlen(char *str);
 int			get_envs_len(t_env *envs);
 int			ft_ischar(char c);
 int			ft_isspace(char c);
-
+void		print_error_and_exit(char *str);
+int     	ft_strcmp(char *s1, char *s2);
+int			builtin_pwd(void);
+void		ft_puts(char *str, int fd);
 #endif

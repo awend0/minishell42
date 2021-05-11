@@ -1,10 +1,13 @@
 NAME	= minishell
 
 SRC		= main.c \
-			envs.c \
-			gnl.c \
-			test.c \
-			utils.c
+		envs.c \
+		gnl.c \
+		test.c \
+		utils.c \
+		utils2.c \
+		executor.c \
+		builtin_pwd.c
 
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
@@ -13,10 +16,10 @@ OBJS	= $(SRCS:c=o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc -Wall -Wextra -Werror -o $(NAME) $(OBJS)
+	gcc -o $(NAME) $(OBJS)
 
 %.o: %.c
-	gcc -Wall -Wextra -Werror -c $< -o $@
+	gcc -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)

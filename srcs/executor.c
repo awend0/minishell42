@@ -1,8 +1,4 @@
 #include "../includes/minishell.h"
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/wait.h>
 
 int		executor_init_fds(int tmp[7], t_cmdtable *table)
 {
@@ -58,7 +54,20 @@ int		executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 	}
 }
 
-int		executor_fork_run(char **argv, char **env)
+int		executor_isbuiltin(t_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->argv[0], "cd")
+	|| !ft_strcmp(cmd->argv[0], "unset")
+	|| !ft_strcmp(cmd->argv[0], "export")
+	|| !ft_strcmp(cmd->argv[0], "pwd")
+	|| !ft_strcmp(cmd->argv[0], "echo")
+	|| !ft_strcmp(cmd->argv[0], "env")
+	|| !ft_strcmp(cmd->argv[0], "exit"))
+		return (1);
+	return (0);
+}
+
+int		executor_run_binary(char **argv, char **env)
 {
 	int		pid;
 	int		ret;
@@ -78,26 +87,34 @@ int		executor_fork_run(char **argv, char **env)
 	return (0);
 }
 
-int     executor(t_cmdtable *cmdtable, t_env **envs)
+int		executor_run_builtin(char **argv, t_env *envs, char **env)
+{
+	if (argv[0] == "exit")
+		exit(0);
+	if (!ft_strcmp(argv[0], "pwd"))
+		builtin_pwd();
+}
+
+int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 {
 	t_cmdtable	*curtable;
 	t_cmd		*curcmds;
 	int			tmp[7];
-	char		**env;
 
-	env = get_env_as_string(envs);
 	curtable = cmdtable;
 	while (curtable)
 	{
 		curcmds = curtable->cmds;
-		if (executor_init_fds(tmp, curtable))
-			return (1);
+		executor_init_fds(tmp, curtable);
 		while (curcmds)
 		{
 			executor_redir(tmp[4], 0);
 			executor_run_and_redir(curcmds, curtable, tmp);
 			executor_redir(tmp[5], 1);
-			executor_fork_run(curcmds->argv, env);
+			if (executor_isbuiltin(curcmds))
+				executor_run_builtin(curcmds->argv, envs, env);
+			else
+				executor_run_binary(curcmds->argv, env);
 			curcmds = curcmds->next;
 		}
 		curtable = curtable->next;
@@ -107,30 +124,33 @@ int     executor(t_cmdtable *cmdtable, t_env **envs)
 	waitpid(tmp[6], 0, 0);
 }
 
+int		executor(t_cmdtable *table, t_env *envs)
+{
+	char	**env;
+
+	env = get_env_as_string(envs);
+	executor_exec(table, envs, env);
+}
+
 /*
-** Test "/bin/ls | grep e" 
 int     main(int argc, char **argv, char **env)
 {
 	t_cmdtable	*test;
 	t_cmd		*cmd1;
-	t_cmd		*cmd2;
+	t_env		*envs;
 
+	envs = init_envs(env);
 	cmd1 = malloc(sizeof(t_cmd));
-	cmd2 = malloc(sizeof(t_cmd));
+	cmd1->next = 0;
 	cmd1->argv = malloc(sizeof(char*));
-	cmd2->argv = malloc(sizeof(char*) * 2);
-	cmd1->argv[0] = strdup("/bin/ls");
-	cmd1->argv[1] = NULL;
-	cmd1->next = cmd2;
-	cmd2->argv[0] = strdup("/bin/grep");
-	cmd2->argv[1] = strdup("e");
-	cmd2->argv[2] = NULL;
-	cmd2->next = 0;
+	cmd1->argv[0] = strdup("pwd");
+	cmd1->argv[1] = 0;
 	test = malloc(sizeof(t_cmdtable));
 	test->cmds = cmd1;
 	test->input_file = 0;
 	test->output_file = 0;
 	test->next = 0;
-	executor(test, env);
+	printf("I'm alive\n");
+	executor(test, envs);
 }
 */
