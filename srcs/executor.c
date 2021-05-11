@@ -126,7 +126,18 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 	waitpid(tmp[6], 0, 0);
 }
 
-int		executor(t_cmdtable *table, char **env)
+int		scan_path(t_env *envs)
 {
-	executor_exec(table, 0, env);
+	while (envs && ft_strcmp(envs->name, "PATH"))
+	{
+		printf("[%s]=[%s]\n", envs->name, envs->value);
+		envs = envs->next;
+	}
+	printf("[%s]=[%s]\n", envs->name, envs->value);
+}
+
+int		executor(t_cmdtable *table, t_env *envs)
+{
+	scan_path(envs);
+	executor_exec(table, envs, get_env_as_string(envs));
 }

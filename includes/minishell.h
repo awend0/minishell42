@@ -36,7 +36,7 @@ int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
 char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
-int			executor(t_cmdtable *table, char **env);
+int			executor(t_cmdtable *table, t_env *envs);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_puts(char *str, int fd);
 
