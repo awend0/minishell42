@@ -32,6 +32,7 @@ typedef struct s_cmdtable
 int			get_next_line(int fd, char **line);
 t_env		*init_envs(char **env);
 char		**get_env_as_string(t_env *envs);
+t_cmdtable	*parser(char *line, t_env *envs)ж
 
 // tests
 void		test_init_envs(t_env *envs);
@@ -40,5 +41,7 @@ void		test_envs_to_strings(t_env *envs);
 // utils
 int			ft_strlen(char *str);
 int			get_envs_len(t_env *envs);
+int			ft_ischar(char c);
+int			ft_isspace(char c);
 
 #endif
