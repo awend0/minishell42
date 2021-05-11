@@ -1,77 +1,114 @@
 #include "../includes/minishell.h"
 #include <fcntl.h>
+#include <errno.h>
+#include <string.h>
+#include <sys/wait.h>
 
-int		executor_run_cmd(char **argv, char **env)
+int		executor_init_fds(int tmp[7], t_cmdtable *table)
 {
-	pid_t	pid;
+	tmp[2] = dup(0);
+	tmp[3] = dup(1);
+	if (table->input_file)
+	{
+		tmp[4] = open(table->input_file, O_RDONLY);
+		if (tmp[4] == -1)
+			print_error_and_exit("Error: file opening error\n");
+	}
+	else
+	{
+		tmp[4] = dup(tmp[2]);
+		if (tmp[4] == -1)
+			print_error_and_exit("Error: file descriptor duplication error\n");
+	}
+	return (0);
+}
+
+int		executor_redir(int oldfd, int newfd)
+{
+	if (dup2(oldfd, newfd) == -1)
+		print_error_and_exit("Error: redirection failed");
+	close(oldfd);
+	return (0);
+}
+
+int		executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
+{
+	if (cmd->next == 0)
+	{
+		if (table->output_file)
+		{
+			tmp[5] = open(table->output_file, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+			if (tmp[5] == -1)
+				print_error_and_exit("Error: failed file creation\n");
+		}
+		else
+		{
+			tmp[5] = dup(tmp[3]);
+			if (tmp[5] == -1)
+				print_error_and_exit("Error: file descriptor duplication error\n");
+		}
+	}
+	else
+	{
+		if (pipe(tmp) == -1)
+			print_error_and_exit("Error: pipe creation error\n");
+		tmp[5] = tmp[1];			
+		tmp[4] = tmp[0];
+		return (0);
+	}
+}
+
+int		executor_fork_run(char **argv, char **env)
+{
+	int		pid;
 	int		ret;
 
 	pid = fork();
+	if (pid == -1)
+		print_error_and_exit("Error: fork failed\n");
 	if (pid == 0)
 	{
-		ret = execve(argv[0], argv, env);
-		exit(1);
+		if (execve(argv[0], argv, env) == -1)
+			print_error_and_exit("Error: binary execution error\n");
+		_exit(1);
 	}
-	if (pid < 0)
-	{
-		puts("Fork fail");
-		return (1);
-	}
-	waitpid(pid, &ret, 0);
-	return (ret);
-}
-
-void	executor_init_fds(int cur[6], t_cmdtable *table)
-{
-	cur[2] = dup(0);
-	cur[3] = dup(1);
-	if (table->input_file)
-		cur[4] = open(table->input_file, O_RDONLY);
 	else
-		cur[4] = dup(cur[2]);
+		if (waitpid(pid, &ret, 0) == -1)
+			print_error_and_exit("Error: waitpid error o.o\n");
+	return (0);
 }
 
-int     executor(t_cmdtable *cmdtable, char **env)
+int     executor(t_cmdtable *cmdtable, t_env **envs)
 {
-	int			fds[6];
 	t_cmdtable	*curtable;
-	t_cmd		*curcmd;
+	t_cmd		*curcmds;
+	int			tmp[7];
+	char		**env;
 
+	env = get_env_as_string(envs);
 	curtable = cmdtable;
 	while (curtable)
 	{
-		executor_init_fds(fds, curtable);
-		curcmd = curtable->cmds;
-		while (curcmd)
+		curcmds = curtable->cmds;
+		if (executor_init_fds(tmp, curtable))
+			return (1);
+		while (curcmds)
 		{
-			dup2(fds[4], 0);
-			close(fds[4]);
-			if (curcmd->next == 0)
-			{
-				if (curtable->output_file)
-					fds[5] = open(curtable->output_file, O_CREAT | O_WRONLY | O_APPEND);
-				else
-					fds[5] = dup(fds[3]);
-			}
-			else
-			{
-				pipe(fds);
-				fds[5] = fds[1];
-				fds[4] = fds[0];
-			}
-			dup2(fds[5], 1);
-			close(fds[5]);
-			executor_run_cmd(curcmd->argv, env);
-			curcmd = curcmd->next;
+			executor_redir(tmp[4], 0);
+			executor_run_and_redir(curcmds, curtable, tmp);
+			executor_redir(tmp[5], 1);
+			executor_fork_run(curcmds->argv, env);
+			curcmds = curcmds->next;
 		}
 		curtable = curtable->next;
 	}
-	dup2(fds[2], 0);
-	dup2(fds[3], 1);
-	close(fds[2]);
-	close(fds[3]);
+	executor_redir(tmp[2], 0);
+	executor_redir(tmp[3], 1);
+	waitpid(tmp[6], 0, 0);
 }
 
+/*
+** Test "/bin/ls | grep e" 
 int     main(int argc, char **argv, char **env)
 {
 	t_cmdtable	*test;
@@ -96,3 +133,4 @@ int     main(int argc, char **argv, char **env)
 	test->next = 0;
 	executor(test, env);
 }
+*/

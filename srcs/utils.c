@@ -37,3 +37,21 @@ int	ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t');
 }
+
+void	ft_puts(char *str, int fd)
+{
+	while (*str)
+	{
+		write(fd, str, 1);
+		str++;
+	}
+}
+
+void	print_error_and_exit(char *str)
+{
+	if (errno != 0)
+		ft_puts(strerror(errno), 1);
+	else
+		ft_puts(str, 1);
+	exit(1);
+}
