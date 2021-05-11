@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **env)
 	status = 0;
 	while (!status)
 	{
-		ft_puts("sh» ", 1);
+		test_init_envs(envs);
+		ft_puts("paSHtet» ", 1);
 		get_next_line(0, &line);
 		if (*line)
 		{
