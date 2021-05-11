@@ -57,34 +57,24 @@ t_env	*init_envs(char **env)
 	envs = 0;
 	while (*env)
 	{
-		printf("i'm alive1\n");
 		if (!envs)
 		{
-			printf("i'm alive2\n");
 			envs = 0;
-			printf("i'm alive3\n");
 			init_env(&envs);
-			printf("i'm alive4\n");
 			envs = envs_split(*env, envs);
 			buf = envs;
-			printf("i'm alive5\n");
 		}
 		else
 		{
 			new = 0;
-			printf("cur env: [%s]\n", *env);
-			printf("i'm alive6\n");
 			init_env(&new);
-			printf("i'm alive7\n");
 			new->prev = envs;
 			envs->next = new;
-			printf("i'm alive8\n");
 			new = envs_split(*env, new);
 			envs = new;
 		}
 		env++;
 	}
-	printf("i'm alive9\n");
 	return (buf);
 }
 
