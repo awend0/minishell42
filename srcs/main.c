@@ -28,8 +28,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	envs = init_envs(env);
-	test_init_envs(envs);
+	envs = env_split(env);
+	// test_init_envs(envs);
 	status = 0;
 	while (!status)
 	{
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **env)
 		cmdtable = parser(line, envs);
 		test_parsing(cmdtable);
 		free(line);
-		// status = executor(cmdtable, envs);
+		status = executor(cmdtable, envs);
 	}
 	return (status);
 }

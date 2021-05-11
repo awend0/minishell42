@@ -75,9 +75,10 @@ int	get_envs_len(t_env *envs)
 	return (size);
 }
 
-int	ft_ischar(char c)
+int	isspecial(char c)
 {
-	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
+	return (c == 39 || c == '$' || c == '"'
+			|| c == '|' || c == ';' || c == '\\');
 }
 
 int	ft_isspace(char c)

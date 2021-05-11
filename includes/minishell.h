@@ -33,7 +33,7 @@ typedef struct s_cmdtable
 }						t_cmdtable;
 
 int			get_next_line(int fd, char **line);
-t_env		*init_envs(char **env);
+t_env		*env_split(char **env);
 char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 int			executor(t_cmdtable *table, char **env);
@@ -51,7 +51,7 @@ int			ft_arrlen(char **str);
 char		*ft_strdup(const char *str);
 int			get_envs_len(t_env *envs);
 void		free_arr(char **arr);
-int			ft_ischar(char c);
+int			isspecial(char c);
 int			ft_isspace(char c);
 void		print_error_and_exit(char *str);
 int     	ft_strcmp(char *s1, char *s2);
