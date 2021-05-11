@@ -62,6 +62,13 @@ void	get_arg(char **line, t_cmdtable *buf)
 	buf->cmds->argv[buf->cmds->argc - 1] = str;
 }
 
+void	get_single_quote(char **line, t_cmdtable *buf, t_env *envs)
+{
+	(*line)++;
+	arg_init(buf);
+
+}
+
 t_cmdtable	*parser(char *line, t_env *envs)
 {
 	t_cmdtable	*table;
