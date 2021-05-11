@@ -64,9 +64,20 @@ void	get_arg(char **line, t_cmdtable *buf)
 
 void	get_single_quote(char **line, t_cmdtable *buf, t_env *envs)
 {
+	int		len;
+	int		i;
+	char	*str;
+
 	(*line)++;
 	arg_init(buf);
-
+	len = 0;
+	while ((*line)[len] != 39)
+		len++;
+	str = ft_calloc(len + 1, sizeof(char));
+	i = 0;
+	while (i < len)
+		str[i++] = *((*line)++);
+	buf->cmds->argv[buf->cmds->argc - 1] = str;
 }
 
 t_cmdtable	*parser(char *line, t_env *envs)
@@ -81,8 +92,8 @@ t_cmdtable	*parser(char *line, t_env *envs)
 	{
 		if (*line && !isspecial(*line))
 			get_arg(&line, buf);
-		// else if (*line && *line == 39)
-		// 	get_single_quote(&line, buf, envs);
+		else if (*line && *line == 39)
+			get_single_quote(&line, buf, envs);
 		// else if (*line && *line == '"')
 		// 	get_double_quote(&line, buf, envs);
 		// else if (*line && *line == '$')
