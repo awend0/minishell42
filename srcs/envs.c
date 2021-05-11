@@ -2,7 +2,7 @@
 
 void	init_env(t_env **envs)
 {
-	(*envs) = malloc(sizeof(t_env));
+	(*envs) = calloc(1, sizeof(t_env) + 1);
 	if (!(*envs))
 		return ;
 	(*envs)->prev = 0;
@@ -27,17 +27,23 @@ t_env	*envs_split(char *line, t_env *envs)
 	int		len;
 	int		i;
 
-	len = how_long_are_you(line);
+	len = strlen(line);
 	envs->name = malloc(sizeof(char) * (len + 1));
 	i = 0;
-	while (*line != '=')
-		envs->name[i++] = *(line++);
+	while (line[i] != '=')
+	{
+		envs->name[i] = line[i];
+		i++;
+	}
 	envs->name[i] = '\0';
-	len = how_long_are_you(++line);
+	len = strlen(line++);
 	envs->value = malloc(sizeof(char) * (len + 1));
 	i = 0;
-	while (*line)
-		envs->value[i++] = *line++;
+	while (line[i])
+	{
+		envs->value[i] = line[i];
+		i++;
+	}
 	envs->value[i] = '\0';
 	return (envs);
 }
@@ -51,22 +57,34 @@ t_env	*init_envs(char **env)
 	envs = 0;
 	while (*env)
 	{
+		printf("i'm alive1\n");
 		if (!envs)
 		{
+			printf("i'm alive2\n");
+			envs = 0;
+			printf("i'm alive3\n");
 			init_env(&envs);
+			printf("i'm alive4\n");
 			envs = envs_split(*env, envs);
 			buf = envs;
+			printf("i'm alive5\n");
 		}
 		else
 		{
+			new = 0;
+			printf("cur env: [%s]\n", *env);
+			printf("i'm alive6\n");
 			init_env(&new);
+			printf("i'm alive7\n");
 			new->prev = envs;
 			envs->next = new;
+			printf("i'm alive8\n");
 			new = envs_split(*env, new);
 			envs = new;
 		}
 		env++;
 	}
+	printf("i'm alive9\n");
 	return (buf);
 }
 

@@ -14,7 +14,7 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -O3
 
 all: $(NAME)
 
@@ -22,13 +22,15 @@ $(NAME): $(OBJS)
 	gcc $(FLAGS) -o $(NAME) $(OBJS)
 
 %.o: %.c
-	gcc -c $< -o $@
+	gcc $(FLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)
 
 fclean: clean
 	rm -rf $(NAME)
+
+re: fclean all
 
 norm:
 	norminette .

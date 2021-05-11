@@ -89,7 +89,7 @@ int		executor_run_binary(char **argv, char **env)
 
 int		executor_run_builtin(char **argv, t_env *envs, char **env)
 {
-	if (argv[0] == "exit")
+	if (!ft_strcmp(argv[0], "exit"))
 		exit(0);
 	if (!ft_strcmp(argv[0], "pwd"))
 		builtin_pwd();
@@ -130,26 +130,3 @@ int		executor(t_cmdtable *table, char **env)
 {
 	executor_exec(table, 0, env);
 }
-
-/*
-int     main(int argc, char **argv, char **env)
-{
-	t_cmdtable	*test;
-	t_cmd		*cmd1;
-	t_env		*envs;
-
-	envs = init_envs(env);
-	cmd1 = malloc(sizeof(t_cmd));
-	cmd1->next = 0;
-	cmd1->argv = malloc(sizeof(char*));
-	cmd1->argv[0] = strdup("pwd");
-	cmd1->argv[1] = 0;
-	test = malloc(sizeof(t_cmdtable));
-	test->cmds = cmd1;
-	test->input_file = 0;
-	test->output_file = 0;
-	test->next = 0;
-	printf("I'm alive\n");
-	executor(test, envs);
-}
-*/
