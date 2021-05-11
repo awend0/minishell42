@@ -132,11 +132,13 @@ char	*scan_path(char *binary, t_env *envs)
 	struct dirent	*file;
 	char			**dirs;
 	char			*slash;
+	t_env			*cur;
 
+	cur = envs;
 	slash = strdup("/");
-	while (envs && ft_strcmp(envs->name, "PATH"))
-		envs = envs->next;
-	dirs = ft_split(envs->value, ':');
+	while (cur && ft_strcmp(cur->name, "PATH"))
+		cur = cur->next;
+	dirs = ft_split(cur->value, ':');
 	while (*dirs)
 	{
 		folder = opendir(*dirs);
@@ -146,7 +148,7 @@ char	*scan_path(char *binary, t_env *envs)
 			if (!file)
 				break;
 			if (!ft_strcmp(file->d_name, binary))
-				return (strcat(*dirs, strcat(slash, binary)));
+				return (strcat(*dirs, strcat(slash, binary))); 
 		}
 		closedir(folder);
 		dirs++;
@@ -154,10 +156,18 @@ char	*scan_path(char *binary, t_env *envs)
 	return (binary);
 }
 
+int		executor_file_exist(char *filename)
+{
+	struct stat	buf;
+
+	return (stat(filename, &buf) == 0);
+}
+
 int		executor(t_cmdtable *table, t_env *envs)
 {
 	if (!table->cmds->argv)
 		return (1);
-	table->cmds->argv[0] = scan_path(table->cmds->argv[0], envs);
+	if (!executor_file_exist(table->cmds->argv[0]))
+		table->cmds->argv[0] = scan_path(table->cmds->argv[0], envs);
 	executor_exec(table, envs, get_env_as_string(envs));
 }
