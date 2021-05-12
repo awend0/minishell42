@@ -21,7 +21,7 @@ FLAGS	= -O3
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc $(FLAGS) -o $(NAME) $(OBJS)
+	gcc $(FLAGS) -fsanitize=address -o $(NAME) $(OBJS)
 
 %.o: %.c
 	gcc $(FLAGS) -c $< -o $@

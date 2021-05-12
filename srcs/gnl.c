@@ -31,14 +31,13 @@ char	*ft_strjoin(char const *s1, char const s2)
 	int		s1_len;
 
 	s1_len = ft_strlen((char *)s1);
-	strjoin = malloc((s1_len + 2) * sizeof(char));
+	strjoin = ft_calloc(s1_len + 2, sizeof(char));
 	if (!strjoin)
 		return (0);
 	buf_strjoin = strjoin;
 	while (*s1)
 		*strjoin++ = *s1++;
 	*strjoin++ = s2;
-	*strjoin = '\0';
 	return (buf_strjoin);
 }
 
