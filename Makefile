@@ -16,12 +16,12 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
-FLAGS	= -O3
+FLAGS	= -O3 -fsanitize=address
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc $(FLAGS) -fsanitize=address -o $(NAME) $(OBJS)
+	gcc $(FLAGS) -o $(NAME) $(OBJS)
 
 %.o: %.c
 	gcc $(FLAGS) -c $< -o $@

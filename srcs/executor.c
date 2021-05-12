@@ -88,7 +88,5 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 
 int		executor(t_cmdtable *table, t_env *envs, char **env)
 {
-	if (!table->cmds->argv)
-		return (1);
 	return (executor_exec(table, envs, env));
 }

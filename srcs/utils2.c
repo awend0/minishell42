@@ -10,16 +10,24 @@ int     ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
+char	*ft_concat(const char *s1, const char *s2)
+{
+	char	*ret;
+
+	ret = malloc(strlen(s1) + strlen(s2) + 1);
+	strcpy(ret, s1);
+	strcat(ret, s2);
+	return (ret);
+}
+
 char	*scan_path(char *binary, t_env *envs)
 {
 	DIR				*folder;
 	struct dirent	*file;
 	char			**dirs;
-	char			*slash;
 	t_env			*cur;
 
 	cur = envs;
-	slash = strdup("/");
 	while (cur && ft_strcmp(cur->name, "PATH"))
 		cur = cur->next;
 	dirs = ft_split(cur->value, ':');
@@ -32,7 +40,7 @@ char	*scan_path(char *binary, t_env *envs)
 			if (!file)
 				break;
 			if (!ft_strcmp(file->d_name, binary))
-				return (strcat(*dirs, strcat(slash, binary))); 
+				return (ft_concat(*dirs, ft_concat("/", file->d_name)));
 		}
 		closedir(folder);
 		dirs++;
