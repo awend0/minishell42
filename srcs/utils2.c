@@ -34,7 +34,7 @@ char	*scan_path(char *binary, t_env *envs)
 	while (*dirs)
 	{
 		folder = opendir(*dirs);
-		while (1)
+		while (folder)
 		{
 			file = readdir(folder);
 			if (!file)

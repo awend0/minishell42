@@ -24,7 +24,10 @@ int		executor_run_binary(char **argv, char **env)
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, env) == -1)
-			return(-1);
+		{
+			ft_puts(strerror(errno), 1);
+			write(1, "\n", 1);
+		}
 		_exit(1);
 	}
 	else
