@@ -31,9 +31,7 @@ void	test_parsing(t_cmdtable *table)
 		while (table->cmds)
 		{
 			while (table->cmds->argv[++i])
-			{
 				printf("%s \n", table->cmds->argv[i]);
-			}
 			table->cmds = table->cmds->next;
 		}
 		table = table->next;

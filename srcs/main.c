@@ -33,11 +33,12 @@ int	main(int argc, char **argv, char **env)
 	status = 0;
 	while (!status)
 	{
-		ft_puts("paSHtet» ", 1);
+		ft_puts("paSHtet » ", 1);
 		get_next_line(0, &line);
 		if (*line)
 		{
 			cmdtable = parser(line, envs);
+			test_parsing(cmdtable);
 			executor(cmdtable, envs, env);
 		}
 		free(line);
