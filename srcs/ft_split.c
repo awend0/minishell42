@@ -1,112 +1,80 @@
 #include "../includes/minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
+int		ft_cw(char const *s, char c)
 {
-	size_t	src_len;
-	size_t	i;
-
-	src_len = 0;
-	while (src[src_len] != '\0')
-	{
-		src_len++;
-	}
-	if (dstsize == 0)
-	{
-		return (src_len);
-	}
-	i = 0;
-	while (src[i] != '\0' && i < (dstsize - 1))
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (src_len);
-}
-
-static char	**ft_malloc_error(char **tab)
-{
-	unsigned int	i;
+	int i;
+	int count;
 
 	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	return (NULL);
-}
-
-static unsigned int	ft_get_nb_strs(char const *s, char c)
-{
-	unsigned int	i;
-	unsigned int	nb_strs;
-
-	if (!s[0])
-		return (0);
-	i = 0;
-	nb_strs = 0;
-	while (s[i] && s[i] == c)
-		i++;
+	count = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i])
+			count++;
+		while (s[i] != c && s[i])
+			i++;
+	}
+	return (count);
+}
+
+void	*ft_free_2d(char **str, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return (0);
+}
+
+int		ft_ws(char const *str, char c)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (str[i] == c)
+		i++;
+	while (str[i] != c && str[i] != '\0')
+	{
+		i++;
+		len++;
+	}
+	return (len);
+}
+
+char		**ft_split(char const *s, char c)
+{
+	int		i;
+	int		j;
+	int		l;
+	char	**str;
+
+	i = -1;
+	j = 0;
+	if (!s || !c || !(str = (char**)malloc(sizeof(char*) * (ft_cw(s, c) + 1))))
+		return (NULL);
+	while (ft_cw(s, c) > ++i)
+	{
+		l = 0;
+		if (!(str[i] = (char*)malloc(sizeof(char) * (ft_ws(&s[j], c) + 1))))
 		{
-			nb_strs++;
-			while (s[i] && s[i] == c)
-				i++;
-			continue ;
+			ft_free_2d(str, j);
+			return (NULL);
 		}
-		i++;
+		while (s[j] == c)
+			j++;
+		while (s[j] != c && s[j])
+			str[i][l++] = s[j++];
+		str[i][l] = '\0';
 	}
-	if (s[i - 1] != c)
-		nb_strs++;
-	return (nb_strs);
-}
-
-static void	ft_get_next_str(char **next_str, unsigned int *next_str_len, char c)
-{
-	unsigned int i;
-
-	*next_str += *next_str_len;
-	*next_str_len = 0;
-	i = 0;
-	while (**next_str && **next_str == c)
-		(*next_str)++;
-	while ((*next_str)[i])
-	{
-		if ((*next_str)[i] == c)
-			return ;
-		(*next_str_len)++;
-		i++;
-	}
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char			**tab;
-	char			*next_str;
-	unsigned int	next_str_len;
-	unsigned int	nb_strs;
-	unsigned int	i;
-
-	if (!s)
-		return (NULL);
-	nb_strs = ft_get_nb_strs(s, c);
-	if (!(tab = (char **)malloc(sizeof(char *) * (nb_strs + 1))))
-		return (NULL);
-	i = 0;
-	next_str = (char *)s;
-	next_str_len = 0;
-	while (i < nb_strs)
-	{
-		ft_get_next_str(&next_str, &next_str_len, c);
-		if (!(tab[i] = (char *)malloc(sizeof(char) * (next_str_len + 1))))
-			return (ft_malloc_error(tab));
-		ft_strlcpy(tab[i], next_str, next_str_len + 1);
-		i++;
-	}
-	tab[i] = NULL;
-	return (tab);
+	str[i] = 0;
+	return (str);
 }

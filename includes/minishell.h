@@ -39,7 +39,6 @@ int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
 char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
-int			executor(t_cmdtable *table, t_env *envs);
 void		*ft_calloc(size_t count, size_t size);
 char		**ft_split(char const *s, char c);
 
@@ -59,6 +58,14 @@ int			ft_isspace(char c);
 void		print_error_and_exit(char *str);
 int     	ft_strcmp(char *s1, char *s2);
 void		ft_puts(char *str, int fd);
+int			file_exist(char *filename);
+char		*scan_path(char *binary, t_env *envs);
+
+// executor
+int			executor(t_cmdtable *table, t_env *envs, char **env);
+int			executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7]);
+int			executor_redir(int oldfd, int newfd);
+int			executor_init_fds(int tmp[7], t_cmdtable *table);
 
 // builtins
 int			builtin_pwd(void);
