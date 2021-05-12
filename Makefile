@@ -8,6 +8,7 @@ SRC		= main.c \
 		utils.c \
 		utils2.c \
 		executor.c \
+		executor_pipe.c \
 		builtin_pwd.c \
 		builtin_echo.c \
 		ft_split.c
