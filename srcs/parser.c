@@ -97,7 +97,7 @@ t_cmdtable	*parser(char *line, t_env *envs)
 		// else if (*line && *line == '"')
 		// 	get_double_quote(&line, buf, envs);
 		// else if (*line && *line == '$')
-		// 	get_env_arg(&line, buf, envs);
+		// 	get_env_arg(&line, buf, envs);       
 		// else if (*line && *line == '|')
 		// 	add_pipe(&buf);
 		// else if (*line && *line == ';')
