@@ -24,7 +24,10 @@ int		executor_run_binary(char **argv, char **env)
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, env) == -1)
-			return(-1);
+		{
+			ft_puts(strerror(errno), 1);
+			write(1, "\n", 1);
+		}
 		_exit(1);
 	}
 	else
@@ -88,7 +91,5 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 
 int		executor(t_cmdtable *table, t_env *envs, char **env)
 {
-	if (!table->cmds->argv)
-		return (1);
 	return (executor_exec(table, envs, env));
 }

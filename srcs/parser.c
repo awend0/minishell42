@@ -12,13 +12,11 @@ char	**arr_copy(char **dest, char **src)
 
 void	arg_init(t_cmdtable *buf)
 {
-	int		len;
 	char	**arr;
 	char	**arr_buf;
 
 	buf->cmds->argc++;
-	len = ft_arrlen(buf->cmds->argv);
-	arr = ft_calloc(len + 2, sizeof(char *));
+	arr = ft_calloc(buf->cmds->argc + 1, sizeof(char *));
 	arr = arr_copy(arr, buf->cmds->argv);
 	arr_buf = buf->cmds->argv;
 	buf->cmds->argv = arr;
@@ -53,7 +51,9 @@ void	get_arg(char **line, t_cmdtable *buf)
 
 	arg_init(buf);
 	len = 0;
-	while (((*line)[len]) && !isspecial((*line)[len]) && !ft_isspace((*line)[len]))
+	while (((*line)[len])
+		&& !isspecial((*line)[len])
+		&& !ft_isspace((*line)[len]))
 		len++;
 	str = ft_calloc(len + 1, sizeof(char));
 	i = 0;
@@ -77,6 +77,7 @@ void	get_single_quote(char **line, t_cmdtable *buf, t_env *envs)
 	i = 0;
 	while (i < len)
 		str[i++] = *((*line)++);
+	(*line)++;
 	buf->cmds->argv[buf->cmds->argc - 1] = str;
 }
 

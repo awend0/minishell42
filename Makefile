@@ -16,7 +16,7 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
-FLAGS	= -O3
+FLAGS	= -O3 -fsanitize=address
 
 all: $(NAME)
 
