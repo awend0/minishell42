@@ -38,8 +38,8 @@ int	main(int argc, char **argv, char **env)
 		if (*line)
 		{
 			cmdtable = parser(line, envs);
-			test_parsing(cmdtable);
-			executor(cmdtable, envs, env);
+			//test_parsing(cmdtable);
+			printf("status %d\n", executor(cmdtable, envs, env));
 		}
 		free(line);
 	}

@@ -52,4 +52,5 @@ int		executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 		tmp[4] = tmp[0];
 		return (0);
 	}
+	return (0);
 }

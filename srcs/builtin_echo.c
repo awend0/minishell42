@@ -13,7 +13,7 @@ int     builtin_echo(char **argv)
 		n_flag = 0;
 	if (!argv[1] && !n_flag)
 	{
-		write(1, "\n", 1);
+		ft_puts("\n", 1);
 		return (0);
 	}
 	argv++;

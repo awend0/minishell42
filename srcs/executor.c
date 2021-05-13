@@ -26,7 +26,7 @@ int		executor_run_binary(char **argv, char **env)
 		if (execve(argv[0], argv, env) == -1)
 		{
 			ft_puts(strerror(errno), 1);
-			write(1, "\n", 1);
+			ft_puts("\n", 1);
 		}
 		_exit(1);
 	}
@@ -38,12 +38,16 @@ int		executor_run_binary(char **argv, char **env)
 
 int		executor_run_builtin(char **argv, t_env *envs, char **env)
 {
+	(void)envs;
+	(void)env;
+
 	if (!ft_strcmp(argv[0], "exit"))
 		exit(0);
 	if (!ft_strcmp(argv[0], "pwd"))
 		return (builtin_pwd());
 	if (!ft_strcmp(argv[0], "echo"))
 		return (builtin_echo(argv));
+	return (0);
 }
 
 int		executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
@@ -66,6 +70,7 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 	int			tmp[7];
 	int			ret;
 
+	ret = 0;
 	curtable = cmdtable;
 	while (curtable)
 	{

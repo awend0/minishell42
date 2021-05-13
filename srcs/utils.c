@@ -103,7 +103,8 @@ void	ft_puts(char *str, int fd)
 {
 	while (*str)
 	{
-		write(fd, str, 1);
+		if (write(fd, str, 1) <= 0)
+			print_error_and_exit(0);
 		str++;
 	}
 }
