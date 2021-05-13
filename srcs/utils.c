@@ -162,3 +162,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	*strjoin = '\0';
 	return (buf_strjoin);
 }
+
+char	**arr_copy(char **dest, char **src)
+{
+	char	**buf;
+
+	buf = dest;
+	while (*src)
+		*dest++ = ft_strdup(*src++);
+	return (buf);
+}

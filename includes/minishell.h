@@ -82,6 +82,7 @@ char		*scan_path(char *binary, t_env *envs);
 char		*charcat(char *str, char c);
 char		*ft_concat(const char *s1, const char *s2);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		**arr_copy(char **dest, char **src);
 
 // executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);
@@ -92,4 +93,10 @@ int			executor_init_fds(int tmp[7], t_cmdtable *table);
 // builtins
 int			builtin_pwd(void);
 int			builtin_echo(char **argv);
+
+// inits
+void		arg_init(t_cmdtable *buf);
+t_cmd		*cmd_init(void);
+void		cmdtable_init(t_cmdtable **table);
+
 #endif
