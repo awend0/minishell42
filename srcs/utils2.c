@@ -30,7 +30,6 @@ char	*scan_path(char *binary, t_env *envs)
 	t_env			*cur;
 	char			*ret;
 
-	ret = binary;
 	cur = envs;
 	while (cur && ft_strcmp(cur->name, "PATH"))
 		cur = cur->next;
@@ -38,6 +37,11 @@ char	*scan_path(char *binary, t_env *envs)
 	while (*dirs)
 	{
 		folder = opendir(*dirs);
+		if (!folder)
+		{
+			dirs++;
+			continue;
+		}
 		while (folder)
 		{
 			file = readdir(folder);
@@ -46,13 +50,14 @@ char	*scan_path(char *binary, t_env *envs)
 			if (!ft_strcmp(file->d_name, binary))
 			{
 				ret = ft_concat(*dirs, ft_concat("/", file->d_name));
-				break;
+				closedir(folder);
+				return (ret);
 			}
 		}
 		closedir(folder);
 		dirs++;
 	}
-	return (ret);
+	return (binary);
 }
 
 int		file_exist(char *filename)
