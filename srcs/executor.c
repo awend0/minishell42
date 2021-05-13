@@ -35,6 +35,8 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 		return (builtin_echo(argv));
 	if (!ft_strcmp(argv[0], "cd"))
 		return (builtin_cd(argv, envs));
+	if (!ft_strcmp(argv[0], "unset"))
+		return (builtin_unset(argv, envs));
 	return (0);
 }
 

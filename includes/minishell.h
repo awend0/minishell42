@@ -97,6 +97,7 @@ int			executor_init_fds(int tmp[7], t_cmdtable *table);
 int			builtin_pwd(void);
 int			builtin_echo(char **argv);
 int			builtin_cd(char **argv, t_env *envs);
+int			builtin_unset(char **argv, t_env *envs);
 
 // inits
 void		arg_init(t_cmdtable *buf);
