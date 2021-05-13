@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int     ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int i;
 
@@ -14,6 +14,8 @@ char	*ft_concat(const char *s1, const char *s2)
 {
 	char	*ret;
 
+	if (!s2)
+		return ((char *)s1);
 	ret = malloc(strlen(s1) + strlen(s2) + 1);
 	strcpy(ret, s1);
 	strcat(ret, s2);

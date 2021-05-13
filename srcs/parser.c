@@ -43,42 +43,92 @@ void	cmdtable_init(t_cmdtable **table)
 	(*table)->next = 0;
 }
 
-void	get_arg(char **line, t_cmdtable *buf)
+char	*find_env(char *env, t_env *envs)
 {
-	int		len;
-	int		i;
-	char	*str;
+	if (!env || !envs)
+		return (0);
+	while (envs)
+	{
+		if (!ft_strcmp(env, envs->name))
+			return (envs->value);
+		envs = envs->next;
+	}
+	return (0);
+}
 
+char	*get_token(char **line, char *spec, int	env_flag, t_env *envs)
+{
+	char	*str;
+	char	*buf;
+
+	str = ft_calloc(1, sizeof(char));
+	while (**line && !ft_strchr(spec, **line))
+	{
+		if (**line == '$' && env_flag)
+		{
+			(*line)++;
+			buf = get_token(line, "$ |;><'\"", 0, envs);
+			str = ft_strjoin(str, find_env(buf, envs));
+		}
+		else if (**line == '\'' && !env_flag)
+		{
+			(*line)++;
+			buf = get_token(line, "'", 0, envs);
+			str = ft_strjoin(str, buf);
+		}
+		else if (**line == '"' && env_flag)
+		{
+			(*line)++;
+			buf = get_token(line, "\"", 1, envs);
+			str = ft_strjoin(str, buf);
+		}
+		else
+			str = charcat(str, *((*line)++));
+	}
+	if (!*str)
+		return (0);
+	return(str);
+}
+
+void	get_arg(char **line, t_cmdtable *buf, t_env *envs)
+{
+	char	*arg;
+
+	arg = get_token(line, " |;><", 1, envs);
+	if (!arg)
+		return ;
 	arg_init(buf);
-	len = 0;
-	while (((*line)[len])
-		&& !isspecial((*line)[len])
-		&& !ft_isspace((*line)[len]))
-		len++;
-	str = ft_calloc(len + 1, sizeof(char));
-	i = 0;
-	while (i < len)
-		str[i++] = *((*line)++);
-	buf->cmds->argv[buf->cmds->argc - 1] = str;
+	buf->cmds->argv[buf->cmds->argc - 1] = arg;
 }
 
 void	get_single_quote(char **line, t_cmdtable *buf, t_env *envs)
 {
-	int		len;
-	int		i;
-	char	*str;
+	char	*arg;
 
 	(*line)++;
+	arg = get_token(line, "'", 0, envs);
+	if (!arg)
+	{
+		(*line)++;
+		return ;
+	}
 	arg_init(buf);
-	len = 0;
-	while ((*line)[len] != 39)
-		len++;
-	str = ft_calloc(len + 1, sizeof(char));
-	i = 0;
-	while (i < len)
-		str[i++] = *((*line)++);
+	buf->cmds->argv[buf->cmds->argc - 1] = arg;
+}
+
+void	get_double_quote(char **line, t_cmdtable *buf, t_env *envs)
+{
+	char	*arg;
+
 	(*line)++;
-	buf->cmds->argv[buf->cmds->argc - 1] = str;
+	arg = get_token(line, "\"", 1, envs);
+	if (!arg)
+	{
+		(*line)++;
+		return ;
+	}
+	arg_init(buf);
+	buf->cmds->argv[buf->cmds->argc - 1] = arg;
 }
 
 t_cmdtable	*parser(char *line, t_env *envs)
@@ -91,14 +141,12 @@ t_cmdtable	*parser(char *line, t_env *envs)
 	(void)envs;
 	while (*line)
 	{
-		if (*line && !isspecial(*line) && !ft_isspace(*line))
-			get_arg(&line, buf);
+		if (*line && !ft_strchr(" |;><", *line))
+			get_arg(&line, buf, envs);
 		else if (*line && *line == 39)
 			get_single_quote(&line, buf, envs);
-		// else if (*line && *line == '"')
-		// 	get_double_quote(&line, buf, envs);
-		// else if (*line && *line == '$')
-		// 	get_env_arg(&line, buf, envs);       
+		else if (*line && *line == '"')
+			get_double_quote(&line, buf, envs);     
 		// else if (*line && *line == '|')
 		// 	add_pipe(&buf);
 		// else if (*line && *line == ';')

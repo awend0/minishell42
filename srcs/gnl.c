@@ -24,23 +24,6 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ft_bzero(array, count * size));
 }
 
-char	*ft_strjoin(char const *s1, char const s2)
-{
-	char	*strjoin;
-	char	*buf_strjoin;
-	int		s1_len;
-
-	s1_len = ft_strlen((char *)s1);
-	strjoin = ft_calloc(s1_len + 2, sizeof(char));
-	if (!strjoin)
-		return (0);
-	buf_strjoin = strjoin;
-	while (*s1)
-		*strjoin++ = *s1++;
-	*strjoin++ = s2;
-	return (buf_strjoin);
-}
-
 int	get_next_line(int fd, char **line)
 {
 	char	buf;
@@ -54,7 +37,7 @@ int	get_next_line(int fd, char **line)
 		if (buf != '\n')
 		{
 			tmp = *line;
-			*line = ft_strjoin(*line, buf);
+			*line = charcat(*line, buf);
 			free(tmp);
 		}
 		else

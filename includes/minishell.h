@@ -68,6 +68,7 @@ void		test_parsing(t_cmdtable *table);
 // utils
 int			ft_strlen(char *str);
 int			ft_arrlen(char **str);
+char		*ft_strchr(const char *str, int c);
 char		*ft_strdup(const char *str);
 int			get_envs_len(t_env *envs);
 void		free_arr(char **arr);
@@ -78,6 +79,9 @@ int     	ft_strcmp(char *s1, char *s2);
 void		ft_puts(char *str, int fd);
 int			file_exist(char *filename);
 char		*scan_path(char *binary, t_env *envs);
+char		*charcat(char *str, char c);
+char		*ft_concat(const char *s1, const char *s2);
+char		*ft_strjoin(char const *s1, char const *s2);
 
 // executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);
