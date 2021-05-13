@@ -39,30 +39,53 @@ void	get_double_quote(char **line, t_cmdtable *buf, t_env *envs)
 	(*line)++;
 }
 
+void	add_pipe(t_cmdtable *buf, char **line)
+{
+	t_cmd	*new;
+
+	new = cmd_init();
+	buf->cmds->next = new;
+	buf->cmds = buf->cmds->next;
+	(*line)++;
+}
+
+void	add_new_cmdtable(t_cmdtable **buf, char **line)
+{
+	t_cmdtable	*new;
+
+	cmdtable_init(&new);
+	(*buf)->next = new;
+	(*buf) = (*buf)->next;
+	(*line)++;
+}
+
 t_cmdtable	*parser(char *line, t_env *envs)
 {
 	t_cmdtable	*table;
 	t_cmdtable	*buf;
+	t_cmd		*cmd_buf;
 
 	cmdtable_init(&table);
 	buf = table;
+	cmd_buf = table->cmds;
 	(void)envs;
 	while (*line)
 	{
 		if (*line && !ft_strchr(" |;><'\"", *line))
-			get_arg(&line, buf, envs);
+			get_arg(&line, table, envs);
 		else if (*line && *line == '\'')
-			get_single_quote(&line, buf, envs);
+			get_single_quote(&line, table, envs);
 		else if (*line && *line == '"')
-			get_double_quote(&line, buf, envs);     
-		// else if (*line && *line == '|')
-		// 	add_pipe(&buf);
-		// else if (*line && *line == ';')
-		// 	add_new_cmd(&buf);
+			get_double_quote(&line, table, envs);     
+		else if (*line && *line == '|')
+			add_pipe(table, &line);
+		else if (*line && *line == ';')
+			add_new_cmdtable(&table, &line);
 		// else if (*line && *line == '>' || *line == '<')
 		// 	add_redirection(&line, buf);
 		else
 			line++;
 	}
-	return (table);
+	buf->cmds = cmd_buf;
+	return (buf);
 }
