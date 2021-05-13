@@ -79,3 +79,12 @@ int	is_builtin(t_cmd *cmd)
 		return (1);
 	return (0);
 }
+
+char	*get_env(t_env *envs, char *name)
+{
+	while (envs && ft_strcmp(envs->name, name))
+		envs = envs->next;
+	if (!envs || ft_strcmp(envs->name, name))
+		return (0);
+	return (envs->value);
+}
