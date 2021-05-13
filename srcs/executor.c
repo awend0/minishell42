@@ -67,7 +67,8 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 		executor_init_fds(tmp, curtable);
 		while (curcmds)
 		{
-			if (executor_redir(tmp[4], 0) == -1
+			if (!curcmds->argv[0]
+				|| executor_redir(tmp[4], 0) == -1
 				|| executor_run_and_redir(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
 				|| executor_cmd(curcmds, envs, env, &tmp[6]) == -1)
