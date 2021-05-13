@@ -26,5 +26,5 @@ int     builtin_echo(char **argv)
 		if (*argv)
 			ft_puts(" ", 1);
 	}
-	return (1);
+	return (0);
 }

@@ -68,9 +68,8 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 	t_cmdtable	*curtable;
 	t_cmd		*curcmds;
 	int			tmp[7];
-	int			ret;
 
-	ret = 0;
+	tmp[6] = 0;
 	curtable = cmdtable;
 	while (curtable)
 	{
@@ -81,7 +80,7 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 			if (executor_redir(tmp[4], 0) == -1
 				|| executor_run_and_redir(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
-				|| executor_cmd(curcmds, envs, env, &ret) == -1)
+				|| executor_cmd(curcmds, envs, env, &tmp[6]) == -1)
 				return (-1);
 			curcmds = curcmds->next;
 		}
@@ -91,7 +90,7 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 		|| executor_redir(tmp[3], 1) == -1)
 		return (-1);
 	waitpid(tmp[6], 0, 0);
-	return (ret);
+	return (tmp[6]);
 }
 
 int		executor(t_cmdtable *table, t_env *envs, char **env)
