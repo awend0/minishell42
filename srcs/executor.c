@@ -1,19 +1,6 @@
 #include "../includes/minishell.h"
 
-int		executor_isbuiltin(t_cmd *cmd)
-{
-	if (!ft_strcmp(cmd->argv[0], "cd")
-	|| !ft_strcmp(cmd->argv[0], "unset")
-	|| !ft_strcmp(cmd->argv[0], "export")
-	|| !ft_strcmp(cmd->argv[0], "pwd")
-	|| !ft_strcmp(cmd->argv[0], "echo")
-	|| !ft_strcmp(cmd->argv[0], "env")
-	|| !ft_strcmp(cmd->argv[0], "exit"))
-		return (1);
-	return (0);
-}
-
-int		executor_run_binary(char **argv, char **env)
+int	executor_run_binary(char **argv, char **env)
 {
 	int		pid;
 	int		ret;
@@ -32,15 +19,14 @@ int		executor_run_binary(char **argv, char **env)
 	}
 	else
 		if (waitpid(pid, &ret, 0) == -1)
-			return(-1);
+			return (-1);
 	return (ret);
 }
 
-int		executor_run_builtin(char **argv, t_env *envs, char **env)
+int	executor_run_builtin(char **argv, t_env *envs, char **env)
 {
 	(void)envs;
 	(void)env;
-
 	if (!ft_strcmp(argv[0], "exit"))
 		exit(0);
 	if (!ft_strcmp(argv[0], "pwd"))
@@ -50,9 +36,9 @@ int		executor_run_builtin(char **argv, t_env *envs, char **env)
 	return (0);
 }
 
-int		executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
+int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
 {
-	if (executor_isbuiltin(cmd))
+	if (is_builtin(cmd))
 	{
 		*ret = executor_run_builtin(cmd->argv, envs, env);
 		return (*ret);
@@ -63,7 +49,7 @@ int		executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
 	return (*ret);
 }
 
-int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
+int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 {
 	t_cmdtable	*curtable;
 	t_cmd		*curcmds;
@@ -86,14 +72,13 @@ int     executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 		}
 		curtable = curtable->next;
 	}
-	if (executor_redir(tmp[2], 0) == -1
-		|| executor_redir(tmp[3], 1) == -1)
+	if (executor_redir(tmp[2], 0) == -1 || executor_redir(tmp[3], 1) == -1)
 		return (-1);
 	waitpid(tmp[6], 0, 0);
 	return (tmp[6]);
 }
 
-int		executor(t_cmdtable *table, t_env *envs, char **env)
+int	executor(t_cmdtable *table, t_env *envs, char **env)
 {
 	return (executor_exec(table, envs, env));
 }

@@ -83,6 +83,7 @@ char		*charcat(char *str, char c);
 char		*ft_concat(const char *s1, const char *s2);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		**arr_copy(char **dest, char **src);
+int			is_builtin(t_cmd *cmd);
 
 // executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);

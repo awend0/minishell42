@@ -60,9 +60,22 @@ char	*scan_path(char *binary, t_env *envs)
 	return (binary);
 }
 
-int		file_exist(char *filename)
+int	file_exist(char *filename)
 {
 	struct stat	buf;
 
 	return (stat(filename, &buf) == 0);
+}
+
+int	is_builtin(t_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->argv[0], "cd")
+		|| !ft_strcmp(cmd->argv[0], "unset")
+		|| !ft_strcmp(cmd->argv[0], "export")
+		|| !ft_strcmp(cmd->argv[0], "pwd")
+		|| !ft_strcmp(cmd->argv[0], "echo")
+		|| !ft_strcmp(cmd->argv[0], "env")
+		|| !ft_strcmp(cmd->argv[0], "exit"))
+		return (1);
+	return (0);
 }

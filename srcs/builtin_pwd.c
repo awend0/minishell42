@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include <limits.h>
 
-int		builtin_pwd(void)
+int	builtin_pwd(void)
 {
 	char	*buf;
 	char	*cwd;
