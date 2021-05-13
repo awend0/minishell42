@@ -5,6 +5,7 @@ SRC		= main.c \
 		gnl.c \
 		test.c \
 		parser.c \
+		tokens.c \
 		inits.c \
 		utils.c \
 		utils2.c \
