@@ -76,7 +76,7 @@ t_cmdtable	*parser(char *line, t_env *envs)
 		else if (*line && *line == '\'')
 			get_single_quote(&line, table, envs);
 		else if (*line && *line == '"')
-			get_double_quote(&line, table, envs);     
+			get_double_quote(&line, table, envs);
 		else if (*line && *line == '|')
 			add_pipe(table, &line);
 		else if (*line && *line == ';')
