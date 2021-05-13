@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			cmdtable = parser(line, envs);
 			//test_parsing(cmdtable);
-			// printf("status %d\n", executor(cmdtable, envs, env));
 			executor(cmdtable, envs, env);
 		}
 		free(line);

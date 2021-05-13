@@ -53,7 +53,7 @@ char	**get_env_as_string(t_env *envs)
 	while (envs)
 	{
 		env[i] = ft_calloc(ft_strlen(envs->name)
-					+ ft_strlen(envs->value) + 2, sizeof(char));
+				+ ft_strlen(envs->value) + 2, sizeof(char));
 		j = 0;
 		while (*(envs->name))
 			env[i][j++] = *(envs->name++);
