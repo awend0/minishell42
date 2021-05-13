@@ -50,6 +50,7 @@ typedef struct s_cmdtable
 	char				*input_file;
 	char				*output_file;
 	t_cmd				*cmds;
+	t_cmd				*last;
 	struct s_cmdtable	*next;
 }						t_cmdtable;
 
@@ -99,7 +100,7 @@ int			builtin_echo(char **argv);
 int			builtin_cd(char **argv, t_env *envs);
 
 // inits
-void		arg_init(t_cmdtable *buf);
+void		arg_init(t_cmd *cur);
 void		cmd_init(t_cmd **cmd);
 void		cmdtable_init(t_cmdtable **table);
 

@@ -1,17 +1,17 @@
 #include "../includes/minishell.h"
 
-void	get_arg(char **line, t_cmdtable *buf, t_env *envs)
+void	get_arg(char **line, t_cmdtable *table, t_env *envs)
 {
 	char	*arg;
 
 	arg = get_token(line, " |;><", '1', envs);
 	if (!arg)
 		return ;
-	arg_init(buf);
-	buf->cmds->argv[buf->cmds->argc - 1] = arg;
+	arg_init(table->last);
+	table->last->argv[table->last->argc - 1] = arg;
 }
 
-void	get_single_quote(char **line, t_cmdtable *buf, t_env *envs)
+void	get_single_quote(char **line, t_cmdtable *table, t_env *envs)
 {
 	char	*arg;
 
@@ -19,13 +19,13 @@ void	get_single_quote(char **line, t_cmdtable *buf, t_env *envs)
 	arg = get_token(line, "'", '2', envs);
 	if (arg)
 	{
-		arg_init(buf);
-		buf->cmds->argv[buf->cmds->argc - 1] = arg;
+		arg_init(table->last);
+		table->last->argv[table->last->argc - 1] = arg;
 	}
 	(*line)++;
 }
 
-void	get_double_quote(char **line, t_cmdtable *buf, t_env *envs)
+void	get_double_quote(char **line, t_cmdtable *table, t_env *envs)
 {
 	char	*arg;
 
@@ -33,29 +33,29 @@ void	get_double_quote(char **line, t_cmdtable *buf, t_env *envs)
 	arg = get_token(line, "\"", '3', envs);
 	if (arg)
 	{
-		arg_init(buf);
-		buf->cmds->argv[buf->cmds->argc - 1] = arg;
+		arg_init(table->last);
+		table->last->argv[table->last->argc - 1] = arg;
 	}
 	(*line)++;
 }
 
-void	add_pipe(t_cmdtable *buf, char **line)
+void	add_pipe(t_cmdtable *table, char **line)
 {
 	t_cmd	*new;
 
 	cmd_init(&new);
-	buf->cmds->next = new;
-	buf->cmds = buf->cmds->next;
+	table->last->next = new;
+	table->last = table->last->next;
 	(*line)++;
 }
 
-void	add_new_cmdtable(t_cmdtable **buf, char **line)
+void	add_new_cmdtable(t_cmdtable **table, char **line)
 {
 	t_cmdtable	*new;
 
 	cmdtable_init(&new);
-	(*buf)->next = new;
-	(*buf) = (*buf)->next;
+	(*table)->next = new;
+	(*table) = (*table)->next;
 	(*line)++;
 }
 
@@ -63,12 +63,9 @@ t_cmdtable	*parser(char *line, t_env *envs)
 {
 	t_cmdtable	*table;
 	t_cmdtable	*buf;
-	t_cmd		*cmd_buf;
 
 	cmdtable_init(&table);
 	buf = table;
-	cmd_buf = table->cmds;
-	(void)envs;
 	while (*line)
 	{
 		if (*line && !ft_strchr(" |;><'\"", *line))
@@ -86,6 +83,5 @@ t_cmdtable	*parser(char *line, t_env *envs)
 		else
 			line++;
 	}
-	buf->cmds = cmd_buf;
 	return (buf);
 }

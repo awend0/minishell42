@@ -72,11 +72,10 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 				return (-1);
 			curcmds = curcmds->next;
 		}
+		if (executor_redir(tmp[2], 0) == -1 || executor_redir(tmp[3], 1) == -1)
+			return (-1);
 		curtable = curtable->next;
 	}
-	if (executor_redir(tmp[2], 0) == -1 || executor_redir(tmp[3], 1) == -1)
-		return (-1);
-	waitpid(tmp[6], 0, 0);
 	return (tmp[6]);
 }
 
