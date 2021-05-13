@@ -32,12 +32,14 @@ char	*get_token(char **line, char *spec, char perm, t_env *envs)
 			(*line)++;
 			buf = get_token(line, "\"", '3', envs);
 			str = ft_strjoin(str, buf);
+			(*line)++;
 		}
 		else if (**line == '\'' && ft_strchr("1", perm))
 		{
 			(*line)++;
 			buf = get_token(line, "'", '2', envs);
 			str = ft_strjoin(str, buf);
+			(*line)++;
 		}
 		else
 			str = charcat(str, *((*line)++));
