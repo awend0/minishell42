@@ -32,8 +32,9 @@ void	test_parsing(t_cmdtable *table)
 		{
 			while (table->cmds->argv[++i])
 			{
+				ft_puts("<", 1);
 				ft_puts(table->cmds->argv[i], 1);
-				ft_puts(" ", 1);
+				ft_puts("> ", 1);
 			}
 			table->cmds = table->cmds->next;
 		}
