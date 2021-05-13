@@ -28,7 +28,9 @@ char	*scan_path(char *binary, t_env *envs)
 	struct dirent	*file;
 	char			**dirs;
 	t_env			*cur;
+	char			*ret;
 
+	ret = binary;
 	cur = envs;
 	while (cur && ft_strcmp(cur->name, "PATH"))
 		cur = cur->next;
@@ -42,12 +44,15 @@ char	*scan_path(char *binary, t_env *envs)
 			if (!file)
 				break;
 			if (!ft_strcmp(file->d_name, binary))
-				return (ft_concat(*dirs, ft_concat("/", file->d_name)));
+			{
+				ret = ft_concat(*dirs, ft_concat("/", file->d_name));
+				break;
+			}
 		}
 		closedir(folder);
 		dirs++;
 	}
-	return (binary);
+	return (ret);
 }
 
 int		file_exist(char *filename)
