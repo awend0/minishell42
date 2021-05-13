@@ -98,7 +98,7 @@ int			builtin_echo(char **argv);
 
 // inits
 void		arg_init(t_cmdtable *buf);
-t_cmd		*cmd_init(void);
+void		cmd_init(t_cmd **cmd);
 void		cmdtable_init(t_cmdtable **table);
 
 #endif

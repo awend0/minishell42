@@ -43,7 +43,7 @@ void	add_pipe(t_cmdtable *buf, char **line)
 {
 	t_cmd	*new;
 
-	new = cmd_init();
+	cmd_init(&new);
 	buf->cmds->next = new;
 	buf->cmds = buf->cmds->next;
 	(*line)++;
