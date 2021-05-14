@@ -13,6 +13,8 @@ SRC		= main.c \
 		executor_pipe.c \
 		builtin_pwd.c \
 		builtin_echo.c \
+		builtin_cd.c \
+		builtin_unset.c \
 		ft_split.c
 
 DIR_SRC = srcs/

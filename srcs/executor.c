@@ -33,6 +33,10 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 		return (builtin_pwd());
 	if (!ft_strcmp(argv[0], "echo"))
 		return (builtin_echo(argv));
+	if (!ft_strcmp(argv[0], "cd"))
+		return (builtin_cd(argv, envs));
+	if (!ft_strcmp(argv[0], "unset"))
+		return (builtin_unset(argv, envs));
 	return (0);
 }
 
@@ -63,18 +67,18 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 		executor_init_fds(tmp, curtable);
 		while (curcmds)
 		{
-			if (executor_redir(tmp[4], 0) == -1
+			if (!curcmds->argv[0]
+				|| executor_redir(tmp[4], 0) == -1
 				|| executor_run_and_redir(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
 				|| executor_cmd(curcmds, envs, env, &tmp[6]) == -1)
 				return (-1);
 			curcmds = curcmds->next;
 		}
+		if (executor_redir(tmp[2], 0) == -1 || executor_redir(tmp[3], 1) == -1)
+			return (-1);
 		curtable = curtable->next;
 	}
-	if (executor_redir(tmp[2], 0) == -1 || executor_redir(tmp[3], 1) == -1)
-		return (-1);
-	waitpid(tmp[6], 0, 0);
 	return (tmp[6]);
 }
 

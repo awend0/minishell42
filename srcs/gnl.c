@@ -32,7 +32,7 @@ int	get_next_line(int fd, char **line)
 	if (fd < 0 || !line)
 		return (-1);
 	*line = ft_calloc(1, sizeof(char));
-	while (read(fd, &buf, 1) > 0)
+	while (read(fd, &buf, 1) >= 0)
 	{
 		if (buf != '\n')
 		{
