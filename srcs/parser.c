@@ -116,8 +116,6 @@ void	write_redirection(char *type, char *filename, t_cmdtable *table)
 	}
 	else if (!ft_strcmp(type, "input"))
 	{
-		if (table->input_file)
-			close(open(filename, O_CREAT));
 		table->input_file = add_filename(filename, table->input_file);
 	}
 	else if (!ft_strcmp(type, "append"))
