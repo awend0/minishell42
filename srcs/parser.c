@@ -111,7 +111,7 @@ void	write_redirection(char *type, char *filename, t_cmdtable *table)
 	if (!ft_strcmp(type, "output"))
 	{
 		if (table->output_file)
-			close(open(filename, O_CREAT));
+			close(open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU));
 		table->output_file = add_filename(filename, table->output_file);
 	}
 	else if (!ft_strcmp(type, "input"))
@@ -121,7 +121,7 @@ void	write_redirection(char *type, char *filename, t_cmdtable *table)
 	else if (!ft_strcmp(type, "append"))
 	{
 		if (table->append_file)
-			close(open(filename, O_CREAT));
+			close(open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU));
 		table->append_file = add_filename(filename, table->append_file);
 	}
 }
