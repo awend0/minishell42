@@ -78,7 +78,7 @@ void		free_arr(char **arr);
 int			isspecial(char c);
 int			ft_isspace(char c);
 void		print_error_and_exit(char *str);
-int     	ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(char *s1, char *s2);
 void		ft_puts(char *str, int fd);
 int			file_exist(char *filename);
 char		*scan_path(char *binary, t_env *envs);

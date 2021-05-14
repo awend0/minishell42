@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-int		ft_cw(char const *s, char c)
+int	ft_cw(char const *s, char c)
 {
-	int i;
-	int count;
+	int		i;
+	int		count;
 
 	i = 0;
 	count = 0;
@@ -21,7 +21,7 @@ int		ft_cw(char const *s, char c)
 
 void	*ft_free_2d(char **str, int size)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (i < size)
@@ -33,10 +33,10 @@ void	*ft_free_2d(char **str, int size)
 	return (0);
 }
 
-int		ft_ws(char const *str, char c)
+int	ft_ws(char const *str, char c)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = 0;
@@ -50,7 +50,7 @@ int		ft_ws(char const *str, char c)
 	return (len);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	int		i;
 	int		j;
@@ -59,12 +59,14 @@ char		**ft_split(char const *s, char c)
 
 	i = -1;
 	j = 0;
-	if (!s || !c || !(str = (char**)malloc(sizeof(char*) * (ft_cw(s, c) + 1))))
+	str = (char **)malloc(sizeof(char *) * (ft_cw(s, c) + 1));
+	if (!s || !c || !str)
 		return (NULL);
 	while (ft_cw(s, c) > ++i)
 	{
 		l = 0;
-		if (!(str[i] = (char*)malloc(sizeof(char) * (ft_ws(&s[j], c) + 1))))
+		str[i] = (char *)malloc(sizeof(char) * (ft_ws(&s[j], c) + 1));
+		if (!str)
 		{
 			ft_free_2d(str, j);
 			return (NULL);

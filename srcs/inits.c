@@ -18,7 +18,6 @@ void	arg_init(t_cmd *last)
 
 void	cmd_init(t_cmd **cmd)
 {
-
 	(*cmd) = ft_calloc(1, sizeof(t_cmd));
 	(*cmd)->next = 0;
 	(*cmd)->argc = 0;

@@ -128,7 +128,7 @@ void	write_redirection(char *type, char *filename, t_cmdtable *table)
 
 void	add_redirection(char **line, t_cmdtable *table, t_env *envs)
 {
-	char 	*filename;
+	char	*filename;
 	char	*type;
 
 	type = get_redirection_type(line);
