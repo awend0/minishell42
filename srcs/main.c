@@ -38,8 +38,8 @@ int	main(int argc, char **argv, char **env)
 		if (*line)
 		{
 			cmdtable = parser(line, envs);
-			test_parsing(cmdtable);
-			// executor(cmdtable, envs, env);
+			// test_parsing(cmdtable);
+			executor(cmdtable, envs, env);
 			// fflush(stdout);
 		}
 		free(line);

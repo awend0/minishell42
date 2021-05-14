@@ -109,11 +109,23 @@ char	**add_filename(char *filename, char **arr)
 void	write_redirection(char *type, char *filename, t_cmdtable *table)
 {
 	if (!ft_strcmp(type, "output"))
+	{
+		if (table->output_file)
+			close(open(filename, O_CREAT));
 		table->output_file = add_filename(filename, table->output_file);
+	}
 	else if (!ft_strcmp(type, "input"))
+	{
+		if (table->input_file)
+			close(open(filename, O_CREAT));
 		table->input_file = add_filename(filename, table->input_file);
+	}
 	else if (!ft_strcmp(type, "append"))
+	{
+		if (table->append_file)
+			close(open(filename, O_CREAT));
 		table->append_file = add_filename(filename, table->append_file);
+	}
 }
 
 void	add_redirection(char **line, t_cmdtable *table, t_env *envs)
