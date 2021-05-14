@@ -88,6 +88,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		**arr_copy(char **dest, char **src);
 int			is_builtin(t_cmd *cmd);
 char		*get_env(t_env *envs, char *name);
+int			check_env(char *str);
 
 // executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);

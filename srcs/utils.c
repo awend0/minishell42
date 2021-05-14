@@ -166,3 +166,22 @@ char	**arr_copy(char **dest, char **src)
 		*dest++ = ft_strdup(*src++);
 	return (buf);
 }
+
+int	check_env(char *str)
+{
+	if ((*str < 65 || *str > 90)
+		&& (*str < 97 || *str > 122)
+		&& *str != '_')
+		return (0);
+	str++;
+	while (*str)
+	{
+		if ((*str < 65 || *str > 90)
+			&& (*str < 97 || *str > 122)
+			&& (*str < 48 || *str > 57)
+			&& *str != '_')
+			return (0);
+		str++;
+	}
+	return (1);
+}
