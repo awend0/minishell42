@@ -59,6 +59,73 @@ void	add_new_cmdtable(t_cmdtable **table, char **line)
 	(*line)++;
 }
 
+char	*get_filename(char **line, t_env *envs)
+{
+	char	*filename;
+
+	filename = 0;
+	while (ft_strchr(" \t", **line))
+		(*line)++;
+	filename = get_token(line, "<> ", '1', envs);
+	return (filename);
+}
+
+char	*get_redirection_type(char **line)
+{
+	char	*type;
+
+	if (**line == '<')
+		type = "input";
+	else if (**line == '>')
+		type = "output";
+	(*line)++;
+	if (**line == '>' && !ft_strcmp(type, "output"))
+	{
+		type = "append";
+		(*line)++;
+	}
+	return (type);
+}
+
+char	**add_filename(char *filename, char **arr)
+{
+	int		len;
+
+	if (!arr)
+	{
+		arr = ft_calloc(2, sizeof(char *));
+		arr[0] = filename;
+	}
+	else
+	{
+		len = ft_arrlen(arr);
+		arr = array_append(arr, len);
+		arr[len] = filename;
+	}
+	return (arr);
+}
+
+void	write_redirection(char *type, char *filename, t_cmdtable *table)
+{
+	if (!ft_strcmp(type, "output"))
+		table->output_file = add_filename(filename, table->output_file);
+	else if (!ft_strcmp(type, "input"))
+		table->input_file = add_filename(filename, table->input_file);
+	else if (!ft_strcmp(type, "append"))
+		table->append_file = add_filename(filename, table->append_file);
+}
+
+void	add_redirection(char **line, t_cmdtable *table, t_env *envs)
+{
+	char 	*filename;
+	char	*type;
+
+	type = get_redirection_type(line);
+	filename = get_filename(line, envs);
+	if (filename)
+		write_redirection(type, filename, table);
+}
+
 t_cmdtable	*parser(char *line, t_env *envs)
 {
 	t_cmdtable	*table;
@@ -78,8 +145,8 @@ t_cmdtable	*parser(char *line, t_env *envs)
 			add_pipe(table, &line);
 		else if (*line && *line == ';')
 			add_new_cmdtable(&table, &line);
-		// else if (*line && *line == '>' || *line == '<')
-		// 	add_redirection(&line, buf);
+		else if (*line && (*line == '>' || *line == '<'))
+			add_redirection(&line, buf, envs);
 		else
 			line++;
 	}

@@ -1,16 +1,19 @@
 #include "../includes/minishell.h"
 
+char	**array_append(char **arr, int len)
+{
+	char	**new;
+
+	new = ft_calloc(len + 2, sizeof(char *));
+	new = arr_copy(new, arr);
+	free_arr(arr);
+	return (new);
+}
+
 void	arg_init(t_cmd *last)
 {
-	char	**arr;
-	char	**arr_buf;
-
 	last->argc++;
-	arr = ft_calloc(last->argc + 1, sizeof(char *));
-	arr = arr_copy(arr, last->argv);
-	arr_buf = last->argv;
-	last->argv = arr;
-	free_arr(arr_buf);
+	last->argv = (array_append(last->argv, last->argc));
 }
 
 void	cmd_init(t_cmd **cmd)

@@ -47,8 +47,9 @@ typedef struct s_cmd
 
 typedef struct s_cmdtable
 {
-	char				*input_file;
-	char				*output_file;
+	char				**input_file;
+	char				**output_file;
+	char				**append_file;
 	t_cmd				*cmds;
 	t_cmd				*last;
 	struct s_cmdtable	*next;
@@ -104,5 +105,6 @@ int			builtin_unset(char **argv, t_env *envs);
 void		arg_init(t_cmd *cur);
 void		cmd_init(t_cmd **cmd);
 void		cmdtable_init(t_cmdtable **table);
+char		**array_append(char **arr, int len);
 
 #endif
