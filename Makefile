@@ -15,6 +15,8 @@ SRC		= main.c \
 		builtin_echo.c \
 		builtin_cd.c \
 		builtin_unset.c \
+		builtin_export.c \
+		builtin_env.c \
 		ft_split.c
 
 DIR_SRC = srcs/

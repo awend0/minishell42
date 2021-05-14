@@ -100,6 +100,8 @@ int			builtin_pwd(void);
 int			builtin_echo(char **argv);
 int			builtin_cd(char **argv, t_env *envs);
 int			builtin_unset(char **argv, t_env *envs);
+int			builtin_export(char **argv, t_env *envs);
+int			builtin_env(t_env *envs, int declare_x);
 
 // inits
 void		arg_init(t_cmd *cur);

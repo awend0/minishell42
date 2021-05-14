@@ -14,7 +14,8 @@ int     builtin_cd(char **argv, t_env *envs)
 			ft_puts("cd: You haven no HOME :(((\n", 1);
 			return (-1);
 		}
-		chdir(path);
+		if (chdir(path) == -1)
+			return (-1);
 		return (0);
 	}
 	if (!ft_strcmp(argv[1], "-"))
@@ -25,7 +26,8 @@ int     builtin_cd(char **argv, t_env *envs)
 			ft_puts("cd: OLDPWD not set\n", 1);
 			return (-1);
 		}
-		chdir(path);
+		if (chdir(path) == -1)
+			return (-1);
 		return (0);
 	}
 	if (chdir(argv[1]) == -1)

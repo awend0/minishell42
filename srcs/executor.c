@@ -25,7 +25,6 @@ int	executor_run_binary(char **argv, char **env)
 
 int	executor_run_builtin(char **argv, t_env *envs, char **env)
 {
-	(void)envs;
 	(void)env;
 	if (!ft_strcmp(argv[0], "exit"))
 		exit(0);
@@ -37,16 +36,19 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 		return (builtin_cd(argv, envs));
 	if (!ft_strcmp(argv[0], "unset"))
 		return (builtin_unset(argv, envs));
-	return (0);
+	if (!ft_strcmp(argv[0], "export"))
+		return (builtin_export(argv, envs));
+	if (!ft_strcmp(argv[0], "env"))
+		return (builtin_env(envs, 0));
+	return (1);
 }
 
 int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
 {
+	if (!cmd->argv[0])
+		return (0);
 	if (is_builtin(cmd))
-	{
-		*ret = executor_run_builtin(cmd->argv, envs, env);
-		return (*ret);
-	}
+		return (executor_run_builtin(cmd->argv, envs, env));
 	if (!file_exist(cmd->argv[0]))
 		cmd->argv[0] = scan_path(cmd->argv[0], envs);
 	*ret = executor_run_binary(cmd->argv, env);
@@ -67,8 +69,7 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 		executor_init_fds(tmp, curtable);
 		while (curcmds)
 		{
-			if (!curcmds->argv[0]
-				|| executor_redir(tmp[4], 0) == -1
+			if (executor_redir(tmp[4], 0) == -1
 				|| executor_run_and_redir(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
 				|| executor_cmd(curcmds, envs, env, &tmp[6]) == -1)
