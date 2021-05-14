@@ -74,6 +74,7 @@ char	*get_redirection_type(char **line)
 {
 	char	*type;
 
+	type = 0;
 	if (**line == '<')
 		type = "input";
 	else if (**line == '>')
