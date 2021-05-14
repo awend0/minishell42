@@ -53,13 +53,17 @@ char	*ft_strdup(const char *str)
 
 void	free_arr(char **arr)
 {
+	char	**buf;
+
 	if (!arr)
 		return ;
+	buf = arr;
 	while (*arr)
 	{
 		free(*arr);
 		arr++;
 	}
+	free(buf);
 }
 
 int	get_envs_len(t_env *envs)
@@ -73,17 +77,6 @@ int	get_envs_len(t_env *envs)
 		envs = envs->next;
 	}
 	return (size);
-}
-
-int	isspecial(char c)
-{
-	return (c == 39 || c == '"'
-			|| c == '|' || c == ';');
-}
-
-int	ft_isspace(char c)
-{
-	return (c == ' ' || c == '\t');
 }
 
 char	*ft_strchr(const char *str, int c)
