@@ -1,15 +1,15 @@
 #include "../includes/minishell.h"
 
-void	arg_init(t_cmdtable *buf)
+void	arg_init(t_cmd *last)
 {
 	char	**arr;
 	char	**arr_buf;
 
-	buf->cmds->argc++;
-	arr = ft_calloc(buf->cmds->argc + 1, sizeof(char *));
-	arr = arr_copy(arr, buf->cmds->argv);
-	arr_buf = buf->cmds->argv;
-	buf->cmds->argv = arr;
+	last->argc++;
+	arr = ft_calloc(last->argc + 1, sizeof(char *));
+	arr = arr_copy(arr, last->argv);
+	arr_buf = last->argv;
+	last->argv = arr;
 	free_arr(arr_buf);
 }
 
@@ -26,6 +26,7 @@ void	cmdtable_init(t_cmdtable **table)
 {
 	*table = ft_calloc(1, sizeof(t_cmdtable));
 	cmd_init(&(*table)->cmds);
+	(*table)->last = (*table)->cmds;
 	(*table)->input_file = 0;
 	(*table)->output_file = 0;
 	(*table)->next = 0;
