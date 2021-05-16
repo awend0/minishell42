@@ -167,21 +167,21 @@ char	**arr_copy(char **dest, char **src)
 	return (buf);
 }
 
-int	check_env(char *str)
+int	check_env_name(char *str)
 {
 	if ((*str < 65 || *str > 90)
 		&& (*str < 97 || *str > 122)
 		&& *str != '_')
-		return (0);
+		return (1);
 	str++;
-	while (*str)
+	while (*str && *str != '=')
 	{
 		if ((*str < 65 || *str > 90)
 			&& (*str < 97 || *str > 122)
 			&& (*str < 48 || *str > 57)
 			&& *str != '_')
-			return (0);
+			return (1);
 		str++;
 	}
-	return (1);
+	return (0);
 }

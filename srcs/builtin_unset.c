@@ -1,80 +1,35 @@
 #include "../includes/minishell.h"
 
-void	free_env(t_env *env)
+void	unset_del(t_env *envs, char *name)
 {
-	free(env->name);
-	free(env->value);
-	free(env);
-}
-
-void	unset_middle(t_env **ptr)
-{
-	t_env	*prev;
-	t_env	*next;
-	t_env	*envs;
-
-	prev = 0;
-	next = 0;
-	envs = *ptr;
-	next = envs->next;
-	prev = envs->prev;
-	//free_env(envs);
-	prev->next = next;
-	next->prev = prev;
-	envs = *ptr;
-}
-
-void	unset_first(t_env **ptr)
-{
-	t_env	*next;
-	t_env	*envs;
-
-	next = 0;
-	envs = *ptr;
+	while (envs && ft_strcmp(envs->name, name))
+		envs = envs->next;
+	if (!envs)
+		return ;
 	if (envs->next)
-		next = envs->next;
-	//free_env(envs);
-	next->prev = 0;
-}
-
-void	unset_last(t_env **ptr)
-{
-	t_env	*prev;
-	t_env	*envs;
-
-	prev = 0;
-	envs = *ptr;
+		envs->next->prev = envs->prev;
 	if (envs->prev)
-		prev = envs->prev;
-	//free_env(envs);
-	prev->next = 0;
+		envs->prev->next = envs->next;
+	free(envs->name);
+	free(envs->value);
+	free(envs);
+	return ;
 }
 
 int	builtin_unset(char **argv, t_env *envs)
 {
 	if (!argv[1])
-	{
-		ft_puts("unset: not enough arguments\n", 1);
-		return (-1);
-	}
-	while (envs && ft_strcmp(envs->name, argv[1]))
-		envs = envs->next;
-	if (!envs || ft_strcmp(envs->name, argv[1]))
 		return (0);
-	if (envs->next && envs->prev)
+	argv++;
+	while (*argv)
 	{
-		unset_middle(&envs);
-		return (0);
-	}
-	if (!envs->next)
-	{
-		unset_last(&envs);
-		return (0);
-	}
-	if (!envs->prev)
-	{
-		unset_first(&envs);
-		return (0);
+		if (check_env_name(*argv))
+		{
+			print_error("unset", *argv, "not a valid identifier");
+			return (1);
+		}
+		unset_del(envs, *argv);
+		argv++;
 	}
 	return (0);
 }

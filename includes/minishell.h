@@ -89,6 +89,10 @@ char		**arr_copy(char **dest, char **src);
 int			is_builtin(t_cmd *cmd);
 char		*get_env(t_env *envs, char *name);
 int			check_env(char *str);
+void		print_error(char *bin, char *val, char *err);
+int			check_env_name(char *name);
+void		modify_env(t_env *envs, char *name, char *newvalue);
+char		*pwd_getcurpath(void);
 
 // executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);

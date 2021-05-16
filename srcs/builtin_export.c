@@ -14,21 +14,15 @@ t_env	*export_init(char *name, char *value)
 
 void	export_replace(t_env *cur, t_env *new)
 {
-	t_env	*prev;
-	t_env	*next;
-
-	prev = cur->prev;
-	if (prev)
-	{
-		new->prev = prev;
-		prev->next = new;
-	}
-	next = cur->next;
-	if (next)
-	{
-		new->next = next;
-		next->prev = new;
-	}
+	if (!cur || !new)
+		return ;
+	if (cur->prev)
+		cur->prev->next = new;
+	if (cur->next)
+		cur->next->prev = new;
+	free(cur->name);
+	free(cur->value);
+	free(cur);
 }
 
 void	export_insert(t_env *envs, t_env *new)
@@ -39,7 +33,10 @@ void	export_insert(t_env *envs, t_env *new)
 	while (envs)
 	{
 		if (!ft_strcmp(envs->name, new->name))
+		{
 			export_replace(envs, new);
+			return ;
+		}
 		prev = envs;
 		envs = envs->next;
 	}
@@ -57,16 +54,12 @@ int	builtin_export(char **argv, t_env *envs)
 	argv++;
 	while (*argv)
 	{
-		tmp = strchr(*argv, '=');
-		if (!tmp)
-			return (0);
-		if (**argv >= '0' && **argv <= '9')
+		if (check_env_name(*argv))
 		{
-			ft_puts("export: '", 1);
-			ft_puts(strndup(*argv, (tmp - *argv)), 1);
-			ft_puts("': not a valid identifier\n", 1);
+			print_error("export", *argv, "not a valid indentifier");
 			return (1);
 		}
+		tmp = strchr(*argv, '=');
 		new = export_init(strndup(*argv, (tmp - *argv)), strdup(tmp + 1));
 		export_insert(envs, new);
 		argv++;

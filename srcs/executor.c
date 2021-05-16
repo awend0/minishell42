@@ -11,10 +11,7 @@ int	executor_run_binary(char **argv, char **env)
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, env) == -1)
-		{
-			ft_puts(strerror(errno), 1);
-			ft_puts("\n", 1);
-		}
+			print_error(argv[0], 0, 0);
 		_exit(1);
 	}
 	else
@@ -48,7 +45,10 @@ int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
 	if (!cmd->argv[0])
 		return (0);
 	if (is_builtin(cmd))
-		return (executor_run_builtin(cmd->argv, envs, env));
+	{
+		*ret= executor_run_builtin(cmd->argv, envs, env);
+		return (*ret);
+	}
 	if (!file_exist(cmd->argv[0]))
 		cmd->argv[0] = scan_path(cmd->argv[0], envs);
 	*ret = executor_run_binary(cmd->argv, env);

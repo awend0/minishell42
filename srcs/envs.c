@@ -12,7 +12,7 @@ t_env	*env_add(t_env *list, char *env)
 	new = malloc(sizeof(t_env));
 	tmp = strchr(env, '=');
 	new->name = strndup(env, (tmp - env));
-	new->value = (tmp + 1);
+	new->value = strdup(tmp + 1);
 	new->next = 0;
 	if (cur)
 	{

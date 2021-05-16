@@ -33,6 +33,8 @@ char	*scan_path(char *binary, t_env *envs)
 	cur = envs;
 	while (cur && ft_strcmp(cur->name, "PATH"))
 		cur = cur->next;
+	if (!cur)
+		return (binary);
 	dirs = ft_split(cur->value, ':');
 	while (*dirs)
 	{
@@ -86,5 +88,35 @@ char	*get_env(t_env *envs, char *name)
 		envs = envs->next;
 	if (!envs || ft_strcmp(envs->name, name))
 		return (0);
-	return (envs->value);
+	return (strdup(envs->value));
+}
+
+void	print_error(char *bin, char *val, char *err)
+{
+	ft_puts("paSHtet: ", 1);
+	ft_puts(bin, 1);
+	ft_puts(": ", 1);
+	if (err)
+	{
+		if (val)
+		{
+			ft_puts("`", 1);
+			ft_puts(val, 1);
+			ft_puts("': ", 1);
+		}
+		ft_puts(err, 1);
+	}
+	else
+		ft_puts(strerror(errno), 1);
+	ft_puts("\n", 1);
+}
+
+void	modify_env(t_env *envs, char *name, char *newvalue)
+{
+	while (envs && ft_strcmp(name, envs->name))
+		envs = envs->next;
+	if (!envs)
+		return ;
+	free(envs->value);
+	envs->value = strdup(newvalue);
 }
