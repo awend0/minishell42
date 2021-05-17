@@ -2,22 +2,19 @@
 
 int	executor_run_binary(char **argv, char **env)
 {
-	int		pid;
-	int		ret;
-
-	pid = fork();
-	if (pid == -1)
+	g_signal.pid = fork();
+	if (g_signal.pid == -1)
 		return (-1);
-	if (pid == 0)
+	if (g_signal.pid == 0)
 	{
 		if (execve(argv[0], argv, env) == -1)
 			print_error(argv[0], 0, 0);
 		_exit(1);
 	}
 	else
-		if (waitpid(pid, &ret, 0) == -1)
+		if (waitpid(g_signal.pid, &g_signal.status, 0) == -1)
 			return (-1);
-	return (ret);
+	return (g_signal.status);
 }
 
 int	executor_run_builtin(char **argv, t_env *envs, char **env)
@@ -40,28 +37,27 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 	return (1);
 }
 
-int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *ret)
+int	executor_cmd(t_cmd *cmd, t_env *envs, char **env)
 {
 	if (!cmd->argv[0])
 		return (0);
 	if (is_builtin(cmd))
 	{
-		*ret= executor_run_builtin(cmd->argv, envs, env);
-		return (*ret);
+		g_signal.status= executor_run_builtin(cmd->argv, envs, env);
+		return (g_signal.status);
 	}
 	if (!file_exist(cmd->argv[0]))
 		cmd->argv[0] = scan_path(cmd->argv[0], envs);
-	*ret = executor_run_binary(cmd->argv, env);
-	return (*ret);
+	g_signal.status = executor_run_binary(cmd->argv, env);
+	return (g_signal.status);
 }
 
 int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 {
 	t_cmdtable	*curtable;
 	t_cmd		*curcmds;
-	int			tmp[7];
+	int			tmp[6];
 
-	tmp[6] = 0;
 	curtable = cmdtable;
 	while (curtable)
 	{
@@ -72,7 +68,7 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 			if (executor_redir(tmp[4], 0) == -1
 				|| executor_run_and_redir(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
-				|| executor_cmd(curcmds, envs, env, &tmp[6]) == -1)
+				|| executor_cmd(curcmds, envs, env) == -1)
 				return (-1);
 			curcmds = curcmds->next;
 		}
@@ -80,10 +76,11 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 			return (-1);
 		curtable = curtable->next;
 	}
-	return (tmp[6]);
+	return (g_signal.status);
 }
 
 int	executor(t_cmdtable *table, t_env *envs, char **env)
 {
-	return (executor_exec(table, envs, env));
+	g_signal.status = executor_exec(table, envs, env);
+	return (g_signal.status);
 }

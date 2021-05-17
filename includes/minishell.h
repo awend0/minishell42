@@ -55,6 +55,14 @@ typedef struct s_cmdtable
 	struct s_cmdtable	*next;
 }						t_cmdtable;
 
+typedef struct s_signal
+{
+	int					pid;
+	int					status;
+	int					inter;
+	int					quit;
+}						t_signal;
+
 int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
 char		**get_env_as_string(t_env *envs);
@@ -114,4 +122,8 @@ void		cmd_init(t_cmd **cmd);
 void		cmdtable_init(t_cmdtable **table);
 char		**array_append(char **arr, int len);
 
+// signal
+void		sig_int(int code);
+void		sig_quit(int code);
+extern t_signal g_signal;
 #endif
