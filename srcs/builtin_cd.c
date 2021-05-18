@@ -6,6 +6,7 @@ int	builtin_cd(char **argv, t_env *envs)
 	char	*path;
 
 	(void)envs;
+	path = 0;
 	if (!argv[1])
 	{
 		path = get_env(envs, "HOME");
