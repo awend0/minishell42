@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_signal g_signal = {0, 0, 0, 0, 0};
+t_signal g_signal = {0, 0, 0, 0};
 
 int	main(int argc, char **argv, char **env)
 {
