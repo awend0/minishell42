@@ -2,10 +2,10 @@
 
 t_signal g_signal = {0, 0, 0, 0};
 
-void	get_termcaps(char **line)
-{
+// void	get_termcaps(char **line)
+// {
 	
-}
+// }
 
 int	main(int argc, char **argv, char **env)
 {
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **env)
 	{
 		ft_puts(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
 		get_next_line(0, &line);
-		get_termcaps(&line);
 		cmdtable = parser(line, envs);
 		executor(cmdtable, envs, env);
 		printf("Status: %d\n", g_signal.status);
