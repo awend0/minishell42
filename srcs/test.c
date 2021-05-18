@@ -25,15 +25,15 @@ void	print_rediretion(char *str, char **arr)
 {
 	int		i;
 
-	ft_puts(str, 1);
+	ft_putstr_fd(str, 1);
 	if (arr)
 	{
 		i = -1;
 		while (arr[++i])
 		{
-			ft_puts("<", 1);
-			ft_puts(arr[i], 1);
-			ft_puts("> ", 1);
+			ft_putstr_fd("<", 1);
+			ft_putstr_fd(arr[i], 1);
+			ft_putstr_fd("> ", 1);
 		}
 	}
 }
@@ -49,9 +49,9 @@ void	test_parsing(t_cmdtable *table)
 			i = -1;
 			while (table->cmds->argv[++i])
 			{
-				ft_puts("<", 1);
-				ft_puts(table->cmds->argv[i], 1);
-				ft_puts("> ", 1);
+				ft_putstr_fd("<", 1);
+				ft_putstr_fd(table->cmds->argv[i], 1);
+				ft_putstr_fd("> ", 1);
 			}
 			table->cmds = table->cmds->next;
 		}
@@ -59,6 +59,6 @@ void	test_parsing(t_cmdtable *table)
 		print_rediretion("\nOutput Files: ", table->output_file);
 		print_rediretion("\nAppend Files: ", table->append_file);
 		table = table->next;
-		ft_puts("\n", 1);
+		ft_putstr_fd("\n", 1);
 	}
 }

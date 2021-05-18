@@ -38,8 +38,8 @@ int	builtin_cd(char **argv, t_env *envs)
 			print_error("cd", 0, 0);
 			return (1);
 		}
-		ft_puts(path, 1);
-		ft_puts("\n", 1);
+		ft_putstr_fd(path, 1);
+		ft_putstr_fd("\n", 1);
 		return (0);
 	}
 	modify_env(envs, "OLDPWD", pwd_getcurpath());

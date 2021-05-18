@@ -9,6 +9,7 @@ SRC		= main.c \
 		inits.c \
 		utils.c \
 		utils2.c \
+		utils_lib.c \
 		executor.c \
 		executor_pipe.c \
 		signal.c \

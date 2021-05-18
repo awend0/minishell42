@@ -20,7 +20,7 @@ int	builtin_pwd(void)
 	cwd = pwd_getcurpath();
 	if (!cwd)
 		print_error("pwd", 0, 0);
-	ft_puts(cwd, 1);
-	ft_puts("\n", 1);
+	ft_putstr_fd(cwd, 1);
+	ft_putstr_fd("\n", 1);
 	return (0);
 }

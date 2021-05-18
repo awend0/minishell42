@@ -4,7 +4,6 @@ t_signal g_signal = {0, 0, 0, 0};
 
 int	main(int argc, char **argv, char **env)
 {
-	int			status;
 	char		*line;
 	t_cmdtable	*cmdtable;
 	t_env		*envs;
@@ -14,15 +13,13 @@ int	main(int argc, char **argv, char **env)
 		return(executor(parser(argv[2], envs), envs, env));
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	status = 0;
 	while (1)
 	{
-		ft_puts(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
+		ft_putstr_fd(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
 		get_next_line(0, &line);
 		cmdtable = parser(line, envs);
-		executor(cmdtable, envs, env);
-		printf("Status: %d\n", g_signal.status);
+		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, env)));
 		free(line);
 	}
-	return (status);
+	return (0);
 }

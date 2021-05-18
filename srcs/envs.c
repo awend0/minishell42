@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_env	*env_add(t_env *list, char *env)
+t_env	*env_add(t_env *list, char *env, int secret)
 {
 	t_env	*new;
 	t_env	*cur;
@@ -13,6 +13,7 @@ t_env	*env_add(t_env *list, char *env)
 	tmp = strchr(env, '=');
 	new->name = strndup(env, (tmp - env));
 	new->value = strdup(tmp + 1);
+	new->secret = secret;
 	new->next = 0;
 	if (cur)
 	{
@@ -34,9 +35,10 @@ t_env	*env_split(char **env)
 	ret = 0;
 	while (*env)
 	{
-		ret = env_add(ret, *env);
+		ret = env_add(ret, *env, 0);
 		env++;
 	}
+	ret = env_add(ret, "?=0", 0);
 	return (ret);
 }
 

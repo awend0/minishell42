@@ -36,6 +36,7 @@ typedef struct s_env
 	char				*value;
 	struct s_env		*next;
 	struct s_env		*prev;
+	int					secret;
 }						t_env;
 
 typedef struct s_cmd
@@ -77,17 +78,11 @@ void		test_envs_to_strings(t_env *envs);
 void		test_parsing(t_cmdtable *table);
 
 // utils
-int			ft_strlen(char *str);
 int			ft_arrlen(char **str);
-char		*ft_strchr(const char *str, int c);
-char		*ft_strdup(const char *str);
 int			get_envs_len(t_env *envs);
 void		free_arr(char **arr);
 int			isspecial(char c);
-int			ft_isspace(char c);
 void		print_error_and_exit(char *str);
-int			ft_strcmp(char *s1, char *s2);
-void		ft_puts(char *str, int fd);
 int			file_exist(char *filename);
 char		*scan_path(char *binary, t_env *envs);
 char		*charcat(char *str, char c);
@@ -126,4 +121,16 @@ char		**array_append(char **arr, int len);
 void		sig_int(int code);
 void		sig_quit(int code);
 extern t_signal g_signal;
+
+// lib
+char		*ft_strchr(char *str, int c);
+int			ft_strcmp(char *s1, char *s2);
+void		ft_putstr_fd(char *str, int fd);
+char		*ft_itoa(int n);
+int			ft_strlen(char *str);
+void		ft_putnbr_fd(int n, int fd);
+char		*ft_strdup(char *s);
+char		*ft_strcpy(char *dst, char *src);
+char		*ft_strndup(const char *s, size_t n);
+
 #endif
