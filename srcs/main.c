@@ -9,6 +9,8 @@ void	termcaps_init(void)
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
+	term.c_cc[VMIN] = 1;
+	term.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSANOW, &term);
 	tgetent(0, "xterm-256color");
 }
@@ -19,28 +21,61 @@ typedef struct	s_term
 	int		size;
 }			t_term;
 
+int	ft_putchar_int(int c)
+{
+	return (write(1, &c, 1));
+}
+
 char	*get_termcaps(void)
 {
-	char	*str;
+	char	str[101];
 	int		ret;
 	t_term	term;
 
-	str = ft_calloc(101, sizeof(char));
 	term.line = ft_calloc(2, sizeof(char));
 	term.size = 0;
-	while (ft_strcmp(str, "\n"))
+	while (strcmp(str, "\4"))
 	{
-		ret = read(0, str, 100);
-		if (!ft_strcmp(str, "\e[A"))
-			write(0, "up", 2);
-		else
-		{
-			write(1, str, ret);
-			term.size++;
-			term.line = charcat(term.line, *str);
-		}
-		free(str);
+		tputs(save_cursor, 1, ft_putchar_int);
+		do{
+			ret = read(0, str, 100);
+			if (!strcmp(str, "\e[A"))
+			{
+				tputs(restore_cursor, 1, ft_putchar_int);
+				tputs(tigetstr("ed"), 1, ft_putchar_int);
+				write(1, "up", 2);
+			}
+			else
+			{
+				write(1, str, ret);
+				term.size++;
+				term.line = charcat(term.line, *str);
+			}
+		} while (strcmp(str, "\4") && strcmp(str, "\n"));
 	}
+	// tputs(save_cursor, 1, ft_putchar_int);
+	// while (ft_strcmp(str, "\n"))
+	// {
+	// 	ret = read(0, str, 100);
+	// 	while (ft_strcmp(str, "\4") || ft_strcmp(str, "\n"))
+	// 	{
+	// 		write(1, "ch ", 3);
+	// 		if (!ft_strcmp(str, "\e[A"))
+	// 		{
+	// 			tputs(restore_cursor, 1, ft_putchar_int);
+	// 			tputs(tigetstr("ed"), 1, ft_putchar_int);
+	// 			write(1, "up", 2);
+	// 		}
+	// 		else
+	// 		{
+	// 			write(1, str, ret);
+	// 			term.size++;
+	// 			term.line = charcat(term.line, *str);
+	// 		}
+	// 		ret = read(0, str, 100);
+	// 	}
+	// }
+	// free(str);
 	return (term.line);
 }
 

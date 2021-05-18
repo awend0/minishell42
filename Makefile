@@ -23,7 +23,7 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
-FLAGS	= -O3 -Wall -Wextra -Werror -g
+FLAGS	= -O3 -Wall -Wextra -Werror
 
 all: $(NAME)
 
@@ -31,7 +31,7 @@ $(NAME): $(OBJS)
 	gcc $(FLAGS) -o $(NAME) $(OBJS) -ltermcap
 
 %.o: %.c
-	gcc $(FLAGS) -c $< -o $@
+	gcc -g $(FLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)
