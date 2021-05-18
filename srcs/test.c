@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 void	test_init_envs(t_env *envs)
 {

@@ -10,9 +10,9 @@ t_env	*env_add(t_env *list, char *env, int secret)
 	while (cur && cur->next)
 		cur = cur->next;
 	new = malloc(sizeof(t_env));
-	tmp = strchr(env, '=');
-	new->name = strndup(env, (tmp - env));
-	new->value = strdup(tmp + 1);
+	tmp = ft_strchr(env, '=');
+	new->name = ft_strndup(env, (tmp - env));
+	new->value = ft_strdup(tmp + 1);
 	new->secret = secret;
 	new->next = 0;
 	if (cur)
@@ -38,7 +38,7 @@ t_env	*env_split(char **env)
 		ret = env_add(ret, *env, 0);
 		env++;
 	}
-	ret = env_add(ret, "?=0", 0);
+	ret = env_add(ret, "?=0", 1);
 	return (ret);
 }
 
