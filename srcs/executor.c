@@ -21,7 +21,11 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 {
 	(void)env;
 	if (!ft_strcmp(argv[0], "exit"))
+	{
+		ft_free_envs(envs);
+		ft_free();
 		exit(0);
+	}
 	if (!ft_strcmp(argv[0], "pwd"))
 		return (builtin_pwd());
 	if (!ft_strcmp(argv[0], "echo"))
@@ -82,5 +86,6 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 int	executor(t_cmdtable *table, t_env *envs, char **env)
 {
 	g_signal.status = executor_exec(table, envs, env);
+	ft_free();
 	return (g_signal.status);
 }

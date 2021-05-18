@@ -4,7 +4,7 @@ t_env	*export_init(char *name, char *value)
 {
 	t_env	*ret;
 
-	ret = malloc(sizeof(t_env));
+	ret = ft_calloc(sizeof(t_env));
 	ret->name = name;
 	ret->value = value;
 	ret->next = 0;

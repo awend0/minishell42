@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_env	*env_add(t_env *list, char *env)
+t_env	*env_add(t_env *list, char *env, int secret)
 {
 	t_env	*new;
 	t_env	*cur;
@@ -9,10 +9,11 @@ t_env	*env_add(t_env *list, char *env)
 	cur = list;
 	while (cur && cur->next)
 		cur = cur->next;
-	new = malloc(sizeof(t_env));
-	tmp = strchr(env, '=');
-	new->name = strndup(env, (tmp - env));
-	new->value = strdup(tmp + 1);
+	new = ft_calloc(sizeof(t_env));
+	tmp = ft_strchr(env, '=');
+	new->name = ft_strndup(env, (tmp - env), 0);
+	new->value = ft_strdup(tmp + 1, 0);
+	new->secret = secret;
 	new->next = 0;
 	if (cur)
 	{
@@ -34,9 +35,10 @@ t_env	*env_split(char **env)
 	ret = 0;
 	while (*env)
 	{
-		ret = env_add(ret, *env);
+		ret = env_add(ret, *env, 0);
 		env++;
 	}
+	ret = env_add(ret, "?=0", 1);
 	return (ret);
 }
 
@@ -48,12 +50,12 @@ char	**get_env_as_string(t_env *envs)
 	int		j;
 
 	len = get_envs_len(envs);
-	env = ft_calloc(len + 1, sizeof(char *));
+	env = ft_calloc_save(len + 1 * sizeof(char *));
 	i = 0;
 	while (envs)
 	{
-		env[i] = ft_calloc(ft_strlen(envs->name)
-				+ ft_strlen(envs->value) + 2, sizeof(char));
+		env[i] = ft_calloc_save(ft_strlen(envs->name)
+				+ ft_strlen(envs->value) + 2);
 		j = 0;
 		while (*(envs->name))
 			env[i][j++] = *(envs->name++);
