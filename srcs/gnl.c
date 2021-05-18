@@ -24,15 +24,15 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ft_bzero(array, count * size));
 }
 
-int	check_termcaps(char s)
-{
-	if (!ft_strcmp(&s, "\e[A"))
-	{
-		write(1, " up ", 4);
-		return (1);
-	}
-	return (0);
-}
+// int	check_termcaps(char s)
+// {
+// 	if (!ft_strcmp(&s, "\e[A"))
+// 	{
+// 		write(1, " up ", 4);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int	get_next_line(int fd, char **line)
 {
@@ -46,17 +46,17 @@ int	get_next_line(int fd, char **line)
 	{
 		if (buf != '\n')
 		{
-			if (!check_termcaps(buf))
-			{
-				write(1, &buf, 1);
-				tmp = *line;
-				*line = charcat(*line, buf);
-				free(tmp);
-			}
+			// if (!check_termcaps(buf))
+			// {
+			// write(1, &buf, 1);
+			tmp = *line;
+			*line = charcat(*line, buf);
+			free(tmp);
+			// }
 		}
 		else
 		{
-			write(1, "\n", 1);
+			// write(1, "\n", 1);
 			return (1);
 		}
 	}
