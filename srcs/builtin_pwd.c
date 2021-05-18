@@ -6,7 +6,7 @@ char	*pwd_getcurpath(void)
 	char	*buf;
 	char	*cwd;
 
-	buf = malloc(PATH_MAX);
+	buf = ft_calloc_save(PATH_MAX);
 	cwd = getcwd(buf, PATH_MAX);
 	if (!cwd)
 		return (0);

@@ -57,7 +57,7 @@ static char		**ft_fill(char const *s, int w, char c, char **ret)
 		while (*s == c)
 			s++;
 		len = ft_wordlen(s, c);
-		if (!(ret[i] = (char *)malloc(sizeof(char) * (len + 1))))
+		if (!(ret[i] = (char *)ft_calloc_save(sizeof(char) * (len + 1))))
 			return (ft_leakprotect(ret, i));
 		j = 0;
 		while (j < len)
@@ -77,7 +77,7 @@ char			**ft_split(char	const *s, char c)
 	if (!s)
 		return (0);
 	w = ft_countwords(s, c);
-	if (!(ret = (char **)malloc(sizeof(char *) * (w + 1))))
+	if (!(ret = (char **)ft_calloc_save(sizeof(char *) * (w + 1))))
 		return (0);
 	ret = ft_fill(s, w, c, ret);
 	return (ret);

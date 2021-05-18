@@ -94,7 +94,7 @@ char	**add_filename(char *filename, char **arr)
 
 	if (!arr)
 	{
-		arr = ft_calloc(2, sizeof(char *));
+		arr = ft_calloc_save(2 * sizeof(char *));
 		arr[0] = filename;
 	}
 	else

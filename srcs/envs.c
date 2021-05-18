@@ -9,10 +9,10 @@ t_env	*env_add(t_env *list, char *env, int secret)
 	cur = list;
 	while (cur && cur->next)
 		cur = cur->next;
-	new = malloc(sizeof(t_env));
+	new = ft_calloc(sizeof(t_env));
 	tmp = ft_strchr(env, '=');
-	new->name = ft_strndup(env, (tmp - env));
-	new->value = ft_strdup(tmp + 1);
+	new->name = ft_strndup(env, (tmp - env), 0);
+	new->value = ft_strdup(tmp + 1, 0);
 	new->secret = secret;
 	new->next = 0;
 	if (cur)
@@ -50,12 +50,12 @@ char	**get_env_as_string(t_env *envs)
 	int		j;
 
 	len = get_envs_len(envs);
-	env = ft_calloc(len + 1, sizeof(char *));
+	env = ft_calloc_save(len + 1 * sizeof(char *));
 	i = 0;
 	while (envs)
 	{
-		env[i] = ft_calloc(ft_strlen(envs->name)
-				+ ft_strlen(envs->value) + 2, sizeof(char));
+		env[i] = ft_calloc_save(ft_strlen(envs->name)
+				+ ft_strlen(envs->value) + 2);
 		j = 0;
 		while (*(envs->name))
 			env[i][j++] = *(envs->name++);

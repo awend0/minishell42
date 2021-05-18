@@ -49,7 +49,7 @@ char	*get_token(char **line, char *spec, char perm, t_env *envs)
 {
 	char	*str;
 
-	str = ft_calloc(1, sizeof(char));
+	str = ft_calloc_save(1);
 	while (**line && !ft_strchr(spec, **line))
 	{
 		if (**line == '$' && ft_strchr("13", perm))

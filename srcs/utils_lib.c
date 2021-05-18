@@ -29,7 +29,7 @@ char	*ft_concat(const char *s1, const char *s2)
 
 	if (!s2)
 		return ((char *)s1);
-	ret = malloc(strlen(s1) + strlen(s2) + 1);
+	ret = ft_calloc_save(strlen(s1) + strlen(s2) + 1);
 	strcpy(ret, s1);
 	strcat(ret, s2);
 	return (ret);
@@ -67,14 +67,6 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putchar_fd(nbr + '0', fd);
 }
 
-static char *ft_strnew(int size)
-{
-    char    *ret;
-
-    ret = ft_calloc(size + 1, sizeof(char));
-    return (ret);
-}
-
 static int	ft_nbrlen(int n)
 {
 	unsigned int	nbr;
@@ -104,7 +96,7 @@ char    *ft_itoa(int n)
 	neg = (n < 0) ? 1 : 0;
 	nbr = (neg) ? n * -1 : n;
 	len = ft_nbrlen(n);
-	s = ft_strnew(len);
+	s = ft_calloc_save(len + 1);
 	if (!s)
 		return (0);
 	s1 = s;
@@ -132,7 +124,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return ((char *)s1);
 	s1_len = ft_strlen((char *)s1);
 	s2_len = ft_strlen((char *)s2);
-	strjoin = malloc((s1_len + s2_len + 1) * sizeof(char));
+	strjoin = ft_calloc_save((s1_len + s2_len + 1) * sizeof(char));
 	if (!strjoin)
 		return (0);
 	buf_strjoin = strjoin;
@@ -151,31 +143,35 @@ char	*ft_strchr(char *s, int c)
 	return ((*s == c) ? s : 0);
 }
 
-char		*ft_strdup(char *s)
+char		*ft_strdup(char *s, int save)
 {
 	int		i;
 	char	*result;
 
-	if ((result = ft_strnew(ft_strlen(s))))
+	if (!save)
+		result = ft_calloc(ft_strlen(s) + 1);
+	else
+		result = ft_calloc_save(ft_strlen(s) + 1);
+	i = 0;
+	while (s[i])
 	{
-		i = 0;
-		while (s[i])
-		{
-			result[i] = s[i];
-			i++;
-		}
-		result[i] = '\0';
+		result[i] = s[i];
+		i++;
 	}
+	result[i] = '\0';
 	return (result);
 }
 
-char	*ft_strndup(const char *s, size_t n)
+char	*ft_strndup(const char *s, size_t n, int save)
 {
 	char			*res;
 	unsigned int	i;
 
 	i = 0;
-	res = malloc(sizeof(char) * (n + 1));
+	if (!save)
+		res = ft_calloc(n + 1);
+	else
+		res = ft_calloc_save(n + 1);
 	if (res == NULL)
 		return (NULL);
 	while (i < n)

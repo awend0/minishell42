@@ -15,21 +15,6 @@ int	ft_arrlen(char **str)
 	return (len);
 }
 
-void	free_arr(char **arr)
-{
-	char	**buf;
-
-	if (!arr)
-		return ;
-	buf = arr;
-	while (*arr)
-	{
-		free(*arr);
-		arr++;
-	}
-	free(buf);
-}
-
 int	get_envs_len(t_env *envs)
 {
 	int		size;
@@ -65,7 +50,7 @@ char	*charcat(char *str, char c)
 	int		len;
 
 	len = ft_strlen((char *)str);
-	strjoin = ft_calloc(len + 2, sizeof(char));
+	strjoin = ft_calloc_save(len + 2);
 	if (!strjoin)
 		return (0);
 	buf_strjoin = strjoin;
@@ -81,7 +66,7 @@ char	**arr_copy(char **dest, char **src)
 
 	buf = dest;
 	while (*src)
-		*dest++ = ft_strdup(*src++);
+		*dest++ = ft_strdup(*src++, 1);
 	return (buf);
 }
 

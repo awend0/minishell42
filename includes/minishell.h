@@ -10,6 +10,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <stdio.h>
 
 # define RESET			"\033[0m"
 # define BLACK			"\033[30m"
@@ -31,19 +32,19 @@
 
 typedef struct s_env
 {
-	char				*name;
-	char				*value;
-	struct s_env		*next;
-	struct s_env		*prev;
-	int					secret;
-}						t_env;
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+	int				secret;
+}					t_env;
 
 typedef struct s_cmd
 {
-	int					argc;
-	char				**argv;
-	struct s_cmd		*next;
-}						t_cmd;
+	int				argc;
+	char			**argv;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_cmdtable
 {
@@ -55,19 +56,24 @@ typedef struct s_cmdtable
 	struct s_cmdtable	*next;
 }						t_cmdtable;
 
+typedef struct s_list{
+	void	*node;
+	void	*next;
+}			t_list;
+
 typedef struct s_signal
 {
-	int					pid;
-	int					status;
-	int					inter;
-	int					quit;
-}						t_signal;
+	int			pid;
+	int			status;
+	int			inter;
+	int			quit;
+	t_list		*memory;
+}				t_signal;
 
 int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
 char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
-void		*ft_calloc(size_t count, size_t size);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
 
@@ -121,6 +127,12 @@ void		sig_int(int code);
 void		sig_quit(int code);
 extern t_signal g_signal;
 
+// memory
+void		ft_free_envs(t_env *envs);
+void		ft_free(void);
+void		*ft_calloc_save(int size);
+void		*ft_calloc(int size);
+
 // lib
 char		*ft_strchr(char *str, int c);
 int			ft_strcmp(char *s1, char *s2);
@@ -128,8 +140,8 @@ void		ft_putstr_fd(char *str, int fd);
 char		*ft_itoa(int n);
 int			ft_strlen(char *str);
 void		ft_putnbr_fd(int n, int fd);
-char		*ft_strdup(char *s);
 char		*ft_strcpy(char *dst, char *src);
-char		*ft_strndup(const char *s, size_t n);
+char		*ft_strdup(char *s, int save);
+char		*ft_strndup(const char *s, size_t n, int save);
 
 #endif
