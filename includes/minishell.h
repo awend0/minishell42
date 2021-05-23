@@ -12,6 +12,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <term.h>
+# include <termios.h>
+# include <termcap.h>
 
 # define RESET			"\033[0m"
 # define BLACK			"\033[30m"
