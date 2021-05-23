@@ -2,7 +2,7 @@
 
 t_signal g_signal = {0, 0, 0, 0, 0};
 
-int	main(int argc, char **argv, char **env)
+main(int argc, char **argv, char **env)
 {
 	char		*line;
 	t_cmdtable	*cmdtable;
