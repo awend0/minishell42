@@ -1,6 +1,7 @@
 NAME	= minishell
 
 SRC		= main.c \
+		term.c \
 		envs.c \
 		gnl.c \
 		test.c \

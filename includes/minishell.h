@@ -79,7 +79,8 @@ char		**get_env_as_string(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
-void		*ft_bzero(void *s, size_t n);
+void		termcaps_init(void);
+char		*term_loop(void);
 
 // tests
 void		test_init_envs(t_env *envs);
