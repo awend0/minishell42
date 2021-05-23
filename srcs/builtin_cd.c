@@ -1,5 +1,4 @@
 #include "../includes/minishell.h"
-#include "limits.h"
 
 int	builtin_cd(char **argv, t_env *envs)
 {
@@ -18,7 +17,6 @@ int	builtin_cd(char **argv, t_env *envs)
 		modify_env(envs, "OLDPWD", pwd_getcurpath());
 		if (chdir(path) == -1)
 		{
-			printf("[%s]\n", path);
 			print_error("cd", 0, 0);
 			return (1);
 		}
@@ -35,18 +33,16 @@ int	builtin_cd(char **argv, t_env *envs)
 		modify_env(envs, "OLDPWD", pwd_getcurpath());
 		if (chdir(path) == -1)
 		{
-			printf("[%s]\n", path);
 			print_error("cd", 0, 0);
 			return (1);
 		}
-		ft_puts(path, 1);
-		ft_puts("\n", 1);
+		ft_putstr_fd(path, 1);
+		ft_putstr_fd("\n", 1);
 		return (0);
 	}
 	modify_env(envs, "OLDPWD", pwd_getcurpath());
 	if (chdir(argv[1]) == -1)
 	{
-		printf("[%s]\n", path);
 		print_error("cd", 0, 0);
 		return (1);
 	}

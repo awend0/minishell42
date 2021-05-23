@@ -18,7 +18,7 @@ char	*get_env_token(char **line, char *str, t_env *envs)
 	char	*buf;
 
 	(*line)++;
-	buf = get_token(line, ":*^$=#@!%\\().,$ |;><'\"", '0', envs);
+	buf = get_token(line, ":*^=#@!%\\().,$ |;><'\"", '0', envs);
 	str = ft_strjoin(str, find_env(buf, envs));
 	return (str);
 }
@@ -49,7 +49,7 @@ char	*get_token(char **line, char *spec, char perm, t_env *envs)
 {
 	char	*str;
 
-	str = ft_calloc(1, sizeof(char));
+	str = ft_calloc_save(1);
 	while (**line && !ft_strchr(spec, **line))
 	{
 		if (**line == '$' && ft_strchr("13", perm))

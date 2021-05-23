@@ -1,27 +1,5 @@
 #include "../includes/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int		i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != 0 && s2[i] != 0)
-		i++;
-	return (s1[i] - s2[i]);
-}
-
-char	*ft_concat(const char *s1, const char *s2)
-{
-	char	*ret;
-
-	if (!s2)
-		return ((char *)s1);
-	ret = malloc(strlen(s1) + strlen(s2) + 1);
-	strcpy(ret, s1);
-	strcat(ret, s2);
-	return (ret);
-}
-
 char	*scan_path(char *binary, t_env *envs)
 {
 	DIR				*folder;
@@ -93,22 +71,22 @@ char	*get_env(t_env *envs, char *name)
 
 void	print_error(char *bin, char *val, char *err)
 {
-	ft_puts("minishell: ", 1);
-	ft_puts(bin, 1);
-	ft_puts(": ", 1);
+	ft_putstr_fd("minishell: ", 1);
+	ft_putstr_fd(bin, 1);
+	ft_putstr_fd(": ", 1);
 	if (err)
 	{
 		if (val)
 		{
-			ft_puts("`", 1);
-			ft_puts(val, 1);
-			ft_puts("': ", 1);
+			ft_putstr_fd("`", 1);
+			ft_putstr_fd(val, 1);
+			ft_putstr_fd("': ", 1);
 		}
-		ft_puts(err, 1);
+		ft_putstr_fd(err, 1);
 	}
 	else
-		ft_puts(strerror(errno), 1);
-	ft_puts("\n", 1);
+		ft_putstr_fd(strerror(errno), 1);
+	ft_putstr_fd("\n", 1);
 }
 
 void	modify_env(t_env *envs, char *name, char *newvalue)

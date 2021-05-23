@@ -9,6 +9,8 @@ SRC		= main.c \
 		inits.c \
 		utils.c \
 		utils2.c \
+		utils_lib.c \
+		memory.c \
 		executor.c \
 		executor_pipe.c \
 		signal.c \
@@ -23,7 +25,7 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
-FLAGS	= -O3 -Wall -Wextra -Werror -g
+FLAGS	= -O3 -Wall -Wextra -Werror -fsanitize=address
 
 all: $(NAME)
 
