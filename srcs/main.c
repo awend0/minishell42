@@ -39,7 +39,6 @@ char	*get_termcaps(void)
 			term.size++;
 			term.line = charcat(term.line, *str);
 		}
-		free(str);
 	}
 	return (term.line);
 }
