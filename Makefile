@@ -26,16 +26,12 @@ SRC		= main.c \
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))
 OBJS	= $(SRCS:c=o)
-<<<<<<< HEAD
 FLAGS	= -O3 -Wall -Wextra -Werror -fsanitize=address
-=======
-FLAGS	= -O3 -Wall -Wextra -Werror
->>>>>>> 6cd39239a1ac36e23a651e5fe2309c4d23100206
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc $(FLAGS) -o $(NAME) $(OBJS) -ltermcap
+	gcc -g $(FLAGS) -o $(NAME) $(OBJS) -ltermcap
 
 %.o: %.c
 	gcc -g $(FLAGS) -c $< -o $@

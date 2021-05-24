@@ -23,43 +23,146 @@ int	ft_putchar_term(int c)
 	return (write(1, &c, 1));
 }
 
-char	*term_loop(void)
+char	*get_privious(t_hist **hist, t_term *term)
+{
+	tputs(restore_cursor, 1, ft_putchar_term);
+	tputs(tigetstr("ed"), 1, ft_putchar_term);
+	if (!(*hist)->cmd)
+		return (0);
+	else
+	{
+		if ((*hist)->prev)
+		{
+			(*hist) = (*hist)->prev;
+			write(1, (*hist)->cmd, ft_strlen((*hist)->cmd));
+			term->position = ft_strlen((*hist)->cmd);
+			term->size = term->position;
+		}
+		return ((*hist)->cmd);
+	}
+}
+
+char	*get_next(t_hist **hist, t_term *term)
+{
+	tputs(restore_cursor, 1, ft_putchar_term);
+	tputs(tigetstr("ed"), 1, ft_putchar_term);
+	if (!(*hist)->cmd)
+		return (0);
+	else
+	{
+		if ((*hist)->next)
+		{
+			(*hist) = (*hist)->next;
+			write(1, (*hist)->cmd, ft_strlen((*hist)->cmd));
+			term->position = ft_strlen((*hist)->cmd);
+			term->size = term->position;
+		}
+		return ((*hist)->cmd);
+	}
+}
+
+void	term_init(t_term *term)
+{
+	term->position = 0;
+	term->line = ft_calloc_save(2 * sizeof(char));
+	term->size = 0;
+}
+
+char	*insert_char(char *line, char *str, int ret, int pos)
+{
+	char	*new;
+	int		len;
+	int		i;
+
+	len = ft_strlen(line);
+	new = ft_calloc_save(ret + len + 1);
+	i = -1;
+	while (++i < pos)
+		new[i] = line[i];
+	while (ret--)
+		new[i++] = *str++;
+	while (line[++pos])
+		new[i] = line[pos];
+	return (new);
+}
+
+void	write_char(char *str, int ret, t_term *term)
+{
+	if (term->position == term->size)
+	{
+		write(1, str, ret);
+		term->size++;
+		term->position++;
+		term->line = charcat(term->line, *str);
+	}
+	else
+	{
+		term->size++;
+		tputs(insert_character, 1, ft_putchar_term);
+		insert_char(term->line, str, ret, term->position);
+		term->position++;
+	}
+}
+
+void	cursor_to_left(t_term *term)
+{
+	if (term->position)
+	{
+		term->position--;
+		tputs(cursor_left, 1, ft_putchar_term);
+	}
+}
+
+void	cursor_to_right(t_term *term)
+{
+	if (term->position < term->size)
+	{
+		term->position++;
+		tputs(cursor_right, 1, ft_putchar_term);
+	}
+}
+
+void	del_one(t_term *term)
+{
+	int		len;
+
+	if (term->position)
+	{
+		tputs(cursor_left, 1, ft_putchar_term);
+		tputs(delete_character, 1, ft_putchar_term);
+		term->size--;
+		term->position--;
+		len = ft_strlen(&term->line[term->position]);
+		ft_memcpy(&term->line[term->position],
+					&term->line[term->position + 1],
+					len);
+	}
+}
+
+char	*term_loop(t_hist *hist)
 {
 	char	str[1000];
 	int		ret;
 	t_term	term;
 
-	term.position = 0;
-	term.line = ft_calloc_save(2 * sizeof(char));
-	term.size = 0;
+	term_init(&term);
 	tputs(save_cursor, 1, ft_putchar_term);
 	ret = read(0, str, 999);
 	str[ret] = 0;
 	while (ret && ft_strcmp(str, "\n") && ft_strcmp(str, "\4"))
 	{
 		if (!strcmp(str, "\e[A"))
-		{
-			tputs(restore_cursor, 1, ft_putchar_term);
-			tputs(tigetstr("ed"), 1, ft_putchar_term);
-			write(1, "previous", 8);
-		}
+			term.line = get_privious(&hist, &term);
 		else if (!strcmp(str, "\e[B"))
-		{
-			tputs(restore_cursor, 1, ft_putchar_term);
-			tputs(tigetstr("ed"), 1, ft_putchar_term);
-			write(1, "next", 4);
-		}
+			term.line = get_next(&hist, &term);
+		else if (!strcmp(str, "\e[D"))
+			cursor_to_left(&term);
+		else if (!strcmp(str, "\e[C"))
+			cursor_to_right(&term);
 		else if (!strcmp(str, "\x7f") && !strcmp(str, "\177"))
-		{
-			tputs(cursor_left, 1, ft_putchar_term);
-			tputs(tigetstr("ed"), 1, ft_putchar_term);
-		}
+			del_one(&term);
 		else
-		{
-			write(1, str, ret);
-			term.size++;
-			term.line = charcat(term.line, *str);
-		}
+			write_char(str, ret, &term);
 		ret = read(0, str, 999);
 		str[ret] = 0;
 	}

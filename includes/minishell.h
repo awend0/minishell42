@@ -64,6 +64,13 @@ typedef struct s_list{
 	void	*next;
 }			t_list;
 
+typedef struct s_hist
+{
+	char			*cmd;
+	struct s_hist	*prev;
+	struct s_hist	*next;
+}					t_hist;
+
 typedef struct s_signal
 {
 	int			pid;
@@ -80,7 +87,8 @@ t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
 void		termcaps_init(void);
-char		*term_loop(void);
+char		*term_loop(t_hist *hist);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 
 // tests
 void		test_init_envs(t_env *envs);
