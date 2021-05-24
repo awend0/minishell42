@@ -86,7 +86,7 @@ char		**get_envs(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
-void		termcaps_init(void);
+void		termcaps_init(t_env *envs);
 char		*term_loop(t_hist *hist);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 

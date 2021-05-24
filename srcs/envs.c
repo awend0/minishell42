@@ -38,6 +38,8 @@ t_env	*env_split(char **env)
 		ret = env_add(ret, *env, 0);
 		env++;
 	}
+	if (!get_env(ret, "OLDPWD"))
+		ret = env_add(ret, "OLDPWD=.", 0);
 	ret = env_add(ret, "?=0", 1);
 	return (ret);
 }

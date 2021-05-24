@@ -66,7 +66,7 @@ char	*get_env(t_env *envs, char *name)
 		envs = envs->next;
 	if (!envs || ft_strcmp(envs->name, name))
 		return (0);
-	return (strdup(envs->value));
+	return (ft_strdup(envs->value, 1));
 }
 
 void	print_error(char *bin, char *val, char *err)

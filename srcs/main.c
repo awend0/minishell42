@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **env)
 	t_hist		*hist;
 
 	envs = env_split(env);
-	termcaps_init();
+	termcaps_init(envs);
 	hist_init(&hist, 1);
 	if (argc == 3 && !ft_strcmp(argv[1], "-c"))
 		return(executor(parser(argv[2], envs), envs, env));

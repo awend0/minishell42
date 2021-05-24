@@ -7,7 +7,7 @@ typedef struct	s_term
 	int		size;
 }			t_term;
 
-void	termcaps_init(void)
+void	termcaps_init(t_env *envs)
 {
 	struct termios	term;
 
@@ -15,7 +15,7 @@ void	termcaps_init(void)
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
 	tcsetattr(0, TCSANOW, &term);
-	tgetent(0, "xterm-256color");
+	tgetent(0, get_env(envs, "TERM"));
 }
 
 int	ft_putchar_term(int c)
