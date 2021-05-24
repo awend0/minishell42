@@ -82,7 +82,7 @@ typedef struct s_signal
 
 int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
-char		**get_env_as_string(t_env *envs);
+char		**get_envs(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);

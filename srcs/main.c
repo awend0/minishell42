@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 		if (*line)
 			save_cmd(line, hist);
 		cmdtable = parser(line, envs);
-		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, get_env_as_string(envs))));
+		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, get_envs(envs))));
 	}
 	ft_free();
 	ft_free_envs(envs);

@@ -90,7 +90,7 @@ void	write_char(char *str, int ret, t_term *term)
 {
 	if (term->position == term->size)
 	{
-		write(1, str, ret);
+		ft_putstr_fd(str, 1);
 		term->size++;
 		term->position++;
 		term->line = charcat(term->line, *str);
