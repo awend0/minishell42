@@ -50,7 +50,7 @@ char	**get_env_as_string(t_env *envs)
 	int		j;
 
 	len = get_envs_len(envs);
-	env = ft_calloc_save(len + 1 * sizeof(char *));
+	env = ft_calloc_save((len + 1) * sizeof(char *));
 	i = 0;
 	while (envs)
 	{

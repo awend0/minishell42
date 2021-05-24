@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **env)
 		ft_putstr_fd(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
 		get_next_line(0, &line);
 		cmdtable = parser(line, envs);
-		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, env)));
+		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, get_env_as_string(envs))));
 	}
 	ft_free();
 	ft_free_envs(envs);
