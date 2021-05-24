@@ -81,8 +81,8 @@ char	*insert_char(char *line, char *str, int ret, int pos)
 		new[i] = line[i];
 	while (ret--)
 		new[i++] = *str++;
-	while (line[++pos])
-		new[i] = line[pos];
+	while (line[pos])
+		new[i++] = line[pos++];
 	return (new);
 }
 
@@ -97,9 +97,13 @@ void	write_char(char *str, int ret, t_term *term)
 	}
 	else
 	{
-		term->size++;
-		tputs(insert_character, 1, ft_putchar_term);
-		insert_char(term->line, str, ret, term->position);
+		term->size += ret;
+		tputs(tgetstr("im", 0), 1, ft_putchar_term);
+		tputs(tgetstr("ic", 0), 1, ft_putchar_term);
+		write(1, str, ret);
+		tputs(tgetstr("ip", 0), 1, ft_putchar_term);
+		tputs(tgetstr("ei", 0), 1, ft_putchar_term);
+		term->line = insert_char(term->line, str, ret, term->position);
 		term->position++;
 	}
 }
