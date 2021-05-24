@@ -34,7 +34,7 @@ char	*get_privious(t_hist **hist, t_term *term)
 		if ((*hist)->prev)
 		{
 			(*hist) = (*hist)->prev;
-			write(1, (*hist)->cmd, ft_strlen((*hist)->cmd));
+			ft_putstr_fd((*hist)->cmd, 1);
 			term->position = ft_strlen((*hist)->cmd);
 			term->size = term->position;
 		}
@@ -53,7 +53,7 @@ char	*get_next(t_hist **hist, t_term *term)
 		if ((*hist)->next)
 		{
 			(*hist) = (*hist)->next;
-			write(1, (*hist)->cmd, ft_strlen((*hist)->cmd));
+			ft_putstr_fd((*hist)->cmd, 1);
 			term->position = ft_strlen((*hist)->cmd);
 			term->size = term->position;
 		}
@@ -100,7 +100,7 @@ void	write_char(char *str, int ret, t_term *term)
 		term->size += ret;
 		tputs(tgetstr("im", 0), 1, ft_putchar_term);
 		tputs(tgetstr("ic", 0), 1, ft_putchar_term);
-		write(1, str, ret);
+		ft_putstr_fd(str, 1);
 		tputs(tgetstr("ip", 0), 1, ft_putchar_term);
 		tputs(tgetstr("ei", 0), 1, ft_putchar_term);
 		term->line = insert_char(term->line, str, ret, term->position);
@@ -170,6 +170,6 @@ char	*term_loop(t_hist *hist)
 		ret = read(0, str, 999);
 		str[ret] = 0;
 	}
-	write(1, "\n", 1);
+	ft_putstr_fd("\n", 1);
 	return (term.line);
 }

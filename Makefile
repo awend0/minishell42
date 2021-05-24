@@ -31,7 +31,7 @@ FLAGS	= -O3 -Wall -Wextra -Werror -fsanitize=address
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc -g $(FLAGS) -o $(NAME) $(OBJS) -ltermcap
+	gcc $(FLAGS) -o $(NAME) $(OBJS) -ltermcap
 
 %.o: %.c
 	gcc -g $(FLAGS) -c $< -o $@
