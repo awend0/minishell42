@@ -21,8 +21,9 @@ void	get_single_quote(char **line, t_cmdtable *table, t_env *envs)
 	{
 		arg_init(table->last);
 		table->last->argv[table->last->argc - 1] = arg;
+		if (**line)
+			(*line)++;
 	}
-	(*line)++;
 }
 
 void	get_double_quote(char **line, t_cmdtable *table, t_env *envs)
@@ -35,8 +36,9 @@ void	get_double_quote(char **line, t_cmdtable *table, t_env *envs)
 	{
 		arg_init(table->last);
 		table->last->argv[table->last->argc - 1] = arg;
+		if (**line)
+			(*line)++;
 	}
-	(*line)++;
 }
 
 void	add_pipe(t_cmdtable *table, char **line)
