@@ -2,6 +2,8 @@
 
 int	executor_run_binary(char **argv, char **env)
 {
+	int		ret;
+
 	g_signal.pid = fork();
 	if (g_signal.pid == -1)
 		return (-1);
@@ -12,11 +14,11 @@ int	executor_run_binary(char **argv, char **env)
 		_exit(1);
 	}
 	else
-		if (waitpid(g_signal.pid, &g_signal.status, 0) == -1)
+		if (waitpid(g_signal.pid, &ret, 0) == -1)
 			return (-1);
-	if (g_signal.status > 0)
-		g_signal.status /= 2;
-	return (g_signal.status);
+	if (ret > 0)
+		ret /= 2;
+	return (ret);
 }
 
 int	executor_run_builtin(char **argv, t_env *envs, char **env)
@@ -43,31 +45,31 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 	return (1);
 }
 
-int	executor_cmd(t_cmd *cmd, t_env *envs, char **env)
+int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *tmp)
 {
 	if (!cmd->argv[0])
 		return (0);
 	if (ft_strchr(cmd->argv[0], '/'))
 	{
-		g_signal.status = executor_run_binary(cmd->argv, env);
-		return (g_signal.status);
+		tmp[6] = executor_run_binary(cmd->argv, env);
+		return (0);
 	}
 	else
 	{
 		if (is_builtin(cmd))
 		{
-			g_signal.status = executor_run_builtin(cmd->argv, envs, env);
-			return (g_signal.status);
+			tmp[6] = executor_run_builtin(cmd->argv, envs, env);
+			return (0);
 		}
 		cmd->argv[0] = scan_path(cmd->argv[0], envs);
 		if (!file_exist(cmd->argv[0]))
 		{
 			print_error(cmd->argv[0], 0, "command not found");
-			g_signal.status = 128;
-			return (g_signal.status);
+			tmp[6]= 128;
+			return (0);
 		}
-		g_signal.status = executor_run_binary(cmd->argv, env);
-		return (g_signal.status);
+		tmp[6] = executor_run_binary(cmd->argv, env);
+		return (0);
 	}
 	return (-1);
 }
@@ -76,7 +78,7 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 {
 	t_cmdtable	*curtable;
 	t_cmd		*curcmds;
-	int			tmp[6];
+	int			tmp[7];
 
 	curtable = cmdtable;
 	while (curtable)
@@ -88,7 +90,7 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 			if (executor_redir(tmp[4], 0) == -1
 				|| executor_run_and_redir(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
-				|| executor_cmd(curcmds, envs, env) == -1)
+				|| executor_cmd(curcmds, envs, env, tmp) == -1)
 				return (-1);
 			curcmds = curcmds->next;
 		}
@@ -96,12 +98,16 @@ int	executor_exec(t_cmdtable *cmdtable, t_env *envs, char **env)
 			return (-1);
 		curtable = curtable->next;
 	}
-	return (g_signal.status);
+	return (tmp[6]);
 }
 
 int	executor(t_cmdtable *table, t_env *envs, char **env)
 {
-	g_signal.status = executor_exec(table, envs, env);
+	int		ret;
+
+	ret = executor_exec(table, envs, env);
 	ft_free();
-	return (g_signal.status);
+	if (!g_signal.status)
+		g_signal.status = ret;
+	return (0);
 }
