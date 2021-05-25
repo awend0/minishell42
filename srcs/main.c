@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_signal g_signal = {0, 0, 0, 0};
+t_signal g_signal = {0, 0, 0, 0, 0};
 
 void	hist_init(t_hist **hist, int start)
 {
@@ -33,12 +33,14 @@ void	save_cmd(char *line, t_hist *hist)
 
 int	main(int argc, char **argv, char **env)
 {
-	char		*line;
-	t_cmdtable	*cmdtable;
-	t_env		*envs;
-	t_hist		*hist;
+	char			*line;
+	t_cmdtable		*cmdtable;
+	t_env			*envs;
+	t_hist			*hist;
+	struct termios	backup;
 
 	envs = env_split(env);
+	tcgetattr(STDIN_FILENO, &backup);
 	termcaps_init(envs);
 	hist_init(&hist, 1);
 	if (argc == 3 && !ft_strcmp(argv[1], "-c"))
@@ -56,5 +58,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_free();
 	ft_free_envs(envs);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &backup);
 	return (0);
 }
