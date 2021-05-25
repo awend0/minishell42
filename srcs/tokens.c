@@ -54,7 +54,7 @@ char	*get_token(char **line, char *spec, char perm, t_env *envs)
 	{
 		if (**line == '$' && ft_strchr("13", perm))
 			str = get_env_token(line, str, envs);
-		if (**line == '\\' && ft_strchr("13", perm))
+		else if (**line == '\\' && ft_strchr("13", perm))
 		{
 			str = charcat(str, *(++(*line)));
 			(*line)++;
