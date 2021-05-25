@@ -104,7 +104,7 @@ void		print_error_and_exit(char *str);
 int			file_exist(char *filename);
 char		*scan_path(char *binary, t_env *envs);
 char		*charcat(char *str, char c);
-char		*ft_concat(const char *s1, const char *s2);
+char		*ft_concat(char *s1, char *s2);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		**arr_copy(char **dest, char **src);
 int			is_builtin(t_cmd *cmd);
@@ -156,5 +156,5 @@ void		ft_putnbr_fd(int n, int fd);
 char		*ft_strcpy(char *dst, char *src);
 char		*ft_strdup(char *s, int save);
 char		*ft_strndup(const char *s, size_t n, int save);
-
+char		*ft_strcat(char *s1, char *s2);
 #endif
