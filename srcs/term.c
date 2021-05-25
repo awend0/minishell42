@@ -170,6 +170,8 @@ char	*term_loop(t_hist *hist)
 		ret = read(0, str, 999);
 		str[ret] = 0;
 	}
+	if (!ft_strcmp(str, "\4"))
+		return ("exit");
 	ft_putstr_fd("\n", 1);
 	return (term.line);
 }
