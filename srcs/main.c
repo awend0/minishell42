@@ -47,13 +47,14 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, &sig_quit);
 	while (1)
 	{
+		g_signal.pid = 0;
 		ft_putstr_fd(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
 		line = term_loop(hist);
 		if (*line)
 			save_cmd(line, hist);
+		modify_env(envs, "?", ft_itoa(g_signal.status));
 		cmdtable = parser(line, envs);
-		modify_env(envs, "?",
-			ft_itoa(executor(cmdtable, envs, get_envs(envs))));
+		executor(cmdtable, envs, get_envs(envs));
 	}
 	return (0);
 }
