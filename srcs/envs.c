@@ -38,31 +38,40 @@ t_env	*env_split(char **env)
 		ret = env_add(ret, *env, 0);
 		env++;
 	}
+	if (!get_env(ret, "OLDPWD"))
+		ret = env_add(ret, "OLDPWD=.", 0);
 	ret = env_add(ret, "?=0", 1);
 	return (ret);
 }
 
-char	**get_env_as_string(t_env *envs)
+int		envs_len(t_env *envs)
 {
-	char	**env;
-	int		len;
-	int		i;
-	int		j;
+	int		ret;
 
-	len = get_envs_len(envs);
-	env = ft_calloc_save(len + 1 * sizeof(char *));
-	i = 0;
+	ret = 0;
 	while (envs)
 	{
-		env[i] = ft_calloc_save(ft_strlen(envs->name)
-				+ ft_strlen(envs->value) + 2);
-		j = 0;
-		while (*(envs->name))
-			env[i][j++] = *(envs->name++);
-		env[i][j++] = '=';
-		while (*(envs->value))
-			env[i][j++] = *(envs->value++);
 		envs = envs->next;
+		ret++;
 	}
-	return (env);
+	return (ret);
+}
+
+char	**get_envs(t_env *envs)
+{
+	char	**ret;
+	char	**buf;
+	int	len;
+
+	len = envs_len(envs);
+	ret = ft_calloc_save((len + 1) * sizeof(char*));
+	buf = ret;
+	while (len--)
+	{
+		*buf = ft_concat(envs->name , ft_concat("=", envs->value));
+		envs = envs->next;
+		buf++;
+	}
+	*buf = 0;
+	return (ret);
 }

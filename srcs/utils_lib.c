@@ -1,5 +1,15 @@
 #include "../includes/minishell.h"
 
+char	*ft_strcat(char *s1, char *s2)
+{
+	int		i;
+
+	i = ft_strlen(s1);
+	while ((s1[i] = *s2++))
+		i++;
+	return (s1);
+}
+
 int	ft_strlen(char *str)
 {
 	int		size;
@@ -25,15 +35,15 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-char	*ft_concat(const char *s1, const char *s2)
+char	*ft_concat(char *s1, char *s2)
 {
 	char	*ret;
 
 	if (!s2)
 		return ((char *)s1);
 	ret = ft_calloc_save(strlen(s1) + strlen(s2) + 1);
-	strcpy(ret, s1);
-	strcat(ret, s2);
+	ft_strcpy(ret, s1);
+	ft_strcat(ret, s2);
 	return (ret);
 }
 

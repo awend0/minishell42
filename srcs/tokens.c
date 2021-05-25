@@ -56,8 +56,8 @@ char	*get_token(char **line, char *spec, char perm, t_env *envs)
 			str = get_env_token(line, str, envs);
 		else if (**line == '\\' && ft_strchr("13", perm))
 		{
-			str = charcat(str, *(++(*line)));
-			(*line)++;
+			if (*(++(*line)))
+				str = charcat(str, *((*line)++));
 		}
 		else if (**line == '"' && ft_strchr("1", perm))
 			str = get_double_token(line, str, envs);

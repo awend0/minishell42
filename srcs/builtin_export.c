@@ -60,7 +60,7 @@ int	builtin_export(char **argv, t_env *envs)
 			return (1);
 		}
 		tmp = strchr(*argv, '=');
-		new = export_init(strndup(*argv, (tmp - *argv)), strdup(tmp + 1));
+		new = export_init(ft_strndup(*argv, (tmp - *argv), 0), ft_strdup(tmp + 1, 0));
 		export_insert(envs, new);
 		argv++;
 	}

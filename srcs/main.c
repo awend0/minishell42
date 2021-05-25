@@ -33,16 +33,16 @@ void	save_cmd(char *line, t_hist *hist)
 
 int	main(int argc, char **argv, char **env)
 {
-	char		*line;
-	t_cmdtable	*cmdtable;
-	t_env		*envs;
-	t_hist		*hist;
+	char			*line;
+	t_cmdtable		*cmdtable;
+	t_env			*envs;
+	t_hist			*hist;
 
+	(void)argc;
+	(void)argv;
 	envs = env_split(env);
-	termcaps_init();
+	termcaps_init(envs);
 	hist_init(&hist, 1);
-	if (argc == 3 && !ft_strcmp(argv[1], "-c"))
-		return(executor(parser(argv[2], envs), envs, env));
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
 	while (1)
@@ -52,9 +52,7 @@ int	main(int argc, char **argv, char **env)
 		if (*line)
 			save_cmd(line, hist);
 		cmdtable = parser(line, envs);
-		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, env)));
+		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, get_envs(envs))));
 	}
-	ft_free();
-	ft_free_envs(envs);
 	return (0);
 }

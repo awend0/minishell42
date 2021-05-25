@@ -82,11 +82,11 @@ typedef struct s_signal
 
 int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
-char		**get_env_as_string(t_env *envs);
+char		**get_envs(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
-void		termcaps_init(void);
+void		termcaps_init(t_env *envs);
 char		*term_loop(t_hist *hist);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 
@@ -104,7 +104,7 @@ void		print_error_and_exit(char *str);
 int			file_exist(char *filename);
 char		*scan_path(char *binary, t_env *envs);
 char		*charcat(char *str, char c);
-char		*ft_concat(const char *s1, const char *s2);
+char		*ft_concat(char *s1, char *s2);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		**arr_copy(char **dest, char **src);
 int			is_builtin(t_cmd *cmd);
@@ -138,7 +138,7 @@ char		**array_append(char **arr, int len);
 // signal
 void		sig_int(int code);
 void		sig_quit(int code);
-extern t_signal g_signal;
+extern t_signal	g_signal;
 
 // memory
 void		ft_free_envs(t_env *envs);
@@ -156,5 +156,5 @@ void		ft_putnbr_fd(int n, int fd);
 char		*ft_strcpy(char *dst, char *src);
 char		*ft_strdup(char *s, int save);
 char		*ft_strndup(const char *s, size_t n, int save);
-
+char		*ft_strcat(char *s1, char *s2);
 #endif
