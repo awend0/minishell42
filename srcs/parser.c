@@ -64,6 +64,8 @@ char	*get_filename(char **line, t_env *envs)
 	char	*filename;
 
 	filename = 0;
+	if (!(**line))
+		return (0);
 	while (ft_strchr(" \t", **line))
 		(*line)++;
 	filename = get_token(line, "<> ", '1', envs);
@@ -112,17 +114,16 @@ void	write_redirection(char *type, char *filename, t_cmdtable *table)
 	{
 		if (table->output_file)
 			close(open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU));
-		table->output_file = add_filename(filename, table->output_file);
+		table->output_file = filename;
 	}
 	else if (!ft_strcmp(type, "input"))
-	{
-		table->input_file = add_filename(filename, table->input_file);
-	}
+		table->input_file = filename;
 	else if (!ft_strcmp(type, "append"))
 	{
 		if (table->append_file)
 			close(open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU));
-		table->append_file = add_filename(filename, table->append_file);
+		table->output_file = filename;
+		table->append_file = 1;
 	}
 }
 

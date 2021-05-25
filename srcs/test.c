@@ -22,21 +22,10 @@ void	test_envs_to_strings(t_env *envs)
 	}
 }
 
-void	print_rediretion(char *str, char **arr)
+void	print_rediretion(char *str, char *arr)
 {
-	int		i;
-
 	ft_putstr_fd(str, 1);
-	if (arr)
-	{
-		i = -1;
-		while (arr[++i])
-		{
-			ft_putstr_fd("<", 1);
-			ft_putstr_fd(arr[i], 1);
-			ft_putstr_fd("> ", 1);
-		}
-	}
+	ft_putstr_fd(arr, 1);
 }
 
 void	test_parsing(t_cmdtable *table)
@@ -58,7 +47,6 @@ void	test_parsing(t_cmdtable *table)
 		}
 		print_rediretion("\nInput Files: ", table->input_file);
 		print_rediretion("\nOutput Files: ", table->output_file);
-		print_rediretion("\nAppend Files: ", table->append_file);
 		table = table->next;
 		ft_putstr_fd("\n", 1);
 	}

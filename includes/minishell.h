@@ -51,9 +51,9 @@ typedef struct s_cmd
 
 typedef struct s_cmdtable
 {
-	char				**input_file;
-	char				**output_file;
-	char				**append_file;
+	char				*input_file;
+	char				*output_file;
+	int					append_file;
 	t_cmd				*cmds;
 	t_cmd				*last;
 	struct s_cmdtable	*next;
