@@ -4,7 +4,7 @@ t_signal	g_signal = {0, 0, 0, 0, 0, 0};
 
 void	hist_init(t_hist **hist, int start)
 {
-	(*hist) = malloc(sizeof(t_hist));
+	(*hist) = ft_calloc(sizeof(t_hist));
 	(*hist)->next = 0;
 	(*hist)->prev = 0;
 	if (start)
