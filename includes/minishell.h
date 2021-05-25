@@ -138,7 +138,7 @@ char		**array_append(char **arr, int len);
 // signal
 void		sig_int(int code);
 void		sig_quit(int code);
-extern t_signal g_signal;
+extern t_signal	g_signal;
 
 // memory
 void		ft_free_envs(t_env *envs);
