@@ -27,7 +27,6 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 	if (!ft_strcmp(argv[0], "exit"))
 	{
 		ft_free(1);
-		// tcsetattr(0, TCSANOW, g_signal.backup);
 		exit(0);
 	}
 	if (!ft_strcmp(argv[0], "pwd"))
