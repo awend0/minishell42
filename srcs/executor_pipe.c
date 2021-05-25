@@ -6,7 +6,7 @@ int	executor_init_fds(int tmp[7], t_cmdtable *table)
 	tmp[3] = dup(1);
 	if (table->input_file)
 	{
-		tmp[4] = open(*table->input_file, O_RDONLY);
+		tmp[4] = open(table->input_file, O_RDONLY);
 		if (tmp[4] == -1)
 			return (-1);
 	}
@@ -34,9 +34,9 @@ int	executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 		if (table->output_file)
 		{
 			if (table->append)
-				tmp[5] = open(*table->output_file, APPEND);
+				tmp[5] = open(table->output_file, APPEND);
 			else
-				tmp[5] = open(*table->output_file, TRUNCATE);
+				tmp[5] = open(table->output_file, TRUNCATE);
 			if (tmp[5] == -1)
 				return (-1);
 		}
