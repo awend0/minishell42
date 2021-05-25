@@ -155,6 +155,7 @@ extern t_signal	g_signal;
 void		ft_free(int memory);
 void		*ft_calloc_save(int size);
 void		*ft_calloc_save2(int size);
+void		*ft_calloc(int size);
 
 // term
 void		del_one(t_term *term);

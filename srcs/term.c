@@ -18,12 +18,12 @@ void	cursor_to_right(t_term *term)
 	}
 }
 
-void	check_command(char *str, t_hist *hist, t_term *term, int ret)
+void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 {
 	if (!strcmp(str, "\e[A"))
-		term->line = get_privious(&hist, term);
+		term->line = get_privious(hist, term);
 	else if (!strcmp(str, "\e[B"))
-		term->line = get_next(&hist, term);
+		term->line = get_next(hist, term);
 	else if (!strcmp(str, "\e[D"))
 		cursor_to_left(term);
 	else if (!strcmp(str, "\e[C"))
@@ -46,7 +46,7 @@ char	*term_loop(t_hist *hist)
 	str[ret] = 0;
 	while (ret && ft_strcmp(str, "\n") && ft_strcmp(str, "\4"))
 	{
-		check_command(str, hist, &term, ret);
+		check_command(str, &hist, &term, ret);
 		ret = read(0, str, 999);
 		str[ret] = 0;
 	}
