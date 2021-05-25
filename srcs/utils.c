@@ -69,22 +69,3 @@ char	**arr_copy(char **dest, char **src)
 		*dest++ = ft_strdup(*src++, 1);
 	return (buf);
 }
-
-int	check_env_name(char *str)
-{
-	if ((*str < 65 || *str > 90)
-		&& (*str < 97 || *str > 122)
-		&& *str != '_')
-		return (1);
-	str++;
-	while (*str && *str != '=')
-	{
-		if ((*str < 65 || *str > 90)
-			&& (*str < 97 || *str > 122)
-			&& (*str < 48 || *str > 57)
-			&& *str != '_')
-			return (1);
-		str++;
-	}
-	return (0);
-}

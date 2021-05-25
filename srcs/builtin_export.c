@@ -44,7 +44,7 @@ int	builtin_export(char **argv, t_env *envs)
 	if (!argv[1])
 		return (builtin_env(envs, 1));
 	argv++;
-	while(*argv)
+	while (*argv)
 	{
 		tmp = ft_strchr(*argv, '=');
 		if (!tmp)
@@ -53,7 +53,7 @@ int	builtin_export(char **argv, t_env *envs)
 			continue ;
 		}
 		if (export_insert(ft_strndup(*argv, (tmp - *argv), 1),
-			ft_strdup(tmp + 1, 1), envs))
+				ft_strdup(tmp + 1, 1), envs))
 			return (1);
 		argv++;
 	}

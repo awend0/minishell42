@@ -36,7 +36,7 @@ void	*ft_calloc_save(int size)
 	{
 		cur = g_signal.memory;
 		while (cur->next)
-			cur=cur->next;
+			cur = cur->next;
 		cur->next = new;
 	}
 	return (ret);

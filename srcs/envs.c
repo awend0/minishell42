@@ -44,7 +44,7 @@ t_env	*env_split(char **env)
 	return (ret);
 }
 
-int		envs_len(t_env *envs)
+int	envs_len(t_env *envs)
 {
 	int		ret;
 
@@ -61,14 +61,14 @@ char	**get_envs(t_env *envs)
 {
 	char	**ret;
 	char	**buf;
-	int	len;
+	int		len;
 
 	len = envs_len(envs);
-	ret = ft_calloc_save((len + 1) * sizeof(char*));
+	ret = ft_calloc_save((len + 1) * sizeof(char *));
 	buf = ret;
 	while (len--)
 	{
-		*buf = ft_concat(envs->name , ft_concat("=", envs->value));
+		*buf = ft_concat(envs->name, ft_concat("=", envs->value));
 		envs = envs->next;
 		buf++;
 	}

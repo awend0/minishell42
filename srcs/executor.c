@@ -14,7 +14,6 @@ int	executor_run_binary(char **argv, char **env)
 	else
 		if (waitpid(g_signal.pid, &g_signal.status, 0) == -1)
 			return (-1);
-
 	if (g_signal.status > 0)
 		g_signal.status /= 2;
 	return (g_signal.status);
@@ -68,7 +67,7 @@ int	executor_cmd(t_cmd *cmd, t_env *envs, char **env)
 			return (g_signal.status);
 		}
 		g_signal.status = executor_run_binary(cmd->argv, env);
-		return (g_signal.status);	
+		return (g_signal.status);
 	}
 	return (-1);
 }

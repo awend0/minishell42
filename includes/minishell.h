@@ -91,7 +91,6 @@ char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
 void		termcaps_init(t_env *envs);
 char		*term_loop(t_hist *hist);
-void		*ft_memcpy(void *dest, const void *src, size_t n);
 
 // tests
 void		test_init_envs(t_env *envs);
@@ -158,6 +157,8 @@ int			ft_strlen(char *str);
 void		ft_putnbr_fd(int n, int fd);
 char		*ft_strcpy(char *dst, char *src);
 char		*ft_strdup(char *s, int save);
-char		*ft_strndup(const char *s, size_t n, int save);
+char		*ft_strndup(char *s, int n, int save);
 char		*ft_strcat(char *s1, char *s2);
+void		*ft_memcpy(void *dest, void *src, int n);
+
 #endif
