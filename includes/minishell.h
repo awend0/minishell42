@@ -80,7 +80,7 @@ typedef struct s_signal
 	int					status;
 	int					inter;
 	int					quit;
-	struct termios		backup;
+	struct termios		*backup;
 	t_list				*memory;
 }						t_signal;
 
