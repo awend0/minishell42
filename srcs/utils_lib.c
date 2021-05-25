@@ -4,6 +4,8 @@ int	ft_strlen(char *str)
 {
 	int		size;
 
+	if (!str)
+		return (0);
 	size = 0;
 	while (*str)
 	{
@@ -192,6 +194,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		return (0);
 	source = src;
 	dest = dst;
+	dest[n] = '\0';
 	while (n--)
 		*dest++ = *source++;
 	return (dst);

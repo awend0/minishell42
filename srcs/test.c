@@ -14,7 +14,7 @@ void	test_envs_to_strings(t_env *envs)
 {
 	char	**env;
 
-	env = get_env_as_string(envs);
+	env = get_envs(envs);
 	while (*env)
 	{
 		printf("%s\n", *env);

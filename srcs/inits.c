@@ -4,7 +4,7 @@ char	**array_append(char **arr, int len)
 {
 	char	**new;
 
-	new = ft_calloc_save(len + 2 * sizeof(char *));
+	new = ft_calloc_save((len + 2) * sizeof(char *));
 	new = arr_copy(new, arr);
 	return (new);
 }

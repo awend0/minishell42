@@ -12,7 +12,10 @@ int	get_next_line(int fd, char **line)
 		if (buf != '\n')
 			*line = charcat(*line, buf);
 		else
+		{
+			// write(1, "\n", 1);
 			return (1);
+		}
 	}
 	return (0);
 }

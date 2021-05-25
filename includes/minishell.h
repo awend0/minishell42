@@ -10,6 +10,9 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <term.h>
+# include <termios.h>
+# include <termcap.h>
 # include <stdio.h>
 
 # define RESET			"\033[0m"
@@ -61,6 +64,13 @@ typedef struct s_list{
 	void	*next;
 }			t_list;
 
+typedef struct s_hist
+{
+	char			*cmd;
+	struct s_hist	*prev;
+	struct s_hist	*next;
+}					t_hist;
+
 typedef struct s_signal
 {
 	int			pid;
@@ -72,10 +82,13 @@ typedef struct s_signal
 
 int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
-char		**get_env_as_string(t_env *envs);
+char		**get_envs(t_env *envs);
 t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
+void		termcaps_init(t_env *envs);
+char		*term_loop(t_hist *hist);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 
 // tests
 void		test_init_envs(t_env *envs);

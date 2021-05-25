@@ -1,6 +1,7 @@
 NAME	= minishell
 
 SRC		= main.c \
+		term.c \
 		envs.c \
 		gnl.c \
 		test.c \
@@ -30,7 +31,7 @@ FLAGS	= -O3 -Wall -Wextra -Werror -fsanitize=address
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc $(FLAGS) -o $(NAME) $(OBJS)
+	gcc $(FLAGS) -o $(NAME) $(OBJS) -ltermcap
 
 %.o: %.c
 	gcc $(FLAGS) -c $< -o $@
