@@ -33,8 +33,10 @@ int	executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 	{
 		if (table->output_file)
 		{
-			tmp[5] = open(*table->output_file,
-					O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+			if (table->append)
+				tmp[5] = open(*table->output_file, APPEND);
+			else
+				tmp[5] = open(*table->output_file, TRUNCATE);
 			if (tmp[5] == -1)
 				return (-1);
 		}

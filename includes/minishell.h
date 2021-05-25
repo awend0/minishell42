@@ -32,6 +32,8 @@
 # define BOLDMAGENTA	"\033[1m\033[35m"
 # define BOLDCYAN		"\033[1m\033[36m"
 # define BOLDWHITE		"\033[1m\033[37m"
+# define APPEND O_CREAT | O_WRONLY | O_APPEND, S_IRWXU
+# define TRUNCATE O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU
 
 typedef struct s_env
 {
@@ -51,15 +53,16 @@ typedef struct s_cmd
 
 typedef struct s_cmdtable
 {
-	char				**input_file;
-	char				**output_file;
-	char				**append_file;
+	char				*input_file;
+	char				*output_file;
+	int					append;
 	t_cmd				*cmds;
 	t_cmd				*last;
 	struct s_cmdtable	*next;
 }						t_cmdtable;
 
-typedef struct s_list{
+typedef struct s_list
+{
 	void	*node;
 	void	*next;
 }			t_list;

@@ -53,22 +53,22 @@ int	executor_cmd(t_cmd *cmd, t_env *envs, char **env)
 		g_signal.status = executor_run_binary(cmd->argv, env);
 		return (g_signal.status);
 	}
-	else if (is_builtin(cmd))
-	{
-		g_signal.status = executor_run_builtin(cmd->argv, envs, env);
-		return (g_signal.status);
-	}
 	else
 	{
+		if (is_builtin(cmd))
+		{
+			g_signal.status = executor_run_builtin(cmd->argv, envs, env);
+			return (g_signal.status);
+		}
 		cmd->argv[0] = scan_path(cmd->argv[0], envs);
 		if (!file_exist(cmd->argv[0]))
 		{
 			print_error(cmd->argv[0], 0, "command not found");
-			g_signal.status = 127;
+			g_signal.status = 128;
 			return (g_signal.status);
 		}
 		g_signal.status = executor_run_binary(cmd->argv, env);
-		return (g_signal.status);
+		return (g_signal.status);	
 	}
 	return (-1);
 }

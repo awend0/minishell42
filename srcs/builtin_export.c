@@ -1,67 +1,60 @@
 #include "../includes/minishell.h"
 
-t_env	*export_init(char *name, char *value)
+t_env	*export_init(char *name, char *value, t_env *prev)
 {
-	t_env	*ret;
+	t_env	*new;
 
-	ret = ft_calloc(sizeof(t_env));
-	ret->name = name;
-	ret->value = value;
-	ret->next = 0;
-	ret->prev = 0;
-	return (ret);
+	new = ft_calloc(sizeof(t_env));
+	new->next = 0;
+	new->prev = prev;
+	new->secret = 0;
+	new->value = ft_strdup(value, 0);
+	new->name = ft_strdup(name, 0);
+	return (new);
 }
 
-void	export_replace(t_env *cur, t_env *new)
-{
-	if (!cur || !new)
-		return ;
-	if (cur->prev)
-		cur->prev->next = new;
-	if (cur->next)
-		cur->next->prev = new;
-	free(cur->name);
-	free(cur->value);
-	free(cur);
-}
-
-void	export_insert(t_env *envs, t_env *new)
+int	export_insert(char *name, char *value, t_env *envs)
 {
 	t_env	*prev;
 
-	prev = 0;
-	while (envs)
+	if (check_env_name(name))
 	{
-		if (!ft_strcmp(envs->name, new->name))
-		{
-			export_replace(envs, new);
-			return ;
-		}
+		print_error("export", name, "not a valid identifier");
+		return (1);
+	}
+	while (envs && ft_strcmp(name, envs->name))
+	{
 		prev = envs;
 		envs = envs->next;
 	}
-	prev->next = new;
-	new->prev = prev;
+	if (envs && !ft_strcmp(envs->name, name))
+	{
+		free(envs->value);
+		envs->value = ft_strdup(value, 0);
+		return (0);
+	}
+	prev->next = export_init(name, value, prev);
+	return (0);
 }
 
 int	builtin_export(char **argv, t_env *envs)
 {
 	char	*tmp;
-	t_env	*new;
 
 	if (!argv[1])
 		return (builtin_env(envs, 1));
 	argv++;
-	while (*argv)
+	while(*argv)
 	{
-		if (check_env_name(*argv))
+		tmp = ft_strchr(*argv, '=');
+		if (!tmp)
 		{
-			print_error("export", *argv, "not a valid indentifier");
-			return (1);
+			argv++;
+			continue ;
 		}
-		tmp = strchr(*argv, '=');
-		new = export_init(ft_strndup(*argv, (tmp - *argv), 0), ft_strdup(tmp + 1, 0));
-		export_insert(envs, new);
+		if (export_insert(ft_strndup(*argv, (tmp - *argv), 1),
+			ft_strdup(tmp + 1, 1), envs))
+			return (1);
 		argv++;
 	}
 	return (0);
