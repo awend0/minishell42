@@ -16,7 +16,7 @@ char	*ft_strdup(char *s, int save)
 	char	*result;
 
 	if (!save)
-		result = ft_calloc(ft_strlen(s) + 1);
+		result = ft_calloc_save2(ft_strlen(s) + 1);
 	else
 		result = ft_calloc_save(ft_strlen(s) + 1);
 	i = 0;
@@ -36,7 +36,7 @@ char	*ft_strndup(char *s, int n, int save)
 
 	i = 0;
 	if (!save)
-		res = ft_calloc(n + 1);
+		res = ft_calloc_save2(n + 1);
 	else
 		res = ft_calloc_save(n + 1);
 	if (!res)

@@ -10,9 +10,6 @@ void	unset_del(t_env *envs, char *name)
 		envs->next->prev = envs->prev;
 	if (envs->prev)
 		envs->prev->next = envs->next;
-	free(envs->name);
-	free(envs->value);
-	free(envs);
 	return ;
 }
 

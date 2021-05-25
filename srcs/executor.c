@@ -26,8 +26,7 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 	(void)env;
 	if (!ft_strcmp(argv[0], "exit"))
 	{
-		ft_free_envs(envs);
-		ft_free();
+		ft_free(1);
 		tcsetattr(0, TCSANOW, g_signal.backup);
 		exit(0);
 	}
@@ -107,7 +106,7 @@ int	executor(t_cmdtable *table, t_env *envs, char **env)
 	int		ret;
 
 	ret = executor_exec(table, envs, env);
-	ft_free();
+	ft_free(0);
 	if (!g_signal.status)
 		g_signal.status = ret;
 	return (0);

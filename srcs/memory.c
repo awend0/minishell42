@@ -18,6 +18,30 @@ void	*ft_calloc(int size)
 	return (ret);
 }
 
+void	*ft_calloc_save2(int size)
+{
+	void	*ret;
+	t_list	*new;
+	t_list	*cur;
+
+	ret = ft_calloc(size);
+	new = ft_calloc(sizeof(t_list));
+	new->node = ret;
+	new->next = 0;
+	if (!g_signal.memory2)
+	{
+		g_signal.memory2 = new;
+	}
+	else
+	{
+		cur = g_signal.memory2;
+		while (cur->next)
+			cur = cur->next;
+		cur->next = new;
+	}
+	return (ret);
+}
+
 void	*ft_calloc_save(int size)
 {
 	void	*ret;
@@ -25,7 +49,7 @@ void	*ft_calloc_save(int size)
 	t_list	*cur;
 
 	ret = ft_calloc(size);
-	new = malloc(sizeof(t_list));
+	new = ft_calloc(sizeof(t_list));
 	new->node = ret;
 	new->next = 0;
 	if (!g_signal.memory)
@@ -42,12 +66,15 @@ void	*ft_calloc_save(int size)
 	return (ret);
 }
 
-void	ft_free(void)
+void	ft_free(int memory)
 {
 	t_list	*cur;
 	t_list	*prev;
 
-	cur = g_signal.memory;
+	if (memory == 0)
+		cur = g_signal.memory;
+	else
+		cur = g_signal.memory2;
 	while (cur)
 	{
 		prev = cur;
@@ -55,19 +82,6 @@ void	ft_free(void)
 		free(prev->node);
 		free(prev);
 	}
-	g_signal.memory = 0;
-}
-
-void	ft_free_envs(t_env *envs)
-{
-	t_env	*tmp;
-
-	while (envs)
-	{
-		tmp = envs;
-		envs = tmp->next;
-		free(tmp->name);
-		free(tmp->value);
-		free(tmp);
-	}
+	if (memory == 0)
+		g_signal.memory = 0;
 }

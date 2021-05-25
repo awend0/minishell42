@@ -12,7 +12,7 @@ void	termcaps_init(t_env *envs)
 	struct termios	term;
 
 	tcgetattr(0, &term);
-	g_signal.backup = ft_calloc(sizeof(struct termios));
+	g_signal.backup = ft_calloc_save2(sizeof(struct termios));
 	tcgetattr(0, g_signal.backup);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);

@@ -9,7 +9,7 @@ t_env	*env_add(t_env *list, char *env, int secret)
 	cur = list;
 	while (cur && cur->next)
 		cur = cur->next;
-	new = ft_calloc(sizeof(t_env));
+	new = ft_calloc_save2(sizeof(t_env));
 	tmp = ft_strchr(env, '=');
 	new->name = ft_strndup(env, (tmp - env), 0);
 	new->value = ft_strdup(tmp + 1, 0);

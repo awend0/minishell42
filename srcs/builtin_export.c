@@ -4,7 +4,7 @@ t_env	*export_init(char *name, char *value, t_env *prev)
 {
 	t_env	*new;
 
-	new = ft_calloc(sizeof(t_env));
+	new = ft_calloc_save2(sizeof(t_env));
 	new->next = 0;
 	new->prev = prev;
 	new->secret = 0;
@@ -29,7 +29,6 @@ int	export_insert(char *name, char *value, t_env *envs)
 	}
 	if (envs && !ft_strcmp(envs->name, name))
 	{
-		free(envs->value);
 		envs->value = ft_strdup(value, 0);
 		return (0);
 	}

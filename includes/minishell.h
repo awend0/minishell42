@@ -82,6 +82,7 @@ typedef struct s_signal
 	int					quit;
 	struct termios		*backup;
 	t_list				*memory;
+	t_list				*memory2;
 }						t_signal;
 
 int			get_next_line(int fd, char **line);
@@ -101,7 +102,6 @@ void		test_parsing(t_cmdtable *table);
 // utils
 int			ft_arrlen(char **str);
 int			get_envs_len(t_env *envs);
-void		free_arr(char **arr);
 int			isspecial(char c);
 void		print_error_and_exit(char *str);
 int			file_exist(char *filename);
@@ -144,10 +144,9 @@ void		sig_quit(int code);
 extern t_signal	g_signal;
 
 // memory
-void		ft_free_envs(t_env *envs);
-void		ft_free(void);
+void		ft_free(int memory);
 void		*ft_calloc_save(int size);
-void		*ft_calloc(int size);
+void		*ft_calloc_save2(int size);
 
 // lib
 char		*ft_strchr(char *str, int c);

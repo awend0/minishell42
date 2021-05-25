@@ -1,14 +1,14 @@
 #include "../includes/minishell.h"
 
-t_signal	g_signal = {0, 0, 0, 0, 0, 0};
+t_signal	g_signal = {0, 0, 0, 0, 0, 0, 0};
 
 void	hist_init(t_hist **hist, int start)
 {
-	(*hist) = ft_calloc(sizeof(t_hist));
+	(*hist) = ft_calloc_save2(sizeof(t_hist));
 	(*hist)->next = 0;
 	(*hist)->prev = 0;
 	if (start)
-		(*hist)->cmd = ft_calloc(sizeof(char) * 2);
+		(*hist)->cmd = ft_calloc_save2(sizeof(char) * 2);
 	else
 		(*hist)->cmd = 0;
 }
