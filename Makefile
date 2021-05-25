@@ -3,14 +3,16 @@ NAME	= minishell
 SRC		= main.c \
 		term.c \
 		envs.c \
-		gnl.c \
 		test.c \
 		parser.c \
 		tokens.c \
 		inits.c \
 		utils.c \
 		utils2.c \
+		utils3.c \
 		utils_lib.c \
+		utils_lib2.c \
+		utils_lib3.c \
 		memory.c \
 		executor.c \
 		executor_pipe.c \

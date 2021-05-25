@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_signal g_signal = {0, 0, 0, 0, 0};
+t_signal	g_signal = {0, 0, 0, 0, 0};
 
 void	hist_init(t_hist **hist, int start)
 {
@@ -52,7 +52,8 @@ int	main(int argc, char **argv, char **env)
 		if (*line)
 			save_cmd(line, hist);
 		cmdtable = parser(line, envs);
-		modify_env(envs, "?", ft_itoa(executor(cmdtable, envs, get_envs(envs))));
+		modify_env(envs, "?",
+			ft_itoa(executor(cmdtable, envs, get_envs(envs))));
 	}
 	return (0);
 }

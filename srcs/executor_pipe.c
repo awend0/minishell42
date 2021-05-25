@@ -27,6 +27,18 @@ int	executor_redir(int oldfd, int newfd)
 	return (0);
 }
 
+int	executor_switch(int **tmp)
+{
+	int	*cur;
+
+	cur = *tmp;
+	if (pipe(cur) == -1)
+		return (-1);
+	cur[5] = cur[1];
+	cur[4] = cur[0];
+	return (0);
+}
+
 int	executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 {
 	if (cmd->next == 0)
@@ -48,12 +60,6 @@ int	executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 		}
 	}
 	else
-	{
-		if (pipe(tmp) == -1)
-			return (-1);
-		tmp[5] = tmp[1];
-		tmp[4] = tmp[0];
-		return (0);
-	}
+		return (executor_switch(&tmp));
 	return (0);
 }

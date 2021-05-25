@@ -1,45 +1,5 @@
 #include "../includes/minishell.h"
 
-char	*scan_path(char *binary, t_env *envs)
-{
-	DIR				*folder;
-	struct dirent	*file;
-	char			**dirs;
-	t_env			*cur;
-	char			*ret;
-
-	cur = envs;
-	while (cur && ft_strcmp(cur->name, "PATH"))
-		cur = cur->next;
-	if (!cur)
-		return (binary);
-	dirs = ft_split(cur->value, ':');
-	while (*dirs)
-	{
-		folder = opendir(*dirs);
-		if (!folder)
-		{
-			dirs++;
-			continue ;
-		}
-		while (folder)
-		{
-			file = readdir(folder);
-			if (!file)
-				break ;
-			if (!ft_strcmp(file->d_name, binary))
-			{
-				ret = ft_concat(*dirs, ft_concat("/", file->d_name));
-				closedir(folder);
-				return (ret);
-			}
-		}
-		closedir(folder);
-		dirs++;
-	}
-	return (binary);
-}
-
 int	file_exist(char *filename)
 {
 	struct stat	buf;
