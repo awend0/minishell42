@@ -12,6 +12,7 @@ void	termcaps_init(t_env *envs)
 	struct termios	term;
 
 	tcgetattr(0, &term);
+	tcgetattr(0, &g_signal.backup);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
 	tcsetattr(0, TCSANOW, &term);

@@ -37,19 +37,19 @@
 
 typedef struct s_env
 {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-	struct s_env	*prev;
-	int				secret;
-}					t_env;
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+	struct s_env		*prev;
+	int					secret;
+}						t_env;
 
 typedef struct s_cmd
 {
-	int				argc;
-	char			**argv;
-	struct s_cmd	*next;
-}					t_cmd;
+	int					argc;
+	char				**argv;
+	struct s_cmd		*next;
+}						t_cmd;
 
 typedef struct s_cmdtable
 {
@@ -63,25 +63,26 @@ typedef struct s_cmdtable
 
 typedef struct s_list
 {
-	void	*node;
-	void	*next;
-}			t_list;
+	void				*node;
+	void				*next;
+}						t_list;
 
 typedef struct s_hist
 {
-	char			*cmd;
-	struct s_hist	*prev;
-	struct s_hist	*next;
-}					t_hist;
+	char				*cmd;
+	struct s_hist		*prev;
+	struct s_hist		*next;
+}						t_hist;
 
 typedef struct s_signal
 {
-	int			pid;
-	int			status;
-	int			inter;
-	int			quit;
-	t_list		*memory;
-}				t_signal;
+	int					pid;
+	int					status;
+	int					inter;
+	int					quit;
+	struct termios		backup;
+	t_list				*memory;
+}						t_signal;
 
 int			get_next_line(int fd, char **line);
 t_env		*env_split(char **env);
