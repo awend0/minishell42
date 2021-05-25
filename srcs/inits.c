@@ -32,3 +32,13 @@ void	cmdtable_init(t_cmdtable **table)
 	(*table)->output_file = 0;
 	(*table)->next = 0;
 }
+
+void	add_new_cmdtable(t_cmdtable **table, char **line)
+{
+	t_cmdtable	*new;
+
+	cmdtable_init(&new);
+	(*table)->next = new;
+	(*table) = (*table)->next;
+	(*line)++;
+}

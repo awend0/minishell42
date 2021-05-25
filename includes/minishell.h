@@ -32,8 +32,6 @@
 # define BOLDMAGENTA	"\033[1m\033[35m"
 # define BOLDCYAN		"\033[1m\033[36m"
 # define BOLDWHITE		"\033[1m\033[37m"
-# define APPEND O_CREAT | O_WRONLY | O_APPEND, S_IRWXU
-# define TRUNCATE O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU
 
 typedef struct s_env
 {
@@ -67,6 +65,13 @@ typedef struct s_list
 	void				*next;
 }						t_list;
 
+typedef struct s_term
+{
+	int					position;
+	char				*line;
+	int					size;
+}						t_term;
+
 typedef struct s_hist
 {
 	char				*cmd;
@@ -93,6 +98,7 @@ char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
 void		termcaps_init(t_env *envs);
 char		*term_loop(t_hist *hist);
+void		add_redirection(char **line, t_cmdtable *table, t_env *envs);
 
 // tests
 void		test_init_envs(t_env *envs);
@@ -117,6 +123,7 @@ void		print_error(char *bin, char *val, char *err);
 int			check_env_name(char *name);
 void		modify_env(t_env *envs, char *name, char *newvalue);
 char		*pwd_getcurpath(void);
+int			ft_putchar_term(int c);
 
 // executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);
@@ -137,6 +144,7 @@ void		arg_init(t_cmd *cur);
 void		cmd_init(t_cmd **cmd);
 void		cmdtable_init(t_cmdtable **table);
 char		**array_append(char **arr, int len);
+void		add_new_cmdtable(t_cmdtable **table, char **line);
 
 // signal
 void		sig_int(int code);
@@ -147,6 +155,15 @@ extern t_signal	g_signal;
 void		ft_free(int memory);
 void		*ft_calloc_save(int size);
 void		*ft_calloc_save2(int size);
+
+// term
+void		del_one(t_term *term);
+void		write_char(char *str, int ret, t_term *term);
+char		*insert_char(char *line, char *str, int ret, int pos);
+char		*get_next(t_hist **hist, t_term *term);
+char		*get_privious(t_hist **hist, t_term *term);
+void		termcaps_init(t_env *envs);
+void		term_init(t_term *term);
 
 // lib
 char		*ft_strchr(char *str, int c);

@@ -27,7 +27,7 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 	if (!ft_strcmp(argv[0], "exit"))
 	{
 		ft_free(1);
-		tcsetattr(0, TCSANOW, g_signal.backup);
+		// tcsetattr(0, TCSANOW, g_signal.backup);
 		exit(0);
 	}
 	if (!ft_strcmp(argv[0], "pwd"))
@@ -65,7 +65,7 @@ int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *tmp)
 		if (!file_exist(cmd->argv[0]))
 		{
 			print_error(cmd->argv[0], 0, "command not found");
-			tmp[6]= 128;
+			tmp[6] = 128;
 			return (0);
 		}
 		tmp[6] = executor_run_binary(cmd->argv, env);

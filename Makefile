@@ -2,9 +2,12 @@ NAME	= minishell
 
 SRC		= main.c \
 		term.c \
+		term_inits.c \
+		term_commands.c \
 		envs.c \
 		test.c \
 		parser.c \
+		parser_redirection.c \
 		tokens.c \
 		inits.c \
 		utils.c \

@@ -1,5 +1,10 @@
 #include "../includes/minishell.h"
 
+int	ft_putchar_term(int c)
+{
+	return (write(1, &c, 1));
+}
+
 char	*scan_iterate_files(char *foldername, char *binary, DIR *folder)
 {
 	char			*ret;
