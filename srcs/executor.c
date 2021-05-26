@@ -25,10 +25,7 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 {
 	(void)env;
 	if (!ft_strcmp(argv[0], "exit"))
-	{
-		tcsetattr(0, TCSANOW, g_signal.backup_term);
-		builtin_exit();
-	}
+		return (builtin_exit(argv));
 	if (!ft_strcmp(argv[0], "pwd"))
 		return (builtin_pwd());
 	if (!ft_strcmp(argv[0], "echo"))

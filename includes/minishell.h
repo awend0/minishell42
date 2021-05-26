@@ -101,12 +101,10 @@ void		termcaps_init(t_env *envs);
 void		term_loop(t_hist *hist);
 void		add_redirection(char **line, t_cmdtable *table, t_env *envs);
 
-// tests
 void		test_init_envs(t_env *envs);
 void		test_envs_to_strings(t_env *envs);
 void		test_parsing(t_cmdtable *table);
 
-// utils
 int			ft_arrlen(char **str);
 int			get_envs_len(t_env *envs);
 int			isspecial(char c);
@@ -126,40 +124,34 @@ void		modify_env(t_env *envs, char *name, char *newvalue);
 char		*pwd_getcurpath(void);
 int			ft_putchar_term(int c);
 
-// executor
 int			executor(t_cmdtable *table, t_env *envs, char **env);
 int			executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7]);
 int			executor_redir(int oldfd, int newfd);
 int			executor_init_fds(int tmp[7], t_cmdtable *table);
 
-// builtins
 int			builtin_pwd(void);
 int			builtin_echo(char **argv);
 int			builtin_cd(char **argv, t_env *envs);
 int			builtin_unset(char **argv, t_env *envs);
 int			builtin_export(char **argv, t_env *envs);
 int			builtin_env(t_env *envs, int declare_x);
-void		builtin_exit(void);
+int			builtin_exit(char **argv);
 
-// inits
 void		arg_init(t_cmd *cur);
 void		cmd_init(t_cmd **cmd);
 void		cmdtable_init(t_cmdtable **table);
 char		**array_append(char **arr, int len);
 void		add_new_cmdtable(t_cmdtable **table, char **line);
 
-// signal
 void		sig_int(int code);
 void		sig_quit(int code);
 extern t_signal	g_signal;
 
-// memory
 void		ft_free(int memory);
 void		*ft_calloc_save(int size);
 void		*ft_calloc_save2(int size);
 void		*ft_calloc(int size);
 
-// term
 void		del_one(t_term *term);
 void		write_char(char *str, int ret, t_term *term);
 char		*insert_char(char *line, char *str, int ret, int pos);
@@ -168,7 +160,6 @@ char		*get_privious(t_hist **hist, t_term *term);
 void		termcaps_init(t_env *envs);
 void		term_init(t_term *term);
 
-// lib
 char		*ft_strchr(char *str, int c);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_putstr_fd(char *str, int fd);

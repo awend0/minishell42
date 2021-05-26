@@ -54,6 +54,7 @@ void	term_loop(t_hist *hist)
 	if (!ft_strcmp(str, "\4"))
 	{
 		g_signal.line = ft_strdup("exit", 1);
+		write(1, "exit\n", 5);
 		return ;
 	}
 	ft_putstr_fd("\n", 1);
