@@ -85,7 +85,6 @@ typedef struct s_signal
 	int					status;
 	int					inter;
 	int					quit;
-	struct termios		*backup;
 	t_list				*memory;
 	t_list				*memory2;
 }						t_signal;
@@ -138,6 +137,7 @@ int			builtin_cd(char **argv, t_env *envs);
 int			builtin_unset(char **argv, t_env *envs);
 int			builtin_export(char **argv, t_env *envs);
 int			builtin_env(t_env *envs, int declare_x);
+void		builtin_exit(void);
 
 // inits
 void		arg_init(t_cmd *cur);

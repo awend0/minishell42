@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_signal	g_signal = {0, 0, 0, 0, 0, 0, 0};
+t_signal	g_signal = {0, 0, 0, 0, 0, 0};
 
 void	hist_init(t_hist **hist, int start)
 {

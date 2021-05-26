@@ -26,7 +26,8 @@ SRC		= main.c \
 		builtin_unset.c \
 		builtin_export.c \
 		builtin_env.c \
-		ft_split.c
+		builtin_exit.c \
+		ft_split.c \
 
 DIR_SRC = srcs/
 SRCS	= $(addprefix $(DIR_SRC), $(SRC))

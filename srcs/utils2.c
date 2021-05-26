@@ -31,7 +31,7 @@ char	*get_env(t_env *envs, char *name)
 
 void	print_error(char *bin, char *val, char *err)
 {
-	ft_putstr_fd("minishell: ", 1);
+	ft_putstr_fd("paSHtet: ", 1);
 	ft_putstr_fd(bin, 1);
 	ft_putstr_fd(": ", 1);
 	if (err)

@@ -44,7 +44,8 @@ char	*scan_iterate_folders(char *binary, char **dirs)
 		closedir(folder);
 		dirs++;
 	}
-	return (binary);
+	print_error(binary, 0, "command not found");
+	return (0);
 }
 
 char	*scan_path(char *binary, t_env *envs)

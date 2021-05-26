@@ -25,10 +25,7 @@ int	executor_run_builtin(char **argv, t_env *envs, char **env)
 {
 	(void)env;
 	if (!ft_strcmp(argv[0], "exit"))
-	{
-		ft_free(1);
-		exit(0);
-	}
+		builtin_exit();
 	if (!ft_strcmp(argv[0], "pwd"))
 		return (builtin_pwd());
 	if (!ft_strcmp(argv[0], "echo"))
@@ -61,9 +58,8 @@ int	executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *tmp)
 			return (0);
 		}
 		cmd->argv[0] = scan_path(cmd->argv[0], envs);
-		if (!file_exist(cmd->argv[0]))
+		if (!cmd->argv[0])
 		{
-			print_error(cmd->argv[0], 0, "command not found");
 			tmp[6] = 128;
 			return (0);
 		}
