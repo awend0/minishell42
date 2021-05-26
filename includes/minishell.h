@@ -87,6 +87,8 @@ typedef struct s_signal
 	int					quit;
 	t_list				*memory;
 	t_list				*memory2;
+	struct termios		*cur_term;
+	struct termios		*backup_term;
 }						t_signal;
 
 int			get_next_line(int fd, char **line);

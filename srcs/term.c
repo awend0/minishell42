@@ -46,6 +46,7 @@ char	*term_loop(t_hist *hist)
 	str[ret] = 0;
 	while (ret && ft_strcmp(str, "\n") && ft_strcmp(str, "\4"))
 	{
+		tcsetattr(0, TCSANOW, g_signal.cur_term);
 		check_command(str, &hist, &term, ret);
 		ret = read(0, str, 999);
 		str[ret] = 0;

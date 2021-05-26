@@ -2,12 +2,13 @@
 
 void	termcaps_init(t_env *envs)
 {
-	struct termios	term;
-
-	tcgetattr(0, &term);
-	term.c_lflag &= ~(ECHO);
-	term.c_lflag &= ~(ICANON);
-	tcsetattr(0, TCSANOW, &term);
+	g_signal.cur_term = ft_calloc(sizeof(struct termios));
+	g_signal.backup_term = ft_calloc(sizeof(struct termios));
+	tcgetattr(0, g_signal.cur_term);
+	tcgetattr(0, g_signal.backup_term);
+	g_signal.cur_term->c_lflag &= ~(ECHO);
+	g_signal.cur_term->c_lflag &= ~(ICANON);
+	tcsetattr(0, TCSANOW, g_signal.cur_term);
 	tgetent(0, get_env(envs, "TERM"));
 }
 
