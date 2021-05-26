@@ -42,10 +42,6 @@ int	cd_back(t_env *envs)
 
 int	builtin_cd(char **argv, t_env *envs)
 {
-	char	*path;
-
-	(void)envs;
-	path = 0;
 	if (!argv[1])
 		return (cd_home(envs));
 	if (!ft_strcmp(argv[1], "-"))

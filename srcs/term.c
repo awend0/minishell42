@@ -20,15 +20,15 @@ void	cursor_to_right(t_term *term)
 
 void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 {
-	if (!strcmp(str, "\e[A"))
+	if (!ft_strcmp(str, "\e[A"))
 		term->line = get_privious(hist, term);
-	else if (!strcmp(str, "\e[B"))
+	else if (!ft_strcmp(str, "\e[B"))
 		term->line = get_next(hist, term);
-	else if (!strcmp(str, "\e[D"))
+	else if (!ft_strcmp(str, "\e[D"))
 		cursor_to_left(term);
-	else if (!strcmp(str, "\e[C"))
+	else if (!ft_strcmp(str, "\e[C"))
 		cursor_to_right(term);
-	else if (!strcmp(str, "\x7f") && !strcmp(str, "\177"))
+	else if (!ft_strcmp(str, "\x7f") && !ft_strcmp(str, "\177"))
 		del_one(term);
 	else
 		write_char(str, ret, term);

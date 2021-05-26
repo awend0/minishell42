@@ -28,21 +28,6 @@ int	get_envs_len(t_env *envs)
 	return (size);
 }
 
-void	print_error_and_exit(char *str)
-{
-	if (errno != 0)
-	{
-		ft_putstr_fd(strerror(errno), 1);
-		ft_putstr_fd("\n", 1);
-	}
-	else
-	{
-		ft_putstr_fd(str, 1);
-		ft_putstr_fd("\n", 1);
-	}
-	exit(1);
-}
-
 char	*charcat(char *str, char c)
 {
 	char	*strjoin;

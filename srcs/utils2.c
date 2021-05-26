@@ -55,5 +55,5 @@ void	modify_env(t_env *envs, char *name, char *newvalue)
 		envs = envs->next;
 	if (!envs)
 		return ;
-	envs->value = strdup(newvalue);
+	envs->value = ft_strdup(newvalue, 0);
 }

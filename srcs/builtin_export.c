@@ -17,6 +17,7 @@ int	export_insert(char *name, char *value, t_env *envs)
 {
 	t_env	*prev;
 
+	prev = 0;
 	if (check_env_name(name))
 	{
 		print_error("export", name, "not a valid identifier");

@@ -47,7 +47,7 @@ char	*ft_concat(char *s1, char *s2)
 
 	if (!s2)
 		return ((char *)s1);
-	ret = ft_calloc_save(strlen(s1) + strlen(s2) + 1);
+	ret = ft_calloc_save(ft_strlen(s1) + ft_strlen(s2) + 1);
 	ft_strcpy(ret, s1);
 	ft_strcat(ret, s2);
 	return (ret);
