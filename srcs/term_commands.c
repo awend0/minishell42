@@ -63,7 +63,7 @@ void	write_char(char *str, int ret, t_term *term)
 		ft_putstr_fd(str, 1);
 		term->size++;
 		term->position++;
-		term->line = charcat(term->line, *str);
+		g_signal.line = charcat(g_signal.line, *str);
 	}
 	else
 	{
@@ -73,7 +73,7 @@ void	write_char(char *str, int ret, t_term *term)
 		ft_putstr_fd(str, 1);
 		tputs(tgetstr("ip", 0), 1, ft_putchar_term);
 		tputs(tgetstr("ei", 0), 1, ft_putchar_term);
-		term->line = insert_char(term->line, str, ret, term->position);
+		g_signal.line = insert_char(g_signal.line, str, ret, term->position);
 		term->position++;
 	}
 }
@@ -88,9 +88,9 @@ void	del_one(t_term *term)
 		tputs(delete_character, 1, ft_putchar_term);
 		term->size--;
 		term->position--;
-		len = ft_strlen(&term->line[term->position]);
-		ft_memcpy(&term->line[term->position],
-			&term->line[term->position + 1],
+		len = ft_strlen(&g_signal.line[term->position]);
+		ft_memcpy(&g_signal.line[term->position],
+			&g_signal.line[term->position + 1],
 			len);
 	}
 }

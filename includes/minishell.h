@@ -68,7 +68,6 @@ typedef struct s_list
 typedef struct s_term
 {
 	int					position;
-	char				*line;
 	int					size;
 }						t_term;
 
@@ -85,6 +84,7 @@ typedef struct s_signal
 	int					status;
 	int					inter;
 	int					quit;
+	char				*line;
 	t_list				*memory;
 	t_list				*memory2;
 	struct termios		*cur_term;
@@ -98,7 +98,7 @@ t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
 void		termcaps_init(t_env *envs);
-char		*term_loop(t_hist *hist);
+void		term_loop(t_hist *hist);
 void		add_redirection(char **line, t_cmdtable *table, t_env *envs);
 
 // tests

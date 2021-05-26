@@ -21,9 +21,9 @@ void	cursor_to_right(t_term *term)
 void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 {
 	if (!ft_strcmp(str, "\e[A"))
-		term->line = get_privious(hist, term);
+		g_signal.line = get_privious(hist, term);
 	else if (!ft_strcmp(str, "\e[B"))
-		term->line = get_next(hist, term);
+		g_signal.line = get_next(hist, term);
 	else if (!ft_strcmp(str, "\e[D"))
 		cursor_to_left(term);
 	else if (!ft_strcmp(str, "\e[C"))
@@ -34,7 +34,7 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		write_char(str, ret, term);
 }
 
-char	*term_loop(t_hist *hist)
+void	term_loop(t_hist *hist)
 {
 	char	str[1000];
 	int		ret;
@@ -52,7 +52,9 @@ char	*term_loop(t_hist *hist)
 		str[ret] = 0;
 	}
 	if (!ft_strcmp(str, "\4"))
-		return ("exit");
+	{
+		g_signal.line = ft_strdup("exit", 1);
+		return ;
+	}
 	ft_putstr_fd("\n", 1);
-	return (term.line);
 }

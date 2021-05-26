@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_signal	g_signal = {0, 0, 0, 0, 0, 0, 0, 0};
+t_signal	g_signal = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 void	hist_init(t_hist **hist, int start)
 {
@@ -33,7 +33,6 @@ void	save_cmd(char *line, t_hist *hist)
 
 int	main(int argc, char **argv, char **env)
 {
-	char			*line;
 	t_cmdtable		*cmdtable;
 	t_env			*envs;
 	t_hist			*hist;
@@ -48,12 +47,13 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		g_signal.pid = 0;
+		g_signal.inter = 0;
 		ft_putstr_fd(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
-		line = term_loop(hist);
-		if (*line)
-			save_cmd(line, hist);
+		term_loop(hist);
+		if (*g_signal.line)
+			save_cmd(g_signal.line, hist);
 		modify_env(envs, "?", ft_itoa(g_signal.status));
-		cmdtable = parser(line, envs);
+		cmdtable = parser(g_signal.line, envs);
 		executor(cmdtable, envs, get_envs(envs));
 	}
 	return (0);
