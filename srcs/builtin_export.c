@@ -33,7 +33,10 @@ int	export_insert(char *name, char *value, t_env *envs)
 		envs->value = ft_strdup(value, 0);
 		return (0);
 	}
-	prev->next = export_init(name, value, prev);
+	if (prev)
+		prev->next = export_init(name, value, prev);
+	else
+		envs = export_init(name, value, prev);
 	return (0);
 }
 

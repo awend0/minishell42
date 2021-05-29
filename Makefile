@@ -5,7 +5,6 @@ SRC		= main.c \
 		term_inits.c \
 		term_commands.c \
 		envs.c \
-		test.c \
 		parser.c \
 		parser_redirection.c \
 		tokens.c \

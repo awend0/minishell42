@@ -1,18 +1,5 @@
 #include "../includes/minishell.h"
 
-char	*find_env(char *env, t_env *envs)
-{
-	if (!env || !envs)
-		return (0);
-	while (envs)
-	{
-		if (!ft_strcmp(env, envs->name))
-			return (envs->value);
-		envs = envs->next;
-	}
-	return (0);
-}
-
 char	*get_env_token(char **line, char *str, t_env *envs)
 {
 	char	*buf;
@@ -21,7 +8,7 @@ char	*get_env_token(char **line, char *str, t_env *envs)
 	buf = get_token(line, ":*^=#@!%\\().,$ |;><'\"", '0', envs);
 	if (!buf)
 		return ("$");
-	str = ft_strjoin(str, find_env(buf, envs));
+	str = ft_strjoin(str, get_env(envs, buf));
 	return (str);
 }
 

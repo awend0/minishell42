@@ -15,6 +15,8 @@ char	*ft_strdup(char *s, int save)
 	int		i;
 	char	*result;
 
+	if (!s || !(*s))
+		return (0);
 	if (!save)
 		result = ft_calloc_save2(ft_strlen(s) + 1);
 	else
@@ -34,6 +36,8 @@ char	*ft_strndup(char *s, int n, int save)
 	char	*res;
 	int		i;
 
+	if (!s || !(*s))
+		return (0);
 	i = 0;
 	if (!save)
 		res = ft_calloc_save2(n + 1);

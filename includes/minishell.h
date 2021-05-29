@@ -101,10 +101,6 @@ void		termcaps_init(t_env *envs);
 void		term_loop(t_hist *hist);
 void		add_redirection(char **line, t_cmdtable *table, t_env *envs);
 
-void		test_init_envs(t_env *envs);
-void		test_envs_to_strings(t_env *envs);
-void		test_parsing(t_cmdtable *table);
-
 int			ft_arrlen(char **str);
 int			get_envs_len(t_env *envs);
 int			isspecial(char c);
