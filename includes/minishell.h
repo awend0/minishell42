@@ -171,5 +171,5 @@ char		*ft_strdup(char *s, int save);
 char		*ft_strndup(char *s, int n, int save);
 char		*ft_strcat(char *s1, char *s2);
 void		*ft_memcpy(void *dest, void *src, int n);
-
+int			ft_atoi(const char *str);
 #endif

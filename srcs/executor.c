@@ -102,7 +102,7 @@ int	executor(t_cmdtable *table, t_env *envs, char **env)
 
 	ret = executor_exec(table, envs, env);
 	ft_free(0);
-	if (!g_signal.status)
+	if (!g_signal.inter && !g_signal.quit)
 		g_signal.status = ret;
 	return (0);
 }

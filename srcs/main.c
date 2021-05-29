@@ -52,9 +52,9 @@ int	main(int argc, char **argv, char **env)
 		term_loop(hist);
 		if (*g_signal.line)
 			save_cmd(g_signal.line, hist);
-		modify_env(envs, "?", ft_itoa(g_signal.status));
 		cmdtable = parser(g_signal.line, envs);
 		executor(cmdtable, envs, get_envs(envs));
+		modify_env(envs, "?", ft_itoa(g_signal.status));
 	}
 	return (0);
 }
