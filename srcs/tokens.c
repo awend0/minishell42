@@ -19,6 +19,8 @@ char	*get_env_token(char **line, char *str, t_env *envs)
 
 	(*line)++;
 	buf = get_token(line, ":*^=#@!%\\().,$ |;><'\"", '0', envs);
+	if (!buf)
+		return ("$");
 	str = ft_strjoin(str, find_env(buf, envs));
 	return (str);
 }
