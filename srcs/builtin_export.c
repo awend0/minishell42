@@ -37,25 +37,37 @@ int	export_insert(char *name, char *value, t_env *envs)
 	return (0);
 }
 
-int	builtin_export(char **argv, t_env *envs)
+int	export_iterate(char **argv, t_env *envs)
 {
+	int		ret;
 	char	*tmp;
 
-	if (!argv[1])
-		return (builtin_env(envs, 1));
-	argv++;
+	ret = 0;
 	while (*argv)
 	{
 		tmp = ft_strchr(*argv, '=');
 		if (!tmp)
 		{
+			if (check_env_name(*argv))
+			{
+				print_error("export", *argv, "not a valid identifier");
+				ret = 1;
+			}
 			argv++;
 			continue ;
 		}
 		if (export_insert(ft_strndup(*argv, (tmp - *argv), 1),
 				ft_strdup(tmp + 1, 1), envs))
-			return (1);
+			ret = 1;
 		argv++;
 	}
-	return (0);
+	return (ret);
+}
+
+int	builtin_export(char **argv, t_env *envs)
+{
+	if (!argv[1])
+		return (builtin_env(envs, 1));
+	argv++;
+	return (export_iterate(argv, envs));
 }

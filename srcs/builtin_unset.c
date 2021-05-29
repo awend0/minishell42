@@ -15,6 +15,9 @@ void	unset_del(t_env *envs, char *name)
 
 int	builtin_unset(char **argv, t_env *envs)
 {
+	int		ret;
+
+	ret = 0;
 	if (!argv[1])
 		return (0);
 	argv++;
@@ -23,10 +26,10 @@ int	builtin_unset(char **argv, t_env *envs)
 		if (check_env_name(*argv))
 		{
 			print_error("unset", *argv, "not a valid identifier");
-			return (1);
+			ret = 1;
 		}
 		unset_del(envs, *argv);
 		argv++;
 	}
-	return (0);
+	return (ret);
 }

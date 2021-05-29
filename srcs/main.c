@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		g_signal.pid = 0;
 		g_signal.inter = 0;
+		g_signal.quit = 0;
 		ft_putstr_fd(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
 		term_loop(hist);
 		if (*g_signal.line)
