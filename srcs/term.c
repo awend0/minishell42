@@ -36,19 +36,19 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 
 void	term_loop(t_hist *hist)
 {
-	char	str[2];
+	char	str[10];
 	int		ret;
 	t_term	term;
 
 	term_init(&term);
 	tputs(save_cursor, 1, ft_putchar_term);
-	ret = read(0, str, 1);
+	ret = read(0, str, 9);
 	str[ret] = 0;
 	while (ret && ft_strcmp(str, "\n") && ft_strcmp(str, "\4"))
 	{
 		tcsetattr(0, TCSANOW, g_signal.cur_term);
 		check_command(str, &hist, &term, ret);
-		ret = read(0, str, 1);
+		ret = read(0, str, 9);
 		str[ret] = 0;
 	}
 	if (!ft_strcmp(str, "\4"))
