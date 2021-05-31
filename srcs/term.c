@@ -39,7 +39,7 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 void	ctrl_d(void)
 {
 	g_signal.line = ft_strdup("exit", 1);
-	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit", 1);
 }
 
 void	term_loop(t_hist *hist, t_env *envs)
@@ -54,7 +54,7 @@ void	term_loop(t_hist *hist, t_env *envs)
 	str[ret] = 0;
 	while (ft_strcmp(str, "\4") && ft_strcmp(str, "\n"))
 	{
-		while (ret && ft_strcmp(str, "\n"))
+		while (ft_strcmp(str, "\n"))
 		{
 			if (g_signal.inter || g_signal.quit)
 				modify_env(envs, "?", ft_itoa(g_signal.status));
@@ -62,6 +62,8 @@ void	term_loop(t_hist *hist, t_env *envs)
 			check_command(str, &hist, &term, ret);
 			ret = read(0, str, 9);
 			str[ret] = 0;
+			if (!ft_strcmp(str, "\4") && !ft_strlen(g_signal.line))
+				break ;
 		}
 	}
 	if (!ft_strcmp(str, "\4"))
