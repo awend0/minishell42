@@ -58,11 +58,11 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, &sig_quit);
 	while (1)
 	{
+		print_current_folder();
+		term_loop(hist, envs);
 		g_signal.pid = 0;
 		g_signal.inter = 0;
 		g_signal.quit = 0;
-		print_current_folder();
-		term_loop(hist);
 		if (*g_signal.line)
 			save_cmd(g_signal.line, hist);
 		cmdtable = parser(g_signal.line, envs);

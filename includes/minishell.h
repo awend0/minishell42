@@ -98,7 +98,7 @@ t_cmdtable	*parser(char *line, t_env *envs);
 char		**ft_split(char const *s, char c);
 char		*get_token(char **line, char *spec, char perm, t_env *envs);
 void		termcaps_init(t_env *envs);
-void		term_loop(t_hist *hist);
+void		term_loop(t_hist *hist, t_env *envs);
 void		add_redirection(char **line, t_cmdtable *table, t_env *envs);
 void		print_current_folder(void);
 
@@ -122,9 +122,14 @@ char		*pwd_getcurpath(void);
 int			ft_putchar_term(int c);
 
 int			executor(t_cmdtable *table, t_env *envs, char **env);
-int			executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7]);
+int			executor_fork(t_cmd *cmd, t_cmdtable *table, int tmp[7]);
 int			executor_redir(int oldfd, int newfd);
 int			executor_init_fds(int tmp[7], t_cmdtable *table);
+int			executor_exec_binary(char **argv, char **env);
+int			executor_exec_builtin(char **argv, t_env *envs, char **env);
+int			executor_run_file(t_cmd *cmd, t_env *envs, char **env, int *tmp);
+int			executor_run_command(t_cmd *cmd, t_env *envs, char **env, int *tmp);
+int			executor_cmd(t_cmd *cmd, t_env *envs, char **env, int *tmp);
 
 int			builtin_pwd(void);
 int			builtin_echo(char **argv);

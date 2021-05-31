@@ -39,7 +39,7 @@ int	executor_switch(int **tmp)
 	return (0);
 }
 
-int	executor_run_and_redir(t_cmd *cmd, t_cmdtable *table, int tmp[7])
+int	executor_fork(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 {
 	if (cmd->next == 0)
 	{

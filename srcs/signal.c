@@ -28,4 +28,5 @@ void	sig_quit(int code)
 		ft_putstr_fd("\n", 1);
 		g_signal.status = 131;
 	}
+	g_signal.quit = 1;
 }

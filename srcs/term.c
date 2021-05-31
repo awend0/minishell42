@@ -34,7 +34,7 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		write_char(str, ret, term);
 }
 
-void	term_loop(t_hist *hist)
+void	term_loop(t_hist *hist, t_env *envs)
 {
 	char	str[10];
 	int		ret;
@@ -46,6 +46,8 @@ void	term_loop(t_hist *hist)
 	str[ret] = 0;
 	while (ret && ft_strcmp(str, "\n") && ft_strcmp(str, "\4"))
 	{
+		if (g_signal.inter || g_signal.quit)
+			modify_env(envs, "?", ft_itoa(g_signal.status));
 		tcsetattr(0, TCSANOW, g_signal.cur_term);
 		check_command(str, &hist, &term, ret);
 		ret = read(0, str, 9);

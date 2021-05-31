@@ -18,6 +18,7 @@ SRC		= main.c \
 		memory.c \
 		executor.c \
 		executor_pipe.c \
+		executor_run.c \
 		signal.c \
 		builtin_pwd.c \
 		builtin_echo.c \
