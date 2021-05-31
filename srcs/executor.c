@@ -39,6 +39,8 @@ int	executor(t_cmdtable *table, t_env *envs, char **env)
 {
 	int		ret;
 
+	if (!g_signal.line || !(*g_signal.line))
+		return (0);
 	ret = executor_iterate(table, envs, env);
 	ft_free(0);
 	if (!g_signal.quit && !g_signal.inter)

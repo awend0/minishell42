@@ -3,6 +3,7 @@
 void	sig_int(int code)
 {
 	(void)code;
+	g_signal.inter = 1;
 	if (g_signal.pid != 0)
 	{
 		ft_putstr_fd("^C\n", 1);
@@ -10,13 +11,12 @@ void	sig_int(int code)
 	}
 	else
 	{
+		g_signal.status = 1;
 		g_signal.line[0] = 0;
 		ft_putstr_fd("\n", 1);
 		print_current_folder();
 		tputs(save_cursor, 1, ft_putchar_term);
-		g_signal.status = 1;
 	}
-	g_signal.inter = 1;
 }
 
 void	sig_quit(int code)

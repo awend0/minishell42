@@ -74,7 +74,10 @@ int	executor_run_command(t_cmd *cmd, t_env *envs, char **env, int *tmp)
 	cmd->argv[0] = scan_path(cmd->argv[0], envs);
 	if (!cmd->argv[0])
 	{
-		print_error(dup, 0, "command not found");
+		if (!get_env(envs, "PATH"))
+			print_error(dup, 0, "No such file or directory");
+		else
+			print_error(dup, 0, "command not found");
 		tmp[6] = 127;
 		return (0);
 	}

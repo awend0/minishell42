@@ -31,6 +31,13 @@ void	save_cmd(char *line, t_hist *hist)
 	buf->prev = new;
 }
 
+char	*get_result_color(void)
+{
+	if (g_signal.status == 0)
+		return (GREEN);
+	return (RED);
+}
+
 void	print_current_folder(void)
 {
 	char	**arr;
@@ -39,12 +46,17 @@ void	print_current_folder(void)
 
 	curpath = pwd_getcurpath();
 	if (!curpath || !ft_strcmp(curpath, "/"))
-		ft_putstr_fd(BOLDCYAN"/"BOLDYELLOW" » "RESET, 1);
+	{
+		ft_putstr_fd(get_result_color(), 1);
+		ft_putstr_fd("• "BOLDCYAN"/", 1);
+		ft_putstr_fd(BOLDYELLOW" » "RESET, 1);
+	}
 	else
 	{
 		arr = ft_split(curpath, '/');
 		len = ft_arrlen(arr);
-		ft_putstr_fd(BOLDCYAN, 1);
+		ft_putstr_fd(get_result_color(), 1);
+		ft_putstr_fd("• "BOLDCYAN"/", 1);
 		ft_putstr_fd(arr[len - 1], 1);
 		ft_putstr_fd(BOLDYELLOW" » "RESET, 1);
 	}

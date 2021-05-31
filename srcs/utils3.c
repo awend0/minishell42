@@ -56,7 +56,7 @@ char	*scan_path(char *binary, t_env *envs)
 	while (cur && ft_strcmp(cur->name, "PATH"))
 		cur = cur->next;
 	if (!cur)
-		return (binary);
+		return (0);
 	dirs = ft_split(cur->value, ':');
 	return (scan_iterate_folders(binary, dirs));
 }
