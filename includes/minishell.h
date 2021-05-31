@@ -107,6 +107,7 @@ int			get_envs_len(t_env *envs);
 int			isspecial(char c);
 void		print_error_and_exit(char *str);
 int			file_exist(char *filename);
+int			is_regular_file(char *path);
 char		*scan_path(char *binary, t_env *envs);
 char		*charcat(char *str, char c);
 char		*ft_concat(char *s1, char *s2);

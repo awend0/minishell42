@@ -1,5 +1,13 @@
 #include "../includes/minishell.h"
 
+int	is_regular_file(char *path)
+{
+	struct stat	path_stat;
+
+	stat(path, &path_stat);
+	return (S_ISREG(path_stat.st_mode));
+}
+
 int	executor_iterate(t_cmdtable *cmdtable, t_env *envs, char **env)
 {
 	t_cmdtable	*curtable;

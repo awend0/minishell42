@@ -16,6 +16,8 @@ int	executor_exec_binary(char **argv, char **env)
 	else
 		if (waitpid(g_signal.pid, &ret, 0) == -1)
 			return (-1);
+	if (ret > 0)
+		ret = 1;
 	return (ret);
 }
 
@@ -46,6 +48,12 @@ int	executor_run_file(t_cmd *cmd, t_env *envs, char **env, int *tmp)
 	{
 		print_error(cmd->argv[0], 0, "No such file or directory");
 		tmp[6] = 127;
+		return (0);
+	}
+	else if (!is_regular_file(cmd->argv[0]))
+	{
+		print_error(cmd->argv[0], 0, "is a directory");
+		tmp[6] = 126;
 		return (0);
 	}
 	else
