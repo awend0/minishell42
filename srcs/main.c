@@ -34,13 +34,20 @@ void	save_cmd(char *line, t_hist *hist)
 void	print_current_folder(void)
 {
 	char	**arr;
+	char	*curpath;
 	int		len;
 
-	arr = ft_split(pwd_getcurpath(), '/');
-	len = ft_arrlen(arr);
-	ft_putstr_fd(BOLDCYAN, 1);
-	ft_putstr_fd(arr[len - 1], 1);
-	ft_putstr_fd(BOLDYELLOW" » "RESET, 1);
+	curpath = pwd_getcurpath();
+	if (!curpath || !ft_strcmp(curpath, "/"))
+		ft_putstr_fd(BOLDCYAN"/"BOLDYELLOW" » "RESET, 1);
+	else
+	{
+		arr = ft_split(curpath, '/');
+		len = ft_arrlen(arr);
+		ft_putstr_fd(BOLDCYAN, 1);
+		ft_putstr_fd(arr[len - 1], 1);
+		ft_putstr_fd(BOLDYELLOW" » "RESET, 1);
+	}
 }
 
 int	main(int argc, char **argv, char **env)
