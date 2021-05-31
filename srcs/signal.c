@@ -11,7 +11,8 @@ void	sig_int(int code)
 	else
 	{
 		g_signal.line[0] = 0;
-		ft_putstr_fd("\n"BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
+		ft_putstr_fd("\n", 1);
+		print_current_folder();
 		tputs(save_cursor, 1, ft_putchar_term);
 		g_signal.status = 1;
 	}

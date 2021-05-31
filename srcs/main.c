@@ -31,6 +31,18 @@ void	save_cmd(char *line, t_hist *hist)
 	buf->prev = new;
 }
 
+void	print_current_folder(void)
+{
+	char	**arr;
+	int		len;
+
+	arr = ft_split(pwd_getcurpath(), '/');
+	len = ft_arrlen(arr);
+	ft_putstr_fd(BOLDCYAN, 1);
+	ft_putstr_fd(arr[len - 1], 1);
+	ft_putstr_fd(BOLDYELLOW" » "RESET, 1);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_cmdtable		*cmdtable;
@@ -49,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 		g_signal.pid = 0;
 		g_signal.inter = 0;
 		g_signal.quit = 0;
-		ft_putstr_fd(BOLDCYAN"paSHtet"BOLDYELLOW" » "RESET, 1);
+		print_current_folder();
 		term_loop(hist);
 		if (*g_signal.line)
 			save_cmd(g_signal.line, hist);

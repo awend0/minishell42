@@ -100,6 +100,7 @@ char		*get_token(char **line, char *spec, char perm, t_env *envs);
 void		termcaps_init(t_env *envs);
 void		term_loop(t_hist *hist);
 void		add_redirection(char **line, t_cmdtable *table, t_env *envs);
+void		print_current_folder(void);
 
 int			ft_arrlen(char **str);
 int			get_envs_len(t_env *envs);
