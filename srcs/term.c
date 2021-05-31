@@ -30,8 +30,16 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		cursor_to_right(term);
 	else if (!ft_strcmp(str, "\x7f") && !ft_strcmp(str, "\177"))
 		del_one(term);
+	else if (!ft_strcmp(str, "\4"))
+		return ;
 	else
 		write_char(str, ret, term);
+}
+
+void	ctrl_d(void)
+{
+	g_signal.line = ft_strdup("exit", 1);
+	ft_putstr_fd("exit\n", 1);
 }
 
 void	term_loop(t_hist *hist, t_env *envs)
@@ -44,20 +52,19 @@ void	term_loop(t_hist *hist, t_env *envs)
 	tputs(save_cursor, 1, ft_putchar_term);
 	ret = read(0, str, 9);
 	str[ret] = 0;
-	while (ret && ft_strcmp(str, "\n") && ft_strcmp(str, "\4"))
+	while (ft_strcmp(str, "\4") && ft_strcmp(str, "\n"))
 	{
-		if (g_signal.inter || g_signal.quit)
-			modify_env(envs, "?", ft_itoa(g_signal.status));
-		tcsetattr(0, TCSANOW, g_signal.cur_term);
-		check_command(str, &hist, &term, ret);
-		ret = read(0, str, 9);
-		str[ret] = 0;
+		while (ret && ft_strcmp(str, "\n"))
+		{
+			if (g_signal.inter || g_signal.quit)
+				modify_env(envs, "?", ft_itoa(g_signal.status));
+			tcsetattr(0, TCSANOW, g_signal.cur_term);
+			check_command(str, &hist, &term, ret);
+			ret = read(0, str, 9);
+			str[ret] = 0;
+		}
 	}
 	if (!ft_strcmp(str, "\4"))
-	{
-		g_signal.line = ft_strdup("exit", 1);
-		ft_putstr_fd("exit\n", 1);
-		return ;
-	}
+		ctrl_d();
 	ft_putstr_fd("\n", 1);
 }
