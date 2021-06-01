@@ -1,13 +1,5 @@
 #include "../includes/minishell.h"
 
-int	is_regular_file(char *path)
-{
-	struct stat	path_stat;
-
-	stat(path, &path_stat);
-	return (S_ISREG(path_stat.st_mode));
-}
-
 int	executor_iterate(t_cmdtable *cmdtable, t_env *envs, char **env)
 {
 	t_cmdtable	*curtable;
@@ -41,11 +33,13 @@ int	executor(t_cmdtable *table, t_env *envs, char **env)
 
 	if (!g_signal.line || !(*g_signal.line))
 		return (0);
+	tcsetattr(0, TCSANOW, g_signal.backup_term);
 	ret = executor_iterate(table, envs, env);
 	ft_free(0);
 	if (!g_signal.quit && !g_signal.inter)
 	{
 		g_signal.status = ret;
 	}
+	tcsetattr(0, TCSANOW, g_signal.cur_term);
 	return (0);
 }

@@ -12,6 +12,7 @@ SRC		= main.c \
 		utils.c \
 		utils2.c \
 		utils3.c \
+		utils4.c \
 		utils_lib.c \
 		utils_lib2.c \
 		utils_lib3.c \

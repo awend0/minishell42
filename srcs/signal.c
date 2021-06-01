@@ -14,7 +14,7 @@ void	sig_int(int code)
 		g_signal.status = 1;
 		g_signal.line[0] = 0;
 		ft_putstr_fd("\n", 1);
-		print_current_folder();
+		print_prompt();
 		tputs(save_cursor, 1, ft_putchar_term);
 	}
 }

@@ -13,7 +13,6 @@ int	builtin_exit(char **argv)
 		code = 0;
 	else
 		code = ft_atoi(argv[1]) % 256;
-	tcsetattr(0, TCSANOW, g_signal.backup_term);
 	ft_free(0);
 	ft_free(1);
 	exit(code);
