@@ -56,3 +56,10 @@ char	*ft_tolower(char *str)
 	}
 	return (ret);
 }
+
+void	signal_init(void)
+{
+	g_signal.inter = 0;
+	g_signal.quit = 0;
+	g_signal.pid = 0;
+}

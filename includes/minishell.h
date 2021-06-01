@@ -145,6 +145,7 @@ void		cmdtable_init(t_cmdtable **table);
 char		**array_append(char **arr, int len);
 void		add_new_cmdtable(t_cmdtable **table, char **line);
 
+void		signal_init(void);
 void		sig_int(int code);
 void		sig_quit(int code);
 extern t_signal	g_signal;
