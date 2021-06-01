@@ -30,6 +30,11 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		cursor_to_right(term);
 	else if (!ft_strcmp(str, "\x7f") && !ft_strcmp(str, "\177"))
 		del_one(term);
+	else if (!ft_strcmp(str, "\f"))
+	{
+		g_signal.line = ft_strdup("clear", 1);
+		tputs("clear", 1, ft_putchar_term);
+	}
 	else if (!ft_strcmp(str, "\4"))
 		return ;
 	else
