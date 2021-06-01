@@ -26,17 +26,17 @@ int	executor_exec_builtin(char **argv, t_env *envs, char **env)
 	(void)env;
 	if (!ft_strcmp(argv[0], "exit"))
 		return (builtin_exit(argv));
-	if (!ft_strcmp(argv[0], "pwd"))
+	if (!ft_strcmp(ft_tolower(argv[0]), "pwd"))
 		return (builtin_pwd());
-	if (!ft_strcmp(argv[0], "echo"))
+	if (!ft_strcmp(ft_tolower(argv[0]), "echo"))
 		return (builtin_echo(argv));
-	if (!ft_strcmp(argv[0], "cd"))
+	if (!ft_strcmp(ft_tolower(argv[0]), "cd"))
 		return (builtin_cd(argv, envs));
 	if (!ft_strcmp(argv[0], "unset"))
 		return (builtin_unset(argv, envs));
 	if (!ft_strcmp(argv[0], "export"))
 		return (builtin_export(argv, envs));
-	if (!ft_strcmp(argv[0], "env"))
+	if (!ft_strcmp(ft_tolower(argv[0]), "env"))
 		return (builtin_env(envs, 0));
 	return (1);
 }

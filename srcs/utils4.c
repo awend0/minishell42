@@ -38,3 +38,21 @@ void	print_prompt(void)
 		ft_putstr_fd(BOLDYELLOW" » "RESET, 1);
 	}
 }
+
+char	*ft_tolower(char *str)
+{
+	char	*ret;
+	int		i;
+
+	i = 0;
+	ret = ft_calloc_save(ft_strlen(str) + 1);
+	while (str[i])
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			ret[i] = str[i] + 32;
+		else
+			ret[i] = str[i];
+		i++;
+	}
+	return (ret);
+}
