@@ -13,7 +13,7 @@ int	cd_home(t_env *envs)
 	modify_env(envs, "OLDPWD", pwd_getcurpath());
 	if (chdir(path) == -1)
 	{
-		print_error("cd", 0, 0);
+		print_error("cd", path, 0);
 		return (1);
 	}
 	return (0);
@@ -32,7 +32,7 @@ int	cd_back(t_env *envs)
 	modify_env(envs, "OLDPWD", pwd_getcurpath());
 	if (chdir(path) == -1)
 	{
-		print_error("cd", 0, 0);
+		print_error("cd", path, 0);
 		return (1);
 	}
 	ft_putstr_fd(path, 1);
@@ -49,7 +49,7 @@ int	builtin_cd(char **argv, t_env *envs)
 	modify_env(envs, "OLDPWD", pwd_getcurpath());
 	if (chdir(argv[1]) == -1)
 	{
-		print_error("cd", 0, 0);
+		print_error("cd", argv[1], 0);
 		return (1);
 	}
 	return (0);
