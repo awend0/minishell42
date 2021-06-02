@@ -34,8 +34,8 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		del_front(term);
 	else if (!ft_strcmp(str, "\4") || !ft_strcmp(str, "\b"))
 		return ;
-	// else if (ft_strlen(str) > 1)
-	// 	return ;
+	else if (ft_strlen(str) > 1)
+		return ;
 	else
 		write_char(str, ret, term);
 }
@@ -52,9 +52,7 @@ void	ctrl_d_l(char *str)
 		ft_putstr_fd("exit", 1);
 	}
 	else if (!ft_strcmp(str, "\f"))
-	{
 		g_signal.line = ft_strdup("clear", 1);
-	}
 }
 
 void	term_loop(t_hist *hist, t_env *envs)
