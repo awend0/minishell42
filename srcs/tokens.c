@@ -17,6 +17,8 @@ char	*get_double_token(char **line, char *str, t_env *envs)
 	char	*buf;
 
 	(*line)++;
+	if (!(**line))
+		return (str);
 	buf = get_token(line, "\"", '3', envs);
 	str = ft_strjoin(str, buf);
 	(*line)++;
@@ -28,6 +30,8 @@ char	*get_single_token(char **line, char *str, t_env *envs)
 	char	*buf;
 
 	(*line)++;
+	if (!(**line))
+		return (str);
 	buf = get_token(line, "'", '2', envs);
 	str = ft_strjoin(str, buf);
 	(*line)++;
