@@ -8,6 +8,8 @@ void	termcaps_init(t_env *envs)
 	tcgetattr(0, g_signal.backup_term);
 	g_signal.cur_term->c_lflag &= ~(ECHO);
 	g_signal.cur_term->c_lflag &= ~(ICANON);
+	g_signal.cur_term->c_cc[VTIME] = 0;
+	g_signal.cur_term->c_cc[VMIN] = 1;
 	tcsetattr(0, TCSANOW, g_signal.cur_term);
 	tgetent(0, get_env(envs, "TERM"));
 }

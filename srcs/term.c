@@ -34,8 +34,8 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		del_front(term);
 	else if (!ft_strcmp(str, "\4") || !ft_strcmp(str, "\b"))
 		return ;
-	else if (ft_strlen(str) > 1)
-		return ;
+	// else if (ft_strlen(str) > 1)
+	// 	return ;
 	else
 		write_char(str, ret, term);
 }
@@ -59,13 +59,13 @@ void	ctrl_d_l(char *str)
 
 void	term_loop(t_hist *hist, t_env *envs)
 {
-	char	str[10];
+	char	str[1000];
 	int		ret;
 	t_term	term;
 
 	term_init(&term);
 	tputs(save_cursor, 1, ft_putchar_term);
-	ret = read(0, str, 9);
+	ret = read(0, str, 999);
 	str[ret] = 0;
 	while (ft_strcmp(str, "\f") && ft_strcmp(str, "\4") && ft_strcmp(str, "\n"))
 	{
@@ -75,7 +75,7 @@ void	term_loop(t_hist *hist, t_env *envs)
 				modify_env(envs, "?", ft_itoa(g_signal.status));
 			tcsetattr(0, TCSANOW, g_signal.cur_term);
 			check_command(str, &hist, &term, ret);
-			ret = read(0, str, 9);
+			ret = read(0, str, 999);
 			str[ret] = 0;
 			if ((!ft_strcmp(str, "\4") && !ft_strlen(g_signal.line))
 				|| !ft_strcmp(str, "\f"))
