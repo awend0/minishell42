@@ -122,7 +122,7 @@ char		*pwd_getcurpath(void);
 int			ft_putchar_term(int c);
 
 int			executor(t_cmdtable *table, t_env *envs, char **env);
-int			executor_fork(t_cmd *cmd, t_cmdtable *table, int tmp[7]);
+int			executor_open(t_cmd *cmd, t_cmdtable *table, int tmp[7]);
 int			executor_redir(int oldfd, int newfd);
 int			executor_init_fds(int tmp[7], t_cmdtable *table);
 int			executor_exec_binary(char **argv, char **env);

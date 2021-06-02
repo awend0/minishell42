@@ -8,7 +8,10 @@ int	executor_init_fds(int tmp[7], t_cmdtable *table)
 	{
 		tmp[4] = open(table->input_file, O_RDONLY);
 		if (tmp[4] == -1)
+		{
+			print_error(table->input_file, 0, "No such file or directory");
 			return (-1);
+		}
 	}
 	else
 	{
@@ -39,18 +42,18 @@ int	executor_switch(int **tmp)
 	return (0);
 }
 
-int	executor_fork(t_cmd *cmd, t_cmdtable *table, int tmp[7])
+int	executor_open(t_cmd *cmd, t_cmdtable *table, int tmp[7])
 {
 	if (cmd->next == 0)
 	{
 		if (table->output_file)
 		{
 			if (table->append)
-				tmp[5] = open(table->output_file, O_CREAT
-						| O_WRONLY | O_APPEND, S_IRWXU);
+				tmp[5] = open(table->output_file, O_CREAT | O_WRONLY | O_APPEND,
+						S_IRWXU);
 			else
-				tmp[5] = open(table->output_file, O_CREAT
-						| O_WRONLY | O_TRUNC, S_IRWXU);
+				tmp[5] = open(table->output_file, O_CREAT | O_WRONLY | O_TRUNC,
+						S_IRWXU);
 			if (tmp[5] == -1)
 				return (-1);
 		}

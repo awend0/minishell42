@@ -14,10 +14,10 @@ int	executor_iterate(t_cmdtable *cmdtable, t_env *envs, char **env)
 		while (curcmds)
 		{
 			if (executor_redir(tmp[4], 0) == -1
-				|| executor_fork(curcmds, curtable, tmp) == -1
+				|| executor_open(curcmds, curtable, tmp) == -1
 				|| executor_redir(tmp[5], 1) == -1
 				|| executor_cmd(curcmds, envs, env, tmp) == -1)
-				return (-1);
+				return (1);
 			curcmds = curcmds->next;
 		}
 		if (executor_redir(tmp[2], 0) == -1 || executor_redir(tmp[3], 1) == -1)
@@ -37,9 +37,7 @@ int	executor(t_cmdtable *table, t_env *envs, char **env)
 	ret = executor_iterate(table, envs, env);
 	ft_free(0);
 	if (!g_signal.quit && !g_signal.inter)
-	{
 		g_signal.status = ret;
-	}
 	tcsetattr(0, TCSANOW, g_signal.cur_term);
 	return (0);
 }

@@ -20,7 +20,7 @@ int	ft_strlen(char *str)
 {
 	int		size;
 
-	if (!str)
+	if (!str || !(*str))
 		return (0);
 	size = 0;
 	while (*str)

@@ -53,16 +53,18 @@ void	write_redirection(char *type, char *filename, t_cmdtable *table)
 {
 	if (!ft_strcmp(type, "output"))
 	{
-		if (filename)
-			close(open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU));
+		if (table->output_file)
+			close(open(table->output_file, O_CREAT | O_WRONLY | O_TRUNC,
+					S_IRWXU));
 		table->output_file = filename;
 	}
 	else if (!ft_strcmp(type, "input"))
 		table->input_file = filename;
 	else if (!ft_strcmp(type, "append"))
 	{
-		if (filename)
-			close(open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU));
+		if (table->output_file)
+			close(open(table->output_file, O_CREAT | O_WRONLY | O_TRUNC,
+					S_IRWXU));
 		table->output_file = filename;
 		table->append = 1;
 	}
