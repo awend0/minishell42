@@ -31,8 +31,15 @@ int	executor(t_cmdtable *table, t_env *envs, char **env)
 {
 	int		ret;
 
-	if (!g_signal.line || !(*g_signal.line))
+	if (!g_signal.line || !*g_signal.line)
 		return (0);
+	if (!table->cmds->argv || !table->cmds->argv[0] || !table->cmds->argv[0][0])
+	{
+		print_error(0, 0, "command not found");
+		if (!g_signal.quit && !g_signal.inter)
+			g_signal.status = 127;
+		return (0);
+	}
 	tcsetattr(0, TCSANOW, g_signal.backup_term);
 	ret = executor_iterate(table, envs, env);
 	ft_free(0);
