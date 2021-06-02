@@ -3,6 +3,7 @@ NAME	= minishell
 SRC		= main.c \
 		term.c \
 		term_inits.c \
+		term_del_insert.c \
 		term_commands.c \
 		envs.c \
 		parser.c \

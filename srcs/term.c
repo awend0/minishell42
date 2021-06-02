@@ -30,6 +30,8 @@ void	check_command(char *str, t_hist **hist, t_term *term, int ret)
 		cursor_to_right(term);
 	else if (!ft_strcmp(str, "\x7f") && !ft_strcmp(str, "\177"))
 		del_one(term);
+	else if (!ft_strcmp(str, "\e[3~"))
+		del_front(term);
 	else if (!ft_strcmp(str, "\4") || !ft_strcmp(str, "\b"))
 		return ;
 	else if (ft_strlen(str) > 1)

@@ -156,6 +156,7 @@ void		*ft_calloc_save2(int size);
 void		*ft_calloc(int size);
 
 void		del_one(t_term *term);
+void		del_front(t_term *term);
 void		write_char(char *str, int ret, t_term *term);
 char		*insert_char(char *line, char *str, int ret, int pos);
 char		*get_next(t_hist **hist, t_term *term);
