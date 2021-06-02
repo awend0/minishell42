@@ -14,9 +14,10 @@ void	termcaps_init(t_env *envs)
 	tgetent(0, get_env(envs, "TERM"));
 }
 
-void	term_init(t_term *term)
+void	term_init(void)
 {
-	term->position = 0;
+	g_signal.term = ft_calloc_save(sizeof(t_term));
+	g_signal.term->position = 0;
 	g_signal.line = ft_calloc_save(2 * sizeof(char));
-	term->size = 0;
+	g_signal.term->size = 0;
 }

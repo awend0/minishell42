@@ -5,7 +5,7 @@ char	*get_env_token(char **line, char *str, t_env *envs)
 	char	*buf;
 
 	(*line)++;
-	buf = get_token(line, ":*^=#@!%\\().,$ |;><'\"", '0', envs);
+	buf = get_token(line, " !\"#$%%&'()*+,-./:;<=>@[\\]^`{|}~", '0', envs);
 	if (!buf)
 		return ("$");
 	str = ft_strjoin(str, get_env(envs, buf));
@@ -49,7 +49,7 @@ char	*get_token(char **line, char *spec, char perm, t_env *envs)
 	{
 		if (**line == '$' && ft_strchr("13", perm))
 			str = get_env_token(line, str, envs);
-		else if (**line == '\\' && ft_strchr("13", perm))
+		else if (**line == '\\' && ft_strchr("1", perm))
 		{
 			if (*(++(*line)))
 				str = charcat(str, *((*line)++));

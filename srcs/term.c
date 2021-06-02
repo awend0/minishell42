@@ -59,9 +59,8 @@ void	term_loop(t_hist *hist, t_env *envs)
 {
 	char	str[1000];
 	int		ret;
-	t_term	term;
 
-	term_init(&term);
+	term_init();
 	tputs(save_cursor, 1, ft_putchar_term);
 	ret = read(0, str, 999);
 	str[ret] = 0;
@@ -72,7 +71,7 @@ void	term_loop(t_hist *hist, t_env *envs)
 			if (g_signal.inter || g_signal.quit)
 				modify_env(envs, "?", ft_itoa(g_signal.status));
 			tcsetattr(0, TCSANOW, g_signal.cur_term);
-			check_command(str, &hist, &term, ret);
+			check_command(str, &hist, g_signal.term, ret);
 			ret = read(0, str, 999);
 			str[ret] = 0;
 			if ((!ft_strcmp(str, "\4") && !ft_strlen(g_signal.line))

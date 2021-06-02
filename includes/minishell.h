@@ -87,6 +87,7 @@ typedef struct s_signal
 	char				*line;
 	t_list				*memory;
 	t_list				*memory2;
+	t_term				*term;
 	struct termios		*cur_term;
 	struct termios		*backup_term;
 }						t_signal;
@@ -162,7 +163,7 @@ char		*insert_char(char *line, char *str, int ret, int pos);
 char		*get_next(t_hist **hist, t_term *term);
 char		*get_privious(t_hist **hist, t_term *term);
 void		termcaps_init(t_env *envs);
-void		term_init(t_term *term);
+void		term_init(void);
 
 char		*ft_strchr(char *str, int c);
 int			ft_strcmp(char *s1, char *s2);

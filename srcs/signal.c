@@ -15,6 +15,7 @@ void	sig_int(int code)
 		g_signal.line[0] = 0;
 		ft_putstr_fd("\n", 1);
 		print_prompt();
+		term_init();
 		tputs(save_cursor, 1, ft_putchar_term);
 	}
 }
