@@ -6,7 +6,7 @@ Basic bash reimplementation in C
 - sudo apt-get install libncurses5-dev  
 - make all  
 
-#### Options
+#### What we did
 
 - Totally leak-free  
 - Totally norminette code-style respected  
