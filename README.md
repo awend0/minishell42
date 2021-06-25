@@ -20,6 +20,4 @@ Basic bash reimplementation in C
 - [mraymun](https://github.com/awend0)  
 - [bbetsey](https://github.com/bbetsey)  
 
-![Screenshot 1](https://github.com/awend0/minishell42/blob/master/screenshots/1.png?raw=true)  
-![Screenshot 2](https://github.com/awend0/minishell42/blob/master/screenshots/2.png?raw=true)  
-![Screenshot 3](https://github.com/awend0/minishell42/blob/master/screenshots/3.png?raw=true)  
+![Screenshot 1](https://github.com/awend0/minishell42/blob/master/screenshots/1.jpg?raw=true)  
